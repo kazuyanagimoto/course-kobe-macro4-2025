@@ -1,0 +1,23 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="344px" height="411px" viewBox="-0.5 -0.5 344 411" content="&lt;mxfile&gt;&lt;diagram id=&quot;19YOnnWJvY-I6pBAVUP5&quot; name=&quot;Page-1&quot;&gt;3VbBkqMgEP0aj5sSiaNe487sXvaUw54ZRaWCYiEZzXz9tgoGY6xJ7SSzVetF+kFD8x7d4OC47H5IUhe/REq547lp5+DvjuchF2/h1yOnEdmGGsglS/WgM7Bn79R4avTIUtrMBiohuGL1HExEVdFEzTAipWjnwzLB56vWJKcLYJ8QvkR/s1QVIxr67hn/SVlemJWRq3teSXLIpThWer1KVHTsKYmZRg9tCpKK1oLws4NjKYQaW2UXU97Tahgb/V5WeqeQJa3ULQ7e0+jxRvhRb1sHpk6GB4ix7pugLwEpd23BFN3XJOnBFrQHrFAlBwtBUwpFFBMVmN8iF4CMcR4LLuQwHY58P9zBRneNkuJATc9AEt7pcKhUtFvdE5qYgsNHRUmVPMEQ7YCNiz53XqDJbs8qer7eZ2ErGGiQ6JOTT3OfKYSGZnGF0eDLGY13OMb4gYwic+YNo0/RFUbdBzEafkwoOEBVoB9TSZp6LBUZ62i6Rtnaic1EpSw8Gz7AS/FGXodYenUkbdi7bffyWTaoTm2bpsw2uUgOfWhDvLq2Wd33SJDQm8lpTEtNhK+pacDPqBl9nZog0cvwLSXFYRRC7btFUnQhKbqQFF1IiuaSIltSdyEpmqI2dwy6k8peFM2TFvlLmT3/iswG/FQZ/NdJOxXF/yRpp2eRSdrlpfa4pL2lBt/5UpsydD2nH5Q3YbRBeMY19oINDpd8b7eb4FoC/cWtB+b51Tf0Wa9q/PwH&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs/>
+    <g>
+        <g>
+            <path d="M 132 190 L 298 190 Q 384 190 384 276 Q 384 362 298 362 L 132 362 Z" fill="#9558b2" stroke="none" transform="rotate(-90,258,276)" pointer-events="all" style="fill: light-dark(rgb(149, 88, 178), rgb(180, 128, 205));"/>
+        </g>
+        <g>
+            <path d="M -39 189 L 125 189 Q 211 189 211 275 Q 211 361 125 361 L -39 361 Z" fill="#cb3c33" stroke="none" transform="rotate(-90,86,275)" pointer-events="all" style="fill: light-dark(rgb(203, 60, 51), rgb(255, 135, 128));"/>
+        </g>
+        <g>
+            <ellipse cx="258" cy="67" rx="65" ry="65" fill="#9558b2" stroke="none" pointer-events="all" style="fill: light-dark(rgb(149, 88, 178), rgb(180, 128, 205));"/>
+        </g>
+        <g>
+            <ellipse cx="172.5" cy="197.5" rx="62.5" ry="62.5" fill="#389826" stroke="#ffffff" stroke-width="10" pointer-events="all" style="fill: light-dark(rgb(56, 152, 38), rgb(72, 155, 57)); stroke: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+        </g>
+        <g>
+            <ellipse cx="86" cy="65" rx="65" ry="65" fill="#cb3c33" stroke="none" pointer-events="all" style="fill: light-dark(rgb(203, 60, 51), rgb(255, 135, 128));"/>
+        </g>
+        <g>
+            <path d="M 100.13 247.38 L 158.88 247.38 Q 244.88 247.38 244.88 333.38 Q 244.88 419.38 158.88 419.38 L 100.13 419.38 Z" fill="#389826" stroke="#ffffff" stroke-width="10" stroke-miterlimit="10" transform="rotate(-90,172.51,333.38)" pointer-events="all" style="fill: light-dark(rgb(56, 152, 38), rgb(72, 155, 57)); stroke: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+        </g>
+    </g>
+</svg>

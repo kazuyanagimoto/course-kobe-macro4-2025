@@ -1,0 +1,22 @@
+[
+  {
+    "listing": "/lecture.html",
+    "items": [
+      "/slides/01-1-intro.pdf",
+      "/lecture/01-2-numerical-method.html",
+      "/lecture/01-3-dynamic-model.html",
+      "/slides/02-1-marriage-search-1.pdf",
+      "/slides/02-1-marriage-search-2.pdf",
+      "/slides/02-2-marriage-frictionless-1.pdf",
+      "/slides/02-2-marriage-frictionless-2.pdf",
+      "/slides/03-1-fertility-classic-1.pdf",
+      "/slides/03-1-fertility-classic-2.pdf",
+      "/slides/03-2-fertility-new-1.pdf",
+      "/slides/03-2-fertility-new-2.pdf",
+      "/slides/04-1-nonlinear-wage.pdf",
+      "/slides/04-2-home-production.pdf",
+      "/slides/04-3-intra-household.pdf",
+      "/lecture/10-1-julia-intro.html"
+    ]
+  }
+]

@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kazuharu Yanagimoto">
+
+<title>Family Macroeconomics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./static/img/logo.drawio.svg" rel="icon" type="image/svg+xml">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-232ebef096930321802e28d562d01725.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-c66b409fd45ad494cff560d16e72e358.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-232ebef096930321802e28d562d01725.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-41b512996cb36735fb60e80108dc15ce.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-46843f881eb064be37e915a4cd2a1863.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-41b512996cb36735fb60e80108dc15ce.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/downloadthis-1.9.1/downloadthis.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Family Macroeconomics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./lecture.html"> 
+<span class="menu-text">Materials</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kazuyanagimoto/course-kobe-macro4-2025"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="course-title title display-7">
+            Family Macroeconomics
+        </h1></header>
+
+<div class="grid title-block">
+    <div class="g-col-9">
+        
+        <div class="course-instructor">
+            <p>Kazuharu Yanagimoto</p>
+        </div>
+        <div class="course-meta">
+            <p>Macro IV・Fall 2025<br>Kobe University</p>
+        </div>
+    </div>
+    <div class="g-col-3 course-logo">
+        <img src="./static/img/logo.drawio.svg" alt="Logo" class="img-fluid">
+    </div>
+</div>
+
+
+<section id="スケジュール" class="level2">
+<h2 class="anchored" data-anchor-id="スケジュール">スケジュール</h2>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_8tdx1w7fsycr0zccwlmf = TinyTable.createTableFunctions("tinytable_8tdx1w7fsycr0zccwlmf");
+      // tinytable span after
+      window.addEventListener('load', function () { tableFns_8tdx1w7fsycr0zccwlmf.spanCell(19, 1, 1, 4) })
+      window.addEventListener('load', function () { tableFns_8tdx1w7fsycr0zccwlmf.spanCell(15, 1, 1, 4) })
+      window.addEventListener('load', function () { tableFns_8tdx1w7fsycr0zccwlmf.spanCell(10, 1, 1, 4) })
+      window.addEventListener('load', function () { tableFns_8tdx1w7fsycr0zccwlmf.spanCell(5, 1, 1, 4) })
+      window.addEventListener('load', function () { tableFns_8tdx1w7fsycr0zccwlmf.spanCell(1, 1, 1, 4) })
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 } ], css_id: 'tinytable_css_76rcd58tomxrqqshom2d',}, 
+          { positions: [ { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 } ], css_id: 'tinytable_css_l9ziqbxg6jl0pvy9vzkz',}, 
+          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 } ], css_id: 'tinytable_css_fr8gl7r3aif93mqp3rux',}, 
+          { positions: [ { i: '20', j: 3 } ], css_id: 'tinytable_css_h1mmfddpk9o3w3jc2hj1',}, 
+          { positions: [ { i: '20', j: 2 } ], css_id: 'tinytable_css_xqgf45wvals7lratay5u',}, 
+          { positions: [ { i: '20', j: 1 }, { i: '20', j: 4 } ], css_id: 'tinytable_css_y5dq8stzkflmsecfm6mh',}, 
+          { positions: [ { i: '1', j: 3 }, { i: '10', j: 3 }, { i: '15', j: 3 }, { i: '19', j: 3 }, { i: '5', j: 3 } ], css_id: 'tinytable_css_t26dvivx7cfli17ebj08',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '10', j: 2 }, { i: '15', j: 2 }, { i: '19', j: 2 }, { i: '5', j: 2 } ], css_id: 'tinytable_css_82g6atbcemzm6w2r6n72',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '1', j: 4 }, { i: '10', j: 1 }, { i: '10', j: 4 }, { i: '15', j: 1 }, { i: '15', j: 4 }, { i: '19', j: 1 }, { i: '19', j: 4 }, { i: '5', j: 1 }, { i: '5', j: 4 } ], css_id: 'tinytable_css_41z9aw3nmh2zq4e1nxw6',}, 
+          { positions: [ { i: '0', j: 3 } ], css_id: 'tinytable_css_84tn714n51ay100layvw',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_lk7kmhiptns7yxkc6zwh',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_2szlhp1hlzrkkw02fg82',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_8tdx1w7fsycr0zccwlmf.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_76rcd58tomxrqqshom2d, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_76rcd58tomxrqqshom2d { text-align: center; width: 10%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_l9ziqbxg6jl0pvy9vzkz, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_l9ziqbxg6jl0pvy9vzkz { text-align: left; width: 50%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_fr8gl7r3aif93mqp3rux, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_fr8gl7r3aif93mqp3rux { text-align: left; width: 20%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_h1mmfddpk9o3w3jc2hj1, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_h1mmfddpk9o3w3jc2hj1 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center; width: 10%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_xqgf45wvals7lratay5u, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_xqgf45wvals7lratay5u {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; width: 50%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_y5dq8stzkflmsecfm6mh, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_y5dq8stzkflmsecfm6mh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; width: 20%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_t26dvivx7cfli17ebj08, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_t26dvivx7cfli17ebj08 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: #cccccc; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; font-weight: bold; text-align: center; font-size: 1.25em; width: 10%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_82g6atbcemzm6w2r6n72, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_82g6atbcemzm6w2r6n72 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: #cccccc; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; font-weight: bold; text-align: left; font-size: 1.25em; width: 50%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_41z9aw3nmh2zq4e1nxw6, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_41z9aw3nmh2zq4e1nxw6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: #cccccc; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; font-weight: bold; text-align: left; font-size: 1.25em; width: 20%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_84tn714n51ay100layvw, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_84tn714n51ay100layvw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center; width: 10%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_lk7kmhiptns7yxkc6zwh, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_lk7kmhiptns7yxkc6zwh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; width: 50%; }
+    #tinytable_8tdx1w7fsycr0zccwlmf td.tinytable_css_2szlhp1hlzrkkw02fg82, #tinytable_8tdx1w7fsycr0zccwlmf th.tinytable_css_2szlhp1hlzrkkw02fg82 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: black; --line-color-right: black; --line-color-top: black; --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left; width: 20%; }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_8tdx1w7fsycr0zccwlmf" style="table-layout: fixed; width: 100%; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"></th>
+                <th scope="col" data-row="0" data-col="2">タイトル</th>
+                <th scope="col" data-row="0" data-col="3">教材</th>
+                <th scope="col" data-row="0" data-col="4">課題提出</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">基礎編</td>
+                  <td data-row="1" data-col="2">基礎編</td>
+                  <td data-row="1" data-col="3">基礎編</td>
+                  <td data-row="1" data-col="4">基礎編</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">2025-10-06</td>
+                  <td data-row="2" data-col="2">Introduction</td>
+                  <td data-row="2" data-col="3"><a href="./slides/01-1-intro.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="2" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">2025-10-15</td>
+                  <td data-row="3" data-col="2">数値計算の基礎</td>
+                  <td data-row="3" data-col="3"><a href="./lecture/01-2-numerical-method.html"><i class="bi bi-file-code"></i></a></td>
+                  <td data-row="3" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">2025-10-20</td>
+                  <td data-row="4" data-col="2">動学モデルの基礎</td>
+                  <td data-row="4" data-col="3"><a href="./lecture/01-3-dynamic-model.html"><i class="bi bi-file-code"></i></a></td>
+                  <td data-row="4" data-col="4">2025-10-28</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">結婚の経済学</td>
+                  <td data-row="5" data-col="2">結婚の経済学</td>
+                  <td data-row="5" data-col="3">結婚の経済学</td>
+                  <td data-row="5" data-col="4">結婚の経済学</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">2025-10-27</td>
+                  <td data-row="6" data-col="2">Search and Matching I</td>
+                  <td data-row="6" data-col="3"><a href="./slides/02-1-marriage-search-1.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="6" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">2025-11-06</td>
+                  <td data-row="7" data-col="2">Search and Matching II</td>
+                  <td data-row="7" data-col="3"><a href="./slides/02-1-marriage-search-2.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="7" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">2025-11-10</td>
+                  <td data-row="8" data-col="2">Frictionless Marriage Market I</td>
+                  <td data-row="8" data-col="3"><a href="./slides/02-2-marriage-frictionless-1.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="8" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">2025-11-17</td>
+                  <td data-row="9" data-col="2">Frictionless Marriage Market II</td>
+                  <td data-row="9" data-col="3"><a href="./slides/02-2-marriage-frictionless-2.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="9" data-col="4">2025-12-02</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">出生の経済学</td>
+                  <td data-row="10" data-col="2">出生の経済学</td>
+                  <td data-row="10" data-col="3">出生の経済学</td>
+                  <td data-row="10" data-col="4">出生の経済学</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">2025-12-01</td>
+                  <td data-row="11" data-col="2">Old Facts, Old Models</td>
+                  <td data-row="11" data-col="3"><a href="./slides/03-1-fertility-classic-1.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="11" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">2025-12-08</td>
+                  <td data-row="12" data-col="2">Kuznet's Facts for Family Economists</td>
+                  <td data-row="12" data-col="3"><a href="./slides/03-1-fertility-classic-2.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="12" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">2025-12-15</td>
+                  <td data-row="13" data-col="2">New Theory of Fertility I</td>
+                  <td data-row="13" data-col="3"><a href="./slides/03-2-fertility-new-1.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="13" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">2025-12-22</td>
+                  <td data-row="14" data-col="2">New Theory of Fertility II</td>
+                  <td data-row="14" data-col="3"><a href="./slides/03-2-fertility-new-2.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="14" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">ジェンダー格差</td>
+                  <td data-row="15" data-col="2">ジェンダー格差</td>
+                  <td data-row="15" data-col="3">ジェンダー格差</td>
+                  <td data-row="15" data-col="4">ジェンダー格差</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1">2026-01-05</td>
+                  <td data-row="16" data-col="2">Non-linear Wage</td>
+                  <td data-row="16" data-col="3"><a href="./slides/04-1-nonlinear-wage.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="16" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="17" data-col="1">2026-01-14</td>
+                  <td data-row="17" data-col="2">Home Production</td>
+                  <td data-row="17" data-col="3"><a href="./slides/04-2-home-production.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="17" data-col="4"> </td>
+                </tr>
+                <tr>
+                  <td data-row="18" data-col="1">2026-01-19</td>
+                  <td data-row="18" data-col="2">Intra-household Allocation</td>
+                  <td data-row="18" data-col="3"><a href="./slides/04-3-intra-household.pdf"><i class="bi bi-filetype-pdf"></i></a></td>
+                  <td data-row="18" data-col="4">2025-01-29</td>
+                </tr>
+                <tr>
+                  <td data-row="19" data-col="1">まとめ</td>
+                  <td data-row="19" data-col="2">まとめ</td>
+                  <td data-row="19" data-col="3">まとめ</td>
+                  <td data-row="19" data-col="4">まとめ</td>
+                </tr>
+                <tr>
+                  <td data-row="20" data-col="1">2026-01-26</td>
+                  <td data-row="20" data-col="2">まとめ</td>
+                  <td data-row="20" data-col="3"></td>
+                  <td data-row="20" data-col="4"> </td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Subscribe!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>授業スケジュールをGoogle Calendarなどに登録できます. 私個人のために作成したものであり間違いがある可能性があります. 大学からの正式なスケジュールを優先した上で, 参考程度にご利用ください.</p>
+<p><input class="form-control" type="text" value="https://kazuyanagimoto.com/course-kobe-macro4/schedule.ics" onclick="this.select()" readonly=""></p>
+</div>
+</div>
+</section>
+<section id="課題について" class="level2">
+<h2 class="anchored" data-anchor-id="課題について">課題について</h2>
+<p><strong>提出期限</strong></p>
+<ul>
+<li>対応するTAセッションの前日23:59 (JST)</li>
+<li>例: 10月29日のTAセッション → 10月28日23:59まで</li>
+</ul>
+<p><strong>提出方法</strong></p>
+<ul>
+<li>Google Classroom上でPDFレポートとコードをアップロード</li>
+<li>TAのPC上で動作確認を行う. 再現できない場合は, TAが環境について質問することがある</li>
+</ul>
+<p><strong>コードについて</strong></p>
+<ul>
+<li>TAのPC上で動作確認を行うため, 無料で利用できる言語 (Julia, Python, R等) を利用すること</li>
+<li>授業ではコード例としてJuliaを利用するため, Juliaを利用することを推奨</li>
+<li>第1回TAセッションでJuliaの基本的な使い方を解説する</li>
+</ul>
+<p><strong>レポートについて</strong></p>
+<ul>
+<li>PDF形式で提出. タイプされたもののみ. 手書きは不可
+<ul>
+<li>レポートにコードは<strong>含めない</strong>こと</li>
+<li>図と表以外のコード実行のアウトプットも含めてはいけない</li>
+<li>TAのPC上でコンパイルすることから, Quartoでは有料のフォント (特にMacのヒラギノ) は利用しないこと.</li>
+</ul></li>
+<li><a href="https://quarto.org/">Quarto</a> での作成を推奨する. <span class="math inline">\(\LaTeX\)</span> 等でレポートを作成した場合は, レポート用のコードの提出は必要ない
+<ul>
+<li>Quarto (Julia) の場合 → PDFレポートとqmdファイルの提出</li>
+<li>Python + <span class="math inline">\(\LaTeX\)</span> の場合 → PDFレポートとpyファイルの提出</li>
+</ul></li>
+<li>Quartoを用いない場合は main 関数を定義し, TAが main 関数を実行することのみでレポートで用いる画像や数値が再現できるようにすること</li>
+<li>第1回のTAセッションでQuartoの基本的な使い方を解説する</li>
+<li>解答には以下のテンプレートを利用してもよい</li>
+</ul>
+<p><a href="#dnldts25793" onclick="fetch('data:text/plain;base64,LS0tCnRpdGxlOiAiRXhlcmNpc2UgMDogTGlmZSBDeWNsZSBNb2RlbCIKZGF0ZTogdG9kYXkKZGF0ZS1mb3JtYXQ6ICJZWVlZ5bm0TeaciETml6UiCmF1dGhvcjogWU9VUiBOQU1FCmV4ZWN1dGU6IAogIGVjaG86IGZhbHNlCiAgd2FybmluZzogZmFsc2UKICBtZXNzYWdlOiBmYWxzZQpmb3JtYXQ6IHR5cHN0CmVuZ2luZToganVsaWEgI2tuaXRyIGZvciBSLCBqdXB5dGVyIGZvciBQeXRob24KYnJhbmQ6CiAgdHlwb2dyYXBoeTogICAgICAKICAgIGZvbnRzOgogICAgICAtIGZhbWlseTogTm90byBTZXJpZiBKUAogICAgICAgIHNvdXJjZTogZ29vZ2xlCiAgICAgIC0gZmFtaWx5OiBJQk0gUGxleCBTYW5zIEpQCiAgICAgICAgc291cmNlOiBnb29nbGUKICAgIGJhc2U6IE5vdG8gU2VyaWYgSlAKICAgIGhlYWRpbmdzOgogICAgICBmYW1pbHk6IElCTSBQbGV4IFNhbnMgSlAKICAgICAgd2VpZ2h0OiByZWd1bGFyCm51bWJlci1zZWN0aW9uczogdHJ1ZQotLS0KCmBgYHtqdWxpYX0KI3wgbGFiZWw6IHNldHVwCiN8IGluY2x1ZGU6IGZhbHNlCmltcG9ydCBQa2cKUGtnLmFkZChbIlF1YW50RWNvbiIsICJQbG90cyIsICJMYVRlWFN0cmluZ3MiXSkgIyBBZGQgcGFja2FnZXMgdXNlZCBmb3IgaXRzIHJlcGxpY2F0aW9uCgp1c2luZyBQbG90cwp1c2luZyBMYVRlWFN0cmluZ3MKZGVmYXVsdChzaXplPSg1MDAsIDMwNyksIHRpdGxlZm9udHNpemU9MTAsIGZtdD06c3ZnKQpgYGAKCiMgU3RvY2hhc3RpYyBMaWZlIEN5Y2xlIE1vZGVsCgojIyDjgqrjgqTjg6njg7zmlrnnqIvlvI8KCuS6iOeul+WItue0hOOCiOOCiiwgJGMgPSAoMStyKSBhICsgeiB3IC0gYSckIOOCkuS7o+WFpeOBl+OBpiwgRk9D44GoRUPjgpLlj5bjgovjgagsCgokJApcYmVnaW57YWxpZ25lZH0KJlxsZWZ0KCgxK3IpIGEgKyB6IHcgLSBhJ1xyaWdodCleey1cZ2FtbWF9ID0gXGJldGEgXG1hdGhiYntFfVxsZWZ0W1ZfYSh0KzEsIHonLCBhJykgXG1pZCB6XHJpZ2h0XSAmIFx0ZXh0eyBGT0Mgb2YgfSBhJyBcXAomVl9hKHQsIHosIGEpID0gKDErcikgXGxlZnQoKDErcikgYSArIHogdyAtIGEnXHJpZ2h0KV57LVxnYW1tYX0gJiBcdGV4dHsgRUMgb2YgfSBhLiBcXApcZW5ke2FsaWduZWR9CiQkCgokYyh6KSA9ICgxK3IpIGEgKyB6IHcgLSBhJyQg44Gq44Gu44GnLCDmmYLplpMgJHQkIOOCkuaPg+OBiOOBpiwKCiQkCmMoeileey1cZ2FtbWF9ID0gXGJldGEgKDErcikgXG1hdGhiYntFfVxsZWZ0W2MnKHonKV57LVxnYW1tYX0gXG1pZCB6XHJpZ2h0XS4KJCQKCiMjIOmDqOWIhuWdh+ihoQoKYGBge2p1bGlhfQojfCBsYWJlbDogbW9kZWwtbGlmZS1jeWNsZQojfCBpbmNsdWRlOiBmYWxzZQptb2R1bGUgTXkKdXNpbmcgUXVhbnRFY29uCgpAa3dkZWYgc3RydWN0IE1vZGVse1RGPDpBYnN0cmFjdEZsb2F0LFRJPDpJbnRlZ2VyfQoKICAgICMgVXRpbGl0eSBmdW5jdGlvbgogICAgzrM6OlRGID0gMi4wCiAgICDOsjo6VEYgPSAwLjk3CiAgICBUOjpJbnQgPSAxMAoKICAgICMgUHJpY2VzCiAgICByOjpURiA9IDAuMDcKICAgIHc6OlRGID0gNS4wCgogICAgIyBHcmlkIGZvciBhIChZb3UgaGF2ZSB0byBzZXQgaXQgYnkgeW91cnNlbGYpCiAgICBuX2E6OlRJID0gMzAKICAgIGFfbWluOjpURiA9IDAuMQogICAgYV9tYXg6OlRGID0gNC4wCiAgICBhX2dyaWQ6OlZlY3RvcntURn0gPSBjb2xsZWN0KHJhbmdlKHN0YXJ0PWFfbWluLCBzdG9wPWFfbWF4LCBsZW5ndGg9bl9hKSkKCiAgICAjIEdyaWQgZm9yIHo6IHBhcmFtZXRlcnMgZm9yIFRhdWNoZW4KICAgIG5fejo6VEkgPSAxMAogICAgz4M6OlRGID0gMC4wMjA1OAogICAgz4E6OlRGID0gMC45OQogICAgbWM6Ok1hcmtvdkNoYWluID0gdGF1Y2hlbihuX3osIM+BLCDPgywgMC4wKQogICAgel9ncmlkOjpWZWN0b3J7VEZ9ID0gZXhwLihtYy5zdGF0ZV92YWx1ZXMpCiAgICBQOjpNYXRyaXh7VEZ9ID0gbWMucAoKICAgICMgVmFsdWUgZnVuY3Rpb24KICAgIFY6OkFycmF5e1RGLDN9ID0gemVyb3Mobl9hLCBuX3osIFQpCmVuZAoKdShjLCBtOjpNb2RlbCkgPSBpc29uZShtLs6zKSA/IGxvZyhjKSA6IGNeKDEgLSBtLs6zKSAvICgxIC0gbS7OsykKCmZ1bmN0aW9uIHNvbHZlIShtOjpNb2RlbCkKICAgICg7IFQsIG5fYSwgbl96LCByLCB3LCDOsiwgUCwgYV9ncmlkLCB6X2dyaWQpID0gbQoKICAgIFYgPSB6ZXJvcyhuX2EsIG5feiwgVCkKCiAgICBmb3IgdCA9IFQ6LTE6MSwgaV9hID0gMTpuX2EsIGlfeiA9IDE6bl96CgogICAgICAgIHV0aWxpdHkgPSAtSW5mCiAgICAgICAgZm9yIGlfYeKAsiA9IDE6bl9hCgogICAgICAgICAgICBleHBlY3RlZCA9ICh0ID09IFQpID8gMC4wIDoKICAgICAgICAgICAgICAgICAgICAgICBzdW0oUFtpX3osIGlfeuKAsl0gKiBWW2lfYeKAsiwgaV964oCyLCB0KzFdIGZvciBpX3rigLIgPSAxOm5feikKICAgICAgICAgICAgYyA9ICgxICsgcikgKiBhX2dyaWRbaV9hXSArIHpfZ3JpZFtpX3pdICogdyAtIGFfZ3JpZFtpX2HigLJdCgogICAgICAgICAgICBpZiBjID4gMAogICAgICAgICAgICAgICAgdXRpbGl0eSA9IG1heCh1KGMsIG0pICsgzrIgKiBleHBlY3RlZCwgdXRpbGl0eSkKICAgICAgICAgICAgZW5kCgogICAgICAgIGVuZAoKICAgICAgICBWW2lfYSwgaV96LCB0XSA9IHV0aWxpdHkKICAgIGVuZAoKICAgIG0uViAuPSBWCgogICAgcmV0dXJuIG5vdGhpbmcKZW5kCgplbmQgIyBtb2R1bGUgTXkKYGBgCgpgYGB7anVsaWF9CiN8IGxhYmVsOiBzb2x2ZS1saWZlLWN5Y2xlCnVzaW5nIC5NeQoKbSA9IE15Lk1vZGVsKCkKTXkuc29sdmUhKG0pOwpgYGAKCiRcbG9nIHokIOOCkjEw562J5YiG44Gu44Kw44Oq44OD44OJ44GX44Gf44Go44GN44GuMSwgNSwgMTDnlarnm67jga7lgKTjgafjg5fjg63jg4Pjg4jjgZnjgosuCgpgYGB7anVsaWF9CiN8IGxhYmVsOiBmaWctbGlmZS1jeWNsZQojfCBmaWctY2FwOiAiVmFsdWUgZnVuY3Rpb24gZm9yIGRpZmZlcmVudCB2YWx1ZXMgb2YgJHokLiIKcHMgPSBbXQoKeV9taW4sIHlfbWF4ID0gbWluaW11bShtLlYpICogMS4xLCBtYXhpbXVtKG0uVikgKyAwLjEKZm9yIChpLCB0KSDiiIggZW51bWVyYXRlKFsxLCA0LCA3LCAxMF0pCgogICAgcCA9IHBsb3QobS5hX2dyaWQsIG0uVls6LCAxLCB0XSwKICAgICAgICB4bGFiZWw9TCJBc3NldCAkeCQiLAogICAgICAgIHlsaW1zPSh5X21pbiwgeV9tYXgpLAogICAgICAgIGxhYmVsPUwiel8xIiwKICAgICAgICBsZWdlbmQ9OmJvdHRvbXJpZ2h0LAogICAgICAgIHRpdGxlPSJ0ID0gJHQiKQogICAgcGxvdCEobS5hX2dyaWQsIG0uVls6LCA1LCB0XSwgbGFiZWw9TCJ6XzUiKQogICAgcGxvdCEobS5hX2dyaWQsIG0uVls6LCAxMCwgdF0sIGxhYmVsPUwiel97MTB9IikKICAgIHB1c2ghKHBzLCBwKQplbmQKCnBsb3QocHMuLi4pCmBgYA==').then(res => res.blob()).then(blob => {
+      const downloadURL = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = downloadURL;
+      a.download = 'template-answer.qmd'; a.click();
+      window.URL.revokeObjectURL(downloadURL);
+      document.body.removeChild(a);
+        });"><button class="btn btn-primary downloadthis  " id="dnldts25793"><i class="bi bi-download"></i> Template </button></a> <a class="btn btn-primary" href="assignment/00-exercise.pdf" role="button"><i class="fa-solid fa-arrow-up-right-from-square" aria-label="arrow-up-right-from-square"></i> Exercise 0</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
