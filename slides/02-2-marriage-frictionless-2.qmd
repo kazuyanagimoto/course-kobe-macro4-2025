@@ -20,11 +20,11 @@ image: /static/img/article/reynoso2024/fig1.svg
 ### 摩擦のない結婚市場 (Frictionless Marriage Market)
 
 1. @gayle2019
-    - 基本的な TU (Transferable Utility) の結婚モデル
-    - 静的なマッチングの枠組みで離婚などが起きない
+    - 基本的な離散選択の結婚モデル
+    - 静的なマッチングの枠組みで離婚などが起きない. ある意味 Full commitment
 1. **@reynoso2024**
     - 0期目のマッチングの後, ライフサイクル上で離婚が起きる
-    - 離婚後の非協力ゲームを導入した ITU (Imperfectly Transferable Utility) モデル
+    - 離婚後の非協力ゲームを導入した Limited Commitment モデル
     - 離婚制度の変更が同類婚傾向 (Assortative Mating) に与える影響を分析
 
 # @reynoso2024
@@ -116,9 +116,6 @@ $$
 - BCTは定理と名が付くが, @becker1991 で提示された概念的な洞察
 - @chiappori2015a は, BCTを定式化し, 反例となるモデルを示した
 - Stylized facts で示した単意離婚の導入後の変化は, BCTを反証する
-    - 離婚後の仮定に無理がある. 離婚後は非協力ゲームを仮定するのが自然
-    - 離婚後の配分に非効率性が生じるため, ITU モデル
-
 
 ## モデル
 
@@ -429,9 +426,9 @@ $$
 
 {{< v 0.5em >}}
 
-**Frictionless Marriage Market under ITU**
+**Frictionless Marriage Market under Limited Commitment**
 
-- 離婚後の非効率性を考慮した Imperfectly Transferable Utility (ITU) モデルを構築
+- Imperfectly Transferable Utility (ITU) かつ Limited Commitment モデルを構築
 - 実証的な事実と整合的な結果 (同類婚の強化) を得た
 - 単意離婚 (UD) の導入の影響が学歴ごとに異なることを示唆する結果
 
