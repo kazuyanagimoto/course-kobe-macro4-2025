@@ -1,0 +1,458 @@
+---
+title: Search and Matching II
+subtitle: "@greenwood2016"
+description: "@greenwood2016"
+date: 2025-11-06
+image: /static/img/article/greenwood2016/fig1.svg
+---
+
+## 結婚の経済学
+
+{{< v 1em >}}
+
+### サーチモデル (Search and Matching)
+
+1. @greenwood2009
+    - 基本的な結婚のサーチモデル
+    - ジェンダーのない代表的エージェント
+1. **@greenwood2016**
+    - Heterogeneity (教育, 能力) とジェンダー (男女) を導入して拡張
+    - 同類婚傾向 (Assortative Mating) や世帯所得格差の拡大も説明
+
+{{< v 1em >}}
+
+### [摩擦のない結婚市場 (Frictionless Marriage Market)]{style="color: gray"}
+
+1. [@gayle2019]{style="color: gray"}
+1. [@reynoso2024]{style="color: gray"}
+
+# @greenwood2016
+
+## 結婚の減少
+
+{{< v -0.5em >}}
+
+![](/static/img/article/greenwood2016/fig1.svg){width=50% fig-align="center"}
+
+- 有配偶率は低下し, 離婚率は上昇
+- 有配偶率も離婚率も大卒者の方が低い
+
+## 同類婚 (Assortative Mating) の増加
+
+{{< v -0.5em >}}
+
+![](/static/img/article/greenwood2016/table1.svg){width=70% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 経済学で同類婚 (assortative mating) とは, 教育などの属性が似た者同士の結婚を指す
+    - assortative matching, educational homogamy とも呼ばれる
+- Table 1によれば, 同類婚傾向が見られる. $\chi^2$ 検定でランダムマッチングが棄却される
+- 相関係数 $\rho$ やトレースのランダムマッチとの比 $\delta$ で計測によると, 同類婚が増加している
+- 同類婚の計測方法に関する議論は @chiappori2025a を参照
+
+## 女性の教育と労働参加率の上昇
+
+{{< v -0.5em >}}
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/greenwood2016/fig3.svg){width=50% fig-align="center"}
+
+![](/static/img/article/greenwood2016/fig4.svg){width=50% fig-align="center"}
+
+:::
+
+- 女性の教育水準と労働参加率が大きく上昇. ジェンダーギャップ (女性の相対賃金) も縮小
+- 賃金の大卒プレミアムの上昇に起因か
+
+## 世帯間所得格差の増加
+
+{{< v -0.5em >}}
+
+![](/static/img/article/greenwood2016/fig5.svg){width=60% fig-align="center"}
+
+## 設定
+
+- 1期を1年とした無限期間モデル. 毎期の死亡確率 $\delta$
+- エージェントは男性 $m$ と女性 $f$
+- 各エージェントは, 能力 $a \sim A(a)$ を持つ
+- 各エージェントは教育 $e \in \{0, 1\}$ を (結婚市場に参入する前に) 選択する.
+- 独身者は毎期ランダムに他の独身者と出会い以下の要素に基づいて結婚
+    - 相手の能力 $a^*$
+    - 相手の教育 $e^*$
+    - マッチングの質 $b$
+    - 女性の労働参加に対するコスト $q$
+- 有配偶者は毎期, マッチングの質 $b$ が上下し, $b$ の値に基づいて離婚を決定
+- 各期, 各エージェントは単位時間 $1$ を持ち, そのうち $h$ を労働に $1-h$ を家事に使う
+- $h = \{0, \overline{h}\}$ のフルタイム労働もしくは働かない選択肢がある
+- 結婚後は男性はフルタイム労働のみ, 女性はフルタイム労働もしくは家事に専念できる
+
+---
+
+![](/static/img/article/greenwood2016/fig6.svg){width=100% fig-align="center"}
+
+## 教育と時給
+
+{{< v 0.5em >}}
+
+時給は, 能力 $a$, 教育 $e$, ジェンダー $g$ に依存する:
+
+- 教育レベル $e \in \{0, 1\}$ の男性は時給 $w_e a$. $w_1 > w_0$
+- 女性の時給は $\phi w_{e} a$, $\phi \in [0, 1]$. ジェンダーギャップを反映
+
+
+{{< v 1em >}}
+
+教育を受けるコスト $\kappa$ は $g$ と $a$ ごとに異なる分布 $C_{a}^g(\kappa)$ に従う:
+
+$$
+\kappa \sim \mathcal{N}\left(\frac{\eta_g}{a}, \sigma_{\kappa}^2\right).
+$$
+
+- 能力 $a$ の高い人ほど教育を受けるコストが (平均的に) 低いという仮定
+
+## 効用関数
+
+$$
+\begin{aligned}
+T_{s}(c, n) &= \frac{1}{1-\zeta} \left(c - \overline{c}\right)^{1-\zeta} + \frac{\alpha}{1-\xi} n^{1-\xi} & \text{Single}\\
+T_{m}(c, n) &= \frac{1}{1-\zeta} \left(\frac{c - \overline{c}}{1 + \chi}\right)^{1-\zeta} + \frac{\alpha}{1-\xi} n^{1-\xi} & \text{Married}
+\end{aligned}
+$$
+
+- $c$: 消費. $\overline{c}$ は最低消費
+- $1 + \chi$: 消費のスケーリング (Economies of scale)
+
+**家庭内生産** $n$
+
+$$
+n = \left(\theta d^\lambda + (1-\theta)\left(z - h_{T}\right)^\lambda \right)^{1/\lambda}
+$$
+
+- $z \in \{1, 2\}$: 世帯サイズごとの合計時間
+- $h_T$: 世帯の合計労働時間
+- $\lambda \in (0, 1)$: 家事財と家事時間の代替弾力性パラメータ. $\lambda > 0$ で, 代替的
+
+## 家計の意思決定
+
+### 独身者
+
+$$
+U_S^g(a, e) := \max_{c, d} T_S(c, n),
+$$
+
+subject to
+
+$$
+c = \begin{cases}
+w_e \phi a \overline{h} - p d & \text{if } g = f, \\
+w_e a \overline{h} - p d & \text{if } g = m,
+\end{cases}
+$$
+
+and
+
+$$
+n = \left(\theta d^\lambda + (1-\theta)\left(1 - \overline{h}\right)^\lambda \right)^{1/\lambda}.
+$$
+
+---
+
+### 有配偶者
+
+$$
+U_M^g(a, e, a^*, e^*, b, q) := \max_{c, d, h^f} T_M(c, n) + h^f q,
+$$
+
+subject to
+
+$$
+c = \begin{cases}
+w_e^* a^* \overline{h} + w_e \phi a \overline{h}h^f - p d & \text{if } g = f, \\
+w_e a \overline{h} + w_{e^*} \phi a^* \overline{h}h^f - p d & \text{if } g = m,
+\end{cases}
+$$
+
+and
+
+$$
+n = \left(\theta d^\lambda + (1-\theta)\left(2 - \overline{h} - \overline{h}h^f\right)^\lambda \right)^{1/\lambda}.
+$$
+
+
+## マッチングの質 $b$ の推移
+
+**独身**: 独身者 $g$ は各期の終わりに, $a^*$, $e^*$ を持つ独身の異性 $g^*$ と出会い, 以下を引く
+
+- $b \sim \mathcal{N}\left(\overline{b}_s, \sigma_{b, s}^2\right)$: マッチングの質
+- $q \in \mathcal{Q}^e = \left\{q_l^e, q_h^e\right\}$: 女性の労働参加に対するコスト
+    - 男性の教育 $e$ に依存する. $q_l^e < q_h^e$ を仮定し, $\frac{1}{2}$ ずつの確率で選ばれる
+
+**有配偶者**: マッチングの質 $b$ は毎期AR(1)過程によって変動する
+
+$$
+b' = (1-\rho_{b, m})\overline{b}_m + \rho_{b, m} b + \sigma_{b, m}\sqrt{1-\rho_{b, m}^2}\varepsilon, \text{ with } \varepsilon \sim \mathcal{N}(0, 1)
+$$
+
+**結婚と離婚の決定**
+
+独身者の価値関数 $V_S^{g}(a, e)$ と有配偶者の価値関数 $V_M^{g}(a, e, a^*, e^*, b, q)$ において, 結婚は以下の不等式が満たされる場合に起きる.
+
+$$
+V_m^{g}(a, e, a^*, e^*, b, q) \ge V_S^{g}(a, e) \text{ and } V_m^{g^*}(a^*, e^*, a, e, b, q) \ge V_S^{g^*}(a^*, e^*).
+$$
+
+この婚姻状態を表すインディケータを $\mathbb{1}^g(a, e, a^*, e^*, b, q)$ とする.
+
+## ベルマン方程式
+
+**独身者**
+
+$$
+\begin{aligned}
+V_S^{g}(a, e) = U_S^{g}(a, e)&\\
++ \beta \int_{\mathcal{B}}\int_{\mathcal{T}}\int_{\mathcal{Q}}
+&\mathbb{1}^g(a, e, a^*, e^*, b, q) V_m^g(a, e, a^*, e^*, b, q) \\
+&+ (1 - \mathbb{1}^g(a, e, a^*, e^*, b, q)) V_m^g(a, e, a^*, e^*, b, q)
+\,dQ(q) \,d\hat{S}^{g^*}(a^*, e^*)\,dF(b).
+\end{aligned}
+$$
+
+ここで, $\hat{S}^{g^*}(a^*, e^*)$ は異性の独身者の $a^*, e^*$ の (独身者の数で標準化された) 分布を表す.
+
+
+**有配偶者**
+
+$$
+\begin{aligned}
+V_m^{g}(a, e, a^*, e^*, b, q) = U_M^{g}&(a, e, a^*, e^*, b, q) + b + M(e, e^*) \\
++ \beta \int_{\mathcal{B}} &\mathbb{1}^g(a, e, a^*, e^*, b, q) V_m^g(a, e, a^*, e^*, b', q) \\
+&+ (1 - \mathbb{1}^g(a, e, a^*, e^*, b', q)) V_s^g(a, e) \,d G(b' | b).
+\end{aligned}
+$$
+
+
+## 教育の選択
+
+結婚市場に参入する前に自身の教育に対するコスト $\kappa$ に基づいて教育を選択する.
+
+$$
+\max_{e\in\{0, 1\}} V_S^{g}(a, e) - e\kappa.
+$$
+
+教育の意思決定を $E_{a}^{g}(\kappa)$ とする. 明らかに,
+
+$$
+E_{a}^{g}(\kappa) = \begin{cases}
+1 & \text{if }  \kappa \le V_S^{g}(a, 1) - V_S^{g}(a, 0), \\
+0 & \text{otherwise}.
+\end{cases}
+$$
+
+よって, 大学教育を受ける $g$ の人数 (確率) は以下のように表される.
+
+$$
+\int_{\mathcal{K}} \int_{\mathcal{A}} E_{a}^{g}(\kappa) \,dC_{a}^g(\kappa) \,dA(a).
+$$
+
+## 結婚市場均衡
+
+均衡において, 独身者の分布 $S^g(a, e)$ と有配偶者の分布 $M^g(a, e, a^*, e^*, b_{-1}, q)$ は $g = m, f$ に対して, 以下の条件を満たす定常分布である.
+
+{{< v 1em >}}
+
+$$
+\begin{aligned}
+&M^g('a, e', {a^*}^{'}, {e^*}^{'}, b', q') \\
+&=(1-\delta)\int_{\mathcal{B}}^{b'}\int_{\mathcal{T}}^{a', e'}\int_{\mathcal{T}}^{{a^*}^{'}, {e^*}^{'}} \int_{\mathcal{Q}}^{q'} \mathbb{1}(a, e, a^*, e^*, b, q) \,dQ(q) \,d\hat{S}^{g^*}(a^*, e^*)\,dS^{g}(a, e) \,dF(b)\\
+&+(1-\delta) \int_{\mathcal{B}}^{b'}\int_{\mathcal{B}}^{b'}\int_{\mathcal{T}}^{a', e'}\int_{\mathcal{T}}^{{a^*}^{'}, {e^*}^{'}} \int_{\mathcal{Q}}^{q'}\mathbb{1}^{g}(a, e, a^*, e^*, b, q) \,d M^g(a, e, a^*, e^*, b_{-1}, q) \,dG(b|b_{-1})\\
+\end{aligned}
+$$
+
+---
+
+$$
+\begin{aligned}
+&S^g(a', e') \\
+&=(1-\delta)\int_{\mathcal{B}}\int_{\mathcal{T}}\int_{\mathcal{T}}^{a', e'}\int_{\mathcal{Q}}
+\left(1-\mathbb{1}(a, e, a^*, e^*, b, q)\right)\,dQ(q)\,dS^{g}(a, e)\,d\hat{S}^{g^*}(a^*, e^*)\,dF(b) \\
+&+(1-\delta) \int_{\mathcal{B}}\int_{\mathcal{B}}\int_{\mathcal{T}}\int_{\mathcal{T}}^{a', e'}\int_{\mathcal{Q}}\left(1-\mathbb{1}^{g}(a, e, a^*, e^*, b, q)\right) \,d M^g(a, e, a^*, e^*, b_{-1}, q) \,dG(b|b_{-1})\\
+&+\delta e' \int_{\mathcal{A}}^{a'}\int_{\mathcal{K}} E_{a}^{g}(\kappa) \,dC_{a}^g(\kappa) \,dA(a)
++ \delta (1-e') \int_{\mathcal{A}}^{a'}\int_{\mathcal{K}} \left(1-E_{a}^{g}(\kappa)\right) \,dC_{a}^g(\kappa) \,dA(a).
+\end{aligned}
+$$
+
+ここで, $\hat{S}^{g^*}(a^*, e^*)$ は異性の独身者 $a^*, e^*$ の (独身者の数で標準化された) 分布を表す.　つまり, 独身者の目から見たランダムにマッチングする相手の分布である.
+
+$$
+\hat{S}^{g^*}(a^*, e^*) := \frac{S^{g^*}(a^*, e^*)}{\int_{\mathcal{T}}\,dS^{g^*}(a^*, e^*)}.
+$$
+
+
+
+## A Priori Information
+
+![](/static/img/article/greenwood2016/table2.svg){width=100% fig-align="center"}
+
+- $1/\delta = 30$: 平均寿命 (25歳から54歳までの期間)
+- $\overline{h} = 0.36$: 週40時間の労働 / (16時間/日 $\times$ 7日)
+
+## Simulated Method of Moments (SMM)
+
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/greenwood2016/table4-1.svg)
+
+![](/static/img/article/greenwood2016/table4-2.svg)
+
+:::
+
+残り22個のパラメータは1960年のデータによる24個のターゲットを用いてSMM
+
+## Estimated Parameters
+
+![](/static/img/article/greenwood2016/table3.svg){width=55% fig-align="center"}
+
+
+---
+
+**結婚のショック**
+
+- $\overline{b}_s = -1.497 < 0$: 独身者のマッチングの質は平均的に負. 良い相手を待つ
+- $\overline{b}_s < \overline{b}_m$: 有配偶者のマッチングの質は独身者のランダムな出会いよりも良い
+- $\sigma_{b, s} > \sigma_{b, m}$: 独身者のマッチングの質の方がばらつきが大きい
+- $\rho_{b, m} = 0.959$: 有配偶者のマッチングの質の自己相関はかなり高い
+
+**女性の労働参加に対するコスト**
+
+- $q_{l}^0, q_{h}^0$: 男性が大卒未満であると, 共働きに負の効用がある
+- $q_{l}^1, q_{h}^1 < 0$: 男性が大卒であると, 共働きにメリットがある
+- 具体的な解釈は論文中では与えられていない. 複合的な要因を内包していると考えられる
+    - 男女の性的役割分担の価値観の差を反映している
+    - 学歴からくる職種の違いによる, 休みの取りやすさの違い
+
+## Moving Forward to 2005
+
+{{< v 1em >}}
+
+### 方針
+
+- 1960年のデータを用いてカリブレーションしたモデルを2005年まで拡張
+- 賃金, 教育, 家庭内生産に関するパラメータを2005年のデータに対して推定
+- これらのパラメータの変化が結婚や離婚に与える影響を定量化
+
+{{< v 1em >}}
+
+### カリブレーション
+
+1. データから直接パラメータを推定
+    - $w_{0, 2005} = 1.17$: 大卒未満の男性の賃金が17%上昇した
+    - $p_{2005} = p_{1960}e^{-0.05(2005-1960)}$: Gordon (1990), NIPA などを元に毎年5%下落と仮定
+2. 2005年のデータを用いてSMM (次ページ)
+
+
+---
+
+### SMM
+
+論文の記述では正確には分からなかったが, おそらく以下のようなターゲットを用いている.
+
+```{=typst}
+{{< include /static/table/reynoso2024_smm.typ >}}
+```
+
+この結果は論文中ではTable 5に示されているが, Assortative matchingをよりデータに近づけるために, さらに以下のパラメータを調整している.
+
+$$
+\mu_{0, 2005} = 0.214, \mu_{1, 2005} = 0.375
+$$
+
+- 1960年と比べて階級意識 (class conciousness) が低くなったと解釈される
+- データの当てはまりは良くなる (Table 6, 省略)
+
+## Counterfactuals
+
+{{< v -1em >}}
+
+:::: {layout-ncol="2"}
+
+::: {.column}
+
+**独身の割合**
+
+{{< v -1em >}}
+
+![](/static/img/lecture/greenwood2016_single.svg){width=50% fig-align="center"}
+
+:::
+
+::: {.column}
+
+**有配偶女性の労働参加率**
+
+{{< v -1em >}}
+
+![](/static/img/lecture/greenwood2016_particip.svg){width=50% fig-align="center"}
+
+:::
+
+::::
+
+{{< v -0.5em >}}
+
+- 結婚は $p$, $w$ の両方によって減少
+  - Home goods の技術が進展しない (Fix $p$) と, 結婚は魅力的 (協力できるので)
+  - 賃金が上昇しない (Fix $w$ and $\phi$) と, 結婚は魅力的 (家計の所得が増えるので)
+- 女性の労働参加に寄与するのは主にHome goods の技術進展
+  - 女性の方が賃金が低いという構造は変わらないので, 家事負担は女性に寄ったまま
+
+---
+
+:::: {layout-ncol="2"}
+
+::: {.column}
+
+**学歴の相関係数**
+
+{{< v -1em >}}
+
+![](/static/img/lecture/greenwood2016_corr.svg){width=50% fig-align="center"}
+
+:::
+
+::: {.column}
+
+**世帯所得のジニ係数**
+
+{{< v -1em >}}
+
+![](/static/img/lecture/greenwood2016_gini.svg){width=50% fig-align="center"}
+
+:::
+
+::::
+
+- 賃金の上昇は同類婚の増加と世帯所得の格差拡大に寄与
+  - 大卒の賃金上昇が大きく, 大卒者への需要が高め, 同類婚傾向を強める
+  - 大卒者の賃金上昇が大きく, 同類婚傾向を強め, 世帯所得の格差を広げる
+
+## まとめ
+
+**サーチモデルと異質性**
+
+- エージェントの異質性 (教育, 能力) を考慮したサーチモデル. @greenwood2009 と異なり2つのジェンダーも考慮
+    - 本質的には定常分布 $\mathcal{S}$ や $\mathcal{M}$ の次元数が増加するだけ
+- 学歴ごとの結婚行動の違いや同類婚を扱うことが可能
+
+**賃金の上昇と家事の技術進展**
+
+- 賃金の上昇と家事の技術進展が, 結婚の減少, 女性の労働参加率の上昇, 同類婚の増加, 世帯所得の格差拡大などに与える影響を定量化
+
+{{< appendix >}}
+
+## 参考文献
+
+::: {refs}
+:::

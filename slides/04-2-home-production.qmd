@@ -1,0 +1,321 @@
+---
+title: Home Production
+subtitle: "@calvo2024"
+description: "@calvo2024"
+date: 2026-01-14
+image: /static/img/article/calvo2024/fig1b.jpeg
+---
+
+
+# @calvo2024
+
+## Positive Assortative Matching (PAM) in Labor and Marriage Markets
+
+![](/static/img/article/calvo2024/fig1.jpeg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 教育年数と仕事のタスクの複雑性には正の相関がある $\Rightarrow$ Labor Market Sorting
+    - Hours partialled out は労働時間で回帰した残差を教育年数で回帰した場合
+- Labor Market Sorting とカップルの教育年数の差には $\cap$-shapeの関係がある
+    - 同類婚者は, 自身のスキルよりかなり高い仕事や低い仕事に就くことは少ない
+
+## Home Production
+
+![](/static/img/article/calvo2024/fig2.jpeg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 夫婦間での労働時間の正の相関が, 市場労働も家事労働も, 学歴が高いほど強い
+- 家庭内分業 (賃金の高い方が市場労働に従事し, 低い方が家事労働に従事する傾向) と整合的
+
+## モデル
+
+### 設定
+
+![](/static/img/article/calvo2024/fig3.jpeg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+
+- ３つのタイプのエージェント, 男性, 女性, 企業で構成される 
+- 男女はステージ (Marriage, Household, Labor) で意思決定をする
+- 企業はそれぞれ生産性 $y \in \mathcal{Y} = [\underline{y}, \overline{y}]$ が異なる
+- 男性はスキル $x_m \in \mathcal{X}_m = [0, \overline{x}_m]$, 女性は $x_f \in \mathcal{X}_f = [0, \overline{x}_f]$ を持つ
+- 企業は労働時間 $h$ と合わせたeffective skill $\tilde{x} = e(x, h)$ を用いて生産 $z(\tilde{x}, y)$ を行う
+- カップルは家事労働時間 $l_i = 1-h_i$ をもちいて , 公共財 $p(1-h_m, 1-h_f)$ を生産する
+
+Labor Market から後方帰納法的に解いていく
+
+## 意思決定
+
+### Labor Market
+
+生産性 $y$ をもつ企業は, (一企業にとって) 外生的な賃金関数 $w(\tilde{x})$ に基づいて労働者を雇う
+
+$$
+\max_{\tilde{x}} z(\tilde{x}, y) - w(\tilde{x})
+$${#eq-firm-problem}
+
+- @eq-firm-problem は (market clearing 条件と共に) マッチング関数 $\mu: \tilde{\mathcal{X}} \rightarrow \mathcal{Y}$ を定義する
+- @eq-firm-problem の1階条件を微分方程式として解くと, 賃金関数は
+
+$$
+w(\tilde{x}) = w_0 + \int_{0}^{\tilde{x}} z_{\tilde{x}}(t, \mu(t)) dt.
+$$
+
+
+::: {.proof}
+
+$t = \tilde{x}$ とおいて, 一階条件は $\frac{dw}{dt}(t) = z_{\tilde{x}}(t, \mu(t))$ より, 変数分離して
+
+$$
+\int w(t) dt = \int z_{\tilde{x}}(t, \mu(t)) dt.
+$$
+
+$t: 0 \rightarrow \tilde{x}$ で積分し, $w(0) = w_0$ とおくと, 示された.
+
+:::
+
+---
+
+### Household Allocation
+
+$$
+\max_{c_m, c_f, h_m, h_f} u(c_m, p(1-h_m, 1-h_f))
+$${#eq-household-problem}
+
+subject to
+
+$$
+\begin{aligned}
+c_m + c_f \leq w(e(x_m, h_m)) - w(e(x_f, h_f)) \\
+u(c_f, p(1-h_m, 1-h_f)) \geq \bar{v}.
+\end{aligned}
+$$
+
+- $\tilde{v}$ はカップルにとって外生的な効用水準. 女性のスキル $\tilde{x}_f$ に依存する (結婚市場で決定)
+- Home production function $p(l_m, l_f)$
+    - PAMの条件 (次ページ) を満たすために supermodular ($p_{l_m, l_f} > 0$) の必要がある
+    - 言い換えれば, 家時間 (家事労働や余暇) が補完的である必要がある
+
+---
+
+### Marriage Market
+
+家計の問題 (-@eq-household-problem) の解を $c_i(x_m, x_f, \tilde{v}), h_i(x_m, x_f, \tilde{v})$ と書くと, 結婚市場の問題は
+
+$$
+\max_{x_f} \Phi(x_m, x_f, v) := u(c_m(x_m, x_f, v(x_f)), p(1-h_m(x_m, x_f, v(x_f)), 1-h_f(x_m, x_f, v(x_f))))
+$${#eq-marriage-problem}
+
+- @eq-marriage-problem は (marriage market clearing 条件と共に) マッチング関数 $\eta: \mathcal{X} \rightarrow \mathcal{Y}$ を定義する
+- $\eta$ を所与とすると, @eq-marriage-problem の一階条件は $v(\cdot)$ の微分方程式を与える
+
+### Conditions for PAM in Labor and Marriage Markets
+
+この論文は PAM が労働市場と結婚市場の両方で成立する条件を示している:
+
+- Home production function の**補完性** ($p$ のsupermodularity)
+   - 労働時間を同程度にするインセンティブ.
+   - 同程度の労働時間なら, 自分より高いスキルのパートナーを選ぶインセンティブ
+- Production function の**補完性** ($z$ のsupermodularity)
+    - 高い生産性を持つ企業は, 高いスキルを持つ労働者を雇うインセンティブ
+
+## 離散選択
+
+理論モデルと異なり, 実証分析では離散化的なスキル $s$ 上で離散選択を仮定する.
+
+**結婚市場**
+
+スキル $s_m$ の男性が, スキル $s$ の女性と結婚する効用:
+
+$$
+\Phi(s_m, s, v(s_m, s)) + \beta_m^s, \quad \beta_m^s \sim \text{Type I}(0, \sigma_{\beta})
+$$
+
+女性側の効用も同様に定義され, マッチングのショックは $\beta_{f}^s \sim \text{Type I}(0, \sigma_{\beta})$.
+
+
+**労働市場**
+
+$$
+u(c_i, p(1-h_i, 1-h_j)) + \delta^{h^t}
+$$
+
+ここで, 労働市場のショック $\delta^{h^t}$ は, 婚姻状態によらず単一の分布に従う.
+
+$$
+\delta^{h^t} = \begin{cases}
+    \delta^{h_i} & \text{ if } t = U\\
+    \delta^{h_f} +  \delta^{h_m} & \text{ if } t = M \\
+\end{cases},
+\quad \delta^{h^t} \sim \text{Type I}(0, \sigma_{\delta})
+$$
+
+
+
+## Parameterization
+
+- $u(c, p) = c + p$
+- $s := x + \nu$: 教育年数 $x$ と能力 $\nu$ に依存する. $s \in \mathcal{S}$
+- $\tilde{s}_m = s_m h_m, \tilde{s}_f = \psi s_f h_f$
+    - $\psi \le 1$ はジェンダーギャップ
+- $z(\tilde{s}, y) = A_z \tilde{s}^{\gamma_1}y^{\gamma_2} + K$
+    - $K$ は最低賃金を表す
+
+Home production function:
+
+$$
+\begin{aligned}
+p^M(1-h_m, 1-h_f) &= A_p\left(\theta(1-h_f)^\rho + (1-\theta)(1-h_m)^{\rho}\right)^{\frac{1}{\rho}} \\
+p^U(1-h_i) &= A_p\left(\theta \mathbb{1}\{i = m\} + (1 - \theta)\mathbb{1}\{i = f\} \right)(1-h_i)
+\end{aligned}
+$$
+
+- $\rho < 0$ なら, 家時間は補完的
+
+## Calibration
+
+**Data**
+
+- German Socioeconomic Panel (GSOEP): ドイツの家計のパネルデータ.
+- BIBB: ドイツ版の職業分類のデータ. アメリカのO*NETに相当.
+
+**タイプの推定**
+
+- GSOEPを元に, 労働者の能力 $v$ を個人の固定効果として推定
+    - 内生性などの問題の詳細な議論はOE.3参照
+- 離散スキル $s$ は, 教育年数 $x$ と能力 $v$ の和として定義し, 6つのタイプに分割
+- 企業の生産性 $y$ はBIBBの職業分類を元にPCAによって1次元に圧縮
+
+**$K$ の推定**
+
+- 週25時間以下の労働時間をもつ労働者の下位5%点の賃金を採用
+
+---
+
+### Simulation Method of Moments (SMM)
+
+{{< v -0.5em >}}
+
+![](/static/img/article/calvo2024/table2.svg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 16個のモーメントを用いて, 9個のパラメータを推定. モーメントの詳細は Figure 4参照
+- $\rho < 0$: 家時間は補完的であり, PAMの条件を満たす
+- $\theta > 0.5$: 女性の方が家時間において生産性が高い
+- $\gamma_1 < 1, \gamma_2 < 1$ は $z$ の凸性を示す. PAMの条件を満たす
+
+## Untargeted Moments
+
+### PAM in Marriage Market
+
+![](/static/img/article/calvo2024/table3.svg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- SMMではスキルレベル $s$ をターゲットにし, 教育年数自体はターゲットにしていない
+- おおむね, PAMが成立していることがわかる
+- 元のモデルでは独身者の数が少なすぎたため, 独身の価値を調整している (Appendix D.1)
+
+---
+
+### PAM in Labor Market
+
+![](//static/img/article/calvo2024/fig5.jpeg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- x軸はスキルレベル $s$. データで観測されたPAMの傾向をモデルが再現している
+
+---
+
+### PAM in Marriage and Labor Markets
+
+![](/static/img/article/calvo2024/fig6.jpeg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- Labor Market Sorting とカップル間のスキルの差の関係をモデルが再現している
+- 家時間の相関とカップル間のスキルの相関をモデルが再現している
+
+## Inequality
+
+個人 $i$ がグループ $g$ に属しているとき, 個人の変数 $x_i$ の分散は,
+
+$$
+\text{Var}(x_i) = \underbrace{\mathbb{E}_g[\text{Var}_i(x_i | g(i))]}_{\text{Within Group Variance}} + \underbrace{\text{Var}_g(\mathbb{E}_i[x_i | g(i)])}_{\text{Between Group Variance}}
+$$
+
+### Cross-section 2010-2016
+
+{{< v -0.5em >}}
+
+![](/static/img/article/calvo2024/table4.svg){width=90% fig-align="center"}
+
+- モデルは賃金の分散や gender wage gap を再現している
+- 賃金の分散 (indequality の指標) は, 家庭内と家庭間で約半分ずつ寄与している
+
+---
+
+### Over time 1990-2016
+
+![](/static/img/article/calvo2024/fig7.jpeg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 2016年から1990年にかけて男女間の差は縮小したが格差は拡大した. 家庭間の寄与が増加
+- 同類婚傾向は増加し, 労働時間や労働市場でのソーティングの男女差が縮小した
+
+## Mechanism
+
+{{< v -0.5em >}}
+
+:::: {layout-ncol=2}
+::: {.column}
+
+![](/static/img/article/calvo2024/fig8.jpeg){width=50% fig-align="center"}
+
+:::
+
+::: {.column}
+
+1990年と2016年のパラメータの推定値
+
+- $\rho = 0.01$ から $-0.54$
+- $\theta = 0.88$ から $0.82$
+- $\psi = 0.78$ から $0.85$
+- $z(\cdot)$ も skill-biased の方向に変化 (Labor Market Production, Skill Distribution)
+
+全体的に男女平等化の方向に変化
+
+:::
+::::
+
+- Home production の補完性の増加がジェンダーギャップ縮小に寄与
+- 生産関数の skill-biased technological change が格差拡大に寄与
+
+
+## まとめ
+
+**PAM in Labor and Marriage Markets**
+
+- 結婚市場と労働市場のPAMには強い関連がある
+- 家時間に補完性がある場合, 同類婚傾向が強くなる
+
+**Model**
+
+- 結婚市場と労働市場でのマッチングを同時にモデル化
+- Home production funcition の補完性と整合的な結果
+
+**Implication**
+
+- Home production function の補完性の増加がジェンダーギャップの減少に大きく寄与
+- Skill-biased technological change が格差拡大に寄与
+
+## 参考文献
+
+:::{refs}
+:::

@@ -1,0 +1,196 @@
+---
+title: Family Macroeconomics
+details: "Macro IV・Fall 2025<br>Kobe University"
+author:
+  - name: Kazuharu Yanagimoto
+    email: yanagimoto@econ.kobe-u.ac.jp
+    orcid: 0009-0007-1967-8304
+logo: /static/img/logo.drawio.svg
+execute: 
+  echo: false
+  warning: false
+  message: false
+  error: false
+suppress-bibliography: true
+toc: false
+format:
+  html:
+    template-partials:
+      - static/html/title-block.html
+---
+
+## スケジュール
+
+```{r}
+#| label: setup
+library(dplyr)
+library(tinytable)
+
+url_site <- yaml::read_yaml("_variables.yml")$`site-url`
+url_ics <- paste0(url_site, "/", "schedule.ics")
+```
+
+```{r}
+#| label: build-schedule
+schedule <- c(
+  list.files("slides", pattern = "\\.qmd$", full.names = TRUE),
+  list.files("lecture", pattern = "\\.qmd$", full.names = TRUE)
+) |>
+  purrr::map(\(x) {
+    yaml <- rmarkdown::yaml_front_matter(x)
+    tibble(
+      id = tools::file_path_sans_ext(basename(x)),
+      title = yaml$title,
+      date = yaml$date,
+      type = basename(dirname(x)),
+    )
+  }) |>
+  purrr::list_rbind() |>
+  filter(stringr::str_sub(id, 1, 1) == "0") |>
+  add_row(id = "", title = "まとめ", date = "2026-01-26") |>
+  arrange(date)
+
+assignment <- tibble(
+  id = c(
+    "01-3-dynamic-model",
+    "02-2-marriage-frictionless-2",
+    "03-2-fertility-ne-2",
+    "04-3-intra-household"
+  ),
+  date_assignment = c("2025-10-28", "2025-12-02", "2025-01-14", "2025-01-29"),
+)
+```
+
+```{r}
+#| label: export-ics
+ics <- schedule |>
+  mutate(
+    rnum = row_number(),
+    start_time_jst = lubridate::ymd_hm(
+      paste0(date, " 13:20"),
+      tz = "Asia/Tokyo"
+    ),
+    start_time = lubridate::with_tz(start_time_jst, "UTC"),
+    summary = glue::glue("Macro IV: {rnum}. {title}"),
+  ) |>
+  group_by(rnum) |>
+  tidyr::nest() |>
+  mutate(
+    ical = purrr::map(
+      data,
+      ~ calendar::ic_event(
+        start_time = .$start_time,
+        end_time = 1.5,
+        summary = .$summary,
+        more_properties = TRUE,
+        event_properties = list(
+          LOCATION = "六甲台本館203",
+          DESCRIPTION = glue::glue("{url_site}/lecture/{.$id}")
+        )
+      )
+    )
+  ) |>
+  ungroup() |>
+  select(-c(rnum, data)) |>
+  tidyr::unnest(ical) |>
+  calendar::ical()
+
+calendar::ic_write(ics, here::here("schedule.ics"))
+```
+
+
+```{r}
+#| label: schedule
+schedule |>
+  left_join(assignment, by = "id") |>
+  mutate(
+    fa_material = ifelse(
+      type == "slides",
+      'filetype-pdf',
+      'file-code'
+    ),
+    file_material = ifelse(
+      type == "slides",
+      glue::glue("/slides/{id}.pdf"),
+      glue::glue("/lecture/{id}.html")
+    ),
+    material = ifelse(
+      id != "",
+      glue::glue(
+        '<a href="{file_material}"><i class="bi bi-{fa_material}"></i></a>'
+      ),
+      ""
+    )
+  ) |>
+  select(date, title, material, date_assignment) |>
+  setNames(c("", "タイトル", "教材", "課題提出")) |>
+  tt(width = c(0.2, 0.5, 0.1, 0.2)) |>
+  style_tt(align = "llcl") |>
+  format_tt(j = c(2), date = "%Y年%m月%d日") |>
+  format_tt(replace = "") |>
+  group_tt(
+    i = lst(
+      "基礎編" = 1,
+      "結婚の経済学" = 4,
+      "出生の経済学" = 8,
+      "ジェンダー格差" = 12,
+      "まとめ" = 15
+    )
+  ) |>
+  style_tt(
+    i = c(1, 5, 10, 15, 19),
+    bold = TRUE,
+    line = "b",
+    line_color = "#cccccc",
+    fontsize = 1.25
+  )
+```
+
+
+::: {.callout-tip}
+
+## Subscribe!
+
+授業スケジュールをGoogle Calendarなどに登録できます. 私個人のために作成したものであり間違いがある可能性があります. 大学からの正式なスケジュールを優先した上で, 参考程度にご利用ください.
+
+```{=html}
+<p><input class="form-control" type="text" value="`r url_ics`" onclick="this.select()" readonly></p>
+```
+
+:::
+
+
+## 課題について
+
+**提出期限**
+
+- 対応するTAセッションの前日23:59 (JST)
+- 例: 10月29日のTAセッション → 10月28日23:59まで
+
+**提出方法**
+
+- Google Classroom上でPDFレポートとコードをアップロード
+- TAのPC上で動作確認を行う. 再現できない場合は, TAが環境について質問することがある
+
+**コードについて**
+
+- TAのPC上で動作確認を行うため, 無料で利用できる言語 (Julia, Python, R等) を利用すること
+- 授業ではコード例としてJuliaを利用するため, Juliaを利用することを推奨
+- 第1回TAセッションでJuliaの基本的な使い方を解説する
+
+**レポートについて**
+
+- PDF形式で提出. タイプされたもののみ. 手書きは不可
+    - レポートにコードは**含めない**こと
+    - 図と表以外のコード実行のアウトプットも含めてはいけない
+    - TAのPC上でコンパイルすることから, Quartoでは有料のフォント (特にMacのヒラギノ) は利用しないこと.
+- [Quarto](https://quarto.org/) での作成を推奨する. $\LaTeX$ 等でレポートを作成した場合は, レポート用のコードの提出は必要ない
+    - Quarto (Julia) の場合 → PDFレポートとqmdファイルの提出
+    - Python + $\LaTeX$ の場合 → PDFレポートとpyファイルの提出
+- Quartoを用いない場合は main 関数を定義し, TAが main 関数を実行することのみでレポートで用いる画像や数値が再現できるようにすること
+- 第1回のTAセッションでQuartoの基本的な使い方を解説する
+- 解答には以下のテンプレートを利用してもよい
+
+{{< downloadthis assignment/00-answer.qmd dname="template-answer" label="Template" type="primary" >}}
+<a class="btn btn-primary" href="assignment/00-exercise.pdf" role="button">{{< fa arrow-up-right-from-square >}} Exercise 0</a>
+

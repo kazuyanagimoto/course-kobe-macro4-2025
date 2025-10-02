@@ -1,0 +1,731 @@
+---
+title: 数値計算の基礎
+date: 2025-10-15
+engine: julia
+format:
+  html:
+    code-tools: true
+---
+
+```{julia}
+#| label: setup
+#| output: false
+using Plots
+using LaTeXStrings
+using Roots
+using NonlinearSolve
+using FastGaussQuadrature
+using Distributions
+using SummaryTables
+
+import Random
+Random.seed!(1234)
+default(size=(500, 309), titlefontsize=10, fmt=:svg)
+```
+
+
+## 一階条件の数値解法
+
+モデルを解くためには, 一階条件を解く必要があります. 特殊なケースや対数線形化などの場合を除き, 多くの場合の一階条件は非線形方程式となります. 非線形方程式の数値解法は, 一変数の場合と多変数の場合に分けられます. 
+
+### 一変数の非線形方程式
+
+モデルを解く最初のステップとして, まずは意思決定者の最適化問題を解くことが挙げられます.
+例えば以下の最適化問題を考えてみましょう.
+
+$$
+\max_{c, l} \frac{c^{1-\gamma_c}}{1-\gamma_c} + \alpha_l \frac{l^{1-\gamma_l}}{1-\gamma_l} \quad \text{s.t.} \quad c = w (1-l)
+$${#eq-max-utility}
+
+この問題は以下の一階条件の解を求めることで解くことができます.
+
+$$
+w^{1-\gamma_c} (1-l)^{-\gamma_c} - \alpha_l l^{\gamma_l} = 0.
+$$
+
+```{julia}
+#| label: fn-foc-crra
+#| output: false
+foc(l; w=1.0, γ_c=1.5, α_l=1.2, γ_l=1.5) =
+    w^(1 - γ_c) * (1 - l)^(-γ_c) - α_l * l^(-γ_l)
+```
+
+```{julia}
+#| code-fold: true
+#| label: fig-foc-crra
+#| fig-cap: FOC for CRRA utility
+plot(0.1:0.01:0.9, foc, label=L"w^{1-\gamma_c} (1-l)^{-\gamma_c} - \alpha_l l^{\gamma_l}", lw=2)
+hline!([0.0], ls=:dash, lw=2, label=false)
+```
+
+これは, 一般に解析解がありません ($\gamma_c = \gamma_l = 1$などを除く.) そのため, 数値計算を用いて解く必要があります. この様な一変数の非線形方程式 $f(x) = 0$ の解法として, 以下の2つの選択肢があります.
+
+1. **Non-bracketing method**: 初期値 $x_0$ からスタートして, $f(x_n)$ が十分0に近づくまで反復的に計算. (ニュートン法など)
+1. **Bracketing method**: 区間 $[a, b]$ を選び, 区間を狭めていくことで解を求める. (二分法など)
+
+一般に, Non-bracketing method は収束が速い代わりにその収束は保証されません. 一方で, Bracketing method は収束がわずかに遅い代わりに, 解が存在する区間を保証することができます. 以下では, その理由とそれぞれの適した利用場面を解説します.
+
+#### Non-bracketing method
+
+Non-bracketing method は基本的には一階微分を利用し, 初期値 $x_0$ からスタートして反復的に解を求めます.
+ここでは, 最も古典的で簡単なニュートン法を紹介します.
+
+::: {.callout-tip}
+
+## ニュートン法
+
+1. 初期値 $x_0$ を選ぶ. また停止条件として十分小さい $\epsilon > 0$ を選ぶ.
+1. $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$ を計算する.
+1. $|f(x_{n+1})| < \epsilon$ ならば停止し, $x_{n+1}$ を解として返す. そうでなければ, $n \leftarrow n+1$ として2に戻る.
+
+:::
+
+![Visualization of Newton Method](/static/cetz/newton_method.svg){#fig-newton-method width=80%}
+
+```{julia}
+#| label: find-zero-newton
+dfoc(l; w=1.0, γ_c=1.5, α_l=1.2, γ_l=1.5) =
+    w^(1 - γ_c) * γ_c * (1 - l)^(-γ_c - 1) + α_l * γ_l * l^(-γ_l - 1)
+
+find_zero((foc, dfoc), 0.5, Roots.Newton())
+```
+
+**Hybrid method**
+
+Juliaの`Roots.jl`のデフォルトのNon-bracketing method (`Order0()`)は, 厳密にはBracketing methodも一部利用します. また一階微分も必要としないため, より汎用的に利用することができます. ただし, 収束が速く収束が保証されない性質はNon-bracketing methodと同じです.
+
+```{julia}
+#| label: find-zero-hybrid
+l = find_zero(foc, 0.5)
+```
+
+
+**定義域の変換**
+
+Non-bracketing method では, $x_{n+1}$ の値を更新する際に, 必ずしも $x_{n+1}$ が定義域内にあることが保証されません. 例えば, 今回の例では 余暇時間であるため, $l \in (0, 1)$ ですが, 初期値や関数形によっては, $l < 0$ や $l > 1$ となる可能性があります.
+
+この場合, 端点解が存在するかどうかを確認する必要があります. 端点解が想定される場合は, 次節で説明するように Bracketing method を利用することが適しています. 今回の例では, 端点解が存在しないため ($l = 0, 1$ のどちらにおいても効用が負の無限大に発散するため), Non-bracketing method での解の収束が保証されています. 以下の様な定義域の変換を用いることで, 解の収束を保証することができます.
+
+::: {.callout-note}
+
+## 定義域の変換
+
+$x$ が区間 $(a, b)$ で定義されるとき, 以下の変換を用いて定義域を $(-\infty, \infty)$ にすることができる.
+
+$$
+x = \frac{a + b \exp y}{1 + \exp y}
+$$
+
+明らかに, $y \rightarrow -\infty$ のとき $x \rightarrow a$, $y \rightarrow \infty$ のとき $x \rightarrow b$ となる.
+
+:::
+
+今回の例では, $l = \frac{1}{1 + \exp(y)}$ (つまり[シグモイド関数](https://ja.wikipedia.org/wiki/%E3%82%B7%E3%82%B0%E3%83%A2%E3%82%A4%E3%83%89%E9%96%A2%E6%95%B0)) という変換を用いることができます.
+
+```{julia}
+#| label: find-zero-transform
+y = find_zero(y -> foc(1 / (1 + exp(y))), 0.0)
+l = 1 / (1 + exp(y))
+```
+
+#### Bracketing method
+
+Bracketing method は, 解が存在する区間 $[a, b]$ を選び, その区間を狭めていくことで解を求めます. ここでは最も基本的な二分法を用いることで解を求めることができます.
+
+::: {.callout-tip}
+
+## 二分法
+
+1. 区間 $[a, b]$ を選ぶ. また停止条件として十分小さい $\epsilon > 0$ を選ぶ.
+1. $f(a) \cdot f(b) < 0$ ならば, $c = \frac{a + b}{2}$ を計算する.
+1. $|f(c)| < \epsilon$ ならば, $c$ を解として返す. そうでなければ, $f(a) \cdot f(c) < 0$ ならば, $b \leftarrow c$ として2に戻る. そうでなければ, $a \leftarrow c$ として2に戻る.
+
+:::
+
+
+![Visualization of Bisection Method](/static/cetz/bisection_method.svg){#fig-bisection-method width=80%}
+
+例えば, 今回の例では $l \in (0, 1)$ であるため, $l = 0$ と $l = 1$ で効用が発散することから, 解が存在する区間は $(0, 1)$ です. なお, 端点でFOCが定義されてない場合も多いので, 端点より微小に内側の区間を選ぶことが多いです.
+
+```{julia}
+#| label: find-zero-bracketing
+ϵ = 1e-9
+l = find_zero(foc, (ϵ, 1 - ϵ))
+```
+
+**端点解の存在**
+
+以下の様なカップルの意思決定問題を考えてみましょう.
+
+$$
+\max_{c_m, c_f, l_m, l_f} u(c_m, l_m) + u(c_f, l_f)
+$$
+
+subject to
+
+$$
+c_m + c_f = w_m (1 - l_m) + w_f (1 - l_f).
+$$
+
+一階条件から以下の関係が導けます:
+
+$$
+\frac{l_m}{l_f} = \left(\frac{w_f}{w_m}\right)^{\frac{1}{\gamma_l}}.
+$$
+
+この関係から一方の相対賃金が十分に大きい場合, 例えば $w_m \gg w_f$ の場合, $l_f > 1$ となる可能性があります ($l_m$ は余暇時間のため, 0よりある程度大きい値をとるということが想像できます.) 内点解が存在する場合の $l_f$ に関する一階条件は以下のようになります.
+
+$$
+w_m\left(1-\left(\frac{w_f}{w_m}\right)^{\frac{1}{\gamma_l}}l_f\right) + w_f(1-l_f) - 2\left(\frac{w_f}{\alpha_l}\right)^{\frac{1}{\gamma_c}}l_f^{\frac{\gamma_l}{\gamma_c}} = 0.
+$$
+
+```{julia}
+#| code-fold: true
+#| label: fig-foc-bargaining
+#| fig-cap: "**FOC for bargaining problem.** $w_m = 1.0$, $\\alpha_l = 1.2$, $\\gamma_c = \\gamma_l = 1.5$."
+
+function foc_bargaining(l_f; w_m=1.0, w_f=0.5, γ_c=1.5, α_l=1.2, γ_l=1.5)
+    return w_m * (1 - (w_f / w_m)^(1 / γ_l) * l_f) + w_f * (1 - l_f) -
+           2 * (w_f / α_l)^(1 / γ_c) * l_f^(γ_l / γ_c)
+end
+
+lf_grid = 0.01:0.01:0.99
+plot(lf_grid, l_f -> foc_bargaining(l_f, w_f=1.0), label=L"w_f = 1.0", xlabel=L"l_f")
+plot!(lf_grid, l_f -> foc_bargaining(l_f, w_f=0.5), label=L"w_f = 0.5")
+plot!(lf_grid, l_f -> foc_bargaining(l_f, w_f=0.1), label=L"w_f = 0.1")
+hline!([0.0], ls=:dash, lw=2, label=false, color=:black)
+```
+
+
+また, $l_f = 1$ における一階条件は以下のようになります.
+
+$$
+w_m(1-l_m) - 2\left(\frac{w_m}{\alpha_l}\right)^{\frac{1}{\gamma_c}} l_m^{\frac{\gamma_l}{\gamma_c}} = 0.
+$$
+
+この様な場合, Bracketing method の考えが有効です.
+
+1. 端点 $l_m = 0, 1$ (実用上は $\epsilon, 1-\epsilon$) において, 一階条件の値を計算.
+1. 一階条件の値が異符号であれば, 二分法を用いて解を求める.
+1. 一階条件の値が同符号であれば, 端点解 (この場合, $l_f = 1$) 上の解を求める.
+
+```{julia}
+#| label: find-zero-bracketing-corner
+#| output: false
+function solve_bargaining(; w_m=1.0, w_f=0.5, γ_c=1.5, α_l=1.2, γ_l=1.5)
+
+    ϵ = 1e-9
+    left = w_m * (1 - (w_f / w_m)^(1 / γ_l) * ϵ) + w_f * (1 - ϵ) -
+           2 * (w_f / α_l)^(1 / γ_c) * ϵ^(γ_l / γ_c)
+    right = w_m * (1 - (w_f / w_m)^(1 / γ_l) * (1 - ϵ)) + w_f * ϵ -
+            2 * (w_f / α_l)^(1 / γ_c) * (1 - ϵ)^(γ_l / γ_c)
+
+    if left * right < 0
+        l_f = find_zero(
+            l_f -> w_m * (1 - (w_f / w_m)^(1 / γ_l) * l_f) + w_f * (1 - l_f) -
+                   2 * (w_f / α_l)^(1 / γ_c) * l_f^(γ_l / γ_c),
+            (ϵ, 1 - ϵ))
+        l_m = (w_f / w_m)^(1 / γ_l) * l_f
+    else
+        l_f = 1.0
+        x = find_zero(
+            x -> w_m * (1 - 1 / (1 + exp(x))) -
+                 2 * (w_m / α_l)^(1 / γ_c) * (1 / (1 + exp(x)))^(γ_l / γ_c),
+            0.0)
+        l_m = 1 / (1 + exp(x))
+    end
+
+    return l_m, l_f
+end
+```
+
+```{julia}
+#| code-fold: true
+#| label: fig-sol-bargaining
+#| fig-cap: "**Solution of bargaining problem.** $w_m = 1.0, \\alpha_l = 1.2, \\gamma_c = \\gamma_l = 1.5$."
+plot(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f)[1], label=L"l_m", xlabel=L"w_f")
+plot!(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f)[2], label=L"l_f")
+```
+
+### 多変数の非線形方程式
+
+多変数の非線形方程式では Bracketing method は使えず, ニュートン法のような Non-bracketing method を用いる必要があります. そのため内点解と微分可能な関数を仮定しており, 端点解やスムースでない関数が想定される場合は使えません. そのような場合は, 原始的なグリッドサーチを用いるか, 後述するのように非線形最適化問題として解く必要があります.
+
+なお, 多くの標準的な効用関数 (CRRA, CESなど) の場合, 一階条件は一変数の非線形方程式に帰着できます. 今回は学習のために, @eq-max-utility を3変数 ($c$, $l$, $\lambda$) の非線形方程式として解いてみましょう.[NonlinearSolve.jl](https://docs.sciml.ai/NonlinearSolve/) を用いると便利です.
+
+$$
+\begin{aligned}
+c^{-\gamma_c} &= \lambda \\
+\alpha_l l^{-\gamma_l} &= \lambda w \\
+c &= w(1-l)
+\end{aligned}
+$$
+
+```{julia}
+#| label: solve-nonlinear-system
+function solve_nonlinear_system(; w=1.0, γ_c=1.5, α_l=1.2, γ_l=1.5)
+    f((c, l, λ), par) = [
+        λ * c^γ_c - 1,
+        α_l - λ * w * l^γ_l,
+        c - w * (1 - l)
+    ]
+    prob = NonlinearProblem(f, [0.5, 0.5, 0.35], 0.)
+    sol = solve(prob, NewtonRaphson())
+
+    return (c=sol.u[1], l=sol.u[2], λ=sol.u[3])
+end
+
+solve_nonlinear_system()
+```
+
+工夫として負の指数を避けるように式変形しています. これは最適化の際に, 負の数の負の数乗によってエラーが起きることを避けるためです.
+
+## 数値積分
+
+以下の定積分を $n$ 個の区間に分割して近似的に計算することを考えます.
+
+$$
+\int_{a}^{b} f(x) \,dx \simeq \sum_{i=1}^{n} w_i f(x_i)
+$$
+
+ここで, $w_i$ は各区間の重み, $x_i$ は各区間の評価点です.
+この形の積分計算はいくつか方法がありますが, 最も基本的な台形則と精度の高いガウス求積を紹介します.
+
+### 台形則 (Trapezoidal Rule)
+
+::: {.callout-tip}
+
+## 台形則 (Trapezoidal Rule)
+
+1. 区間 $[a, b]$ を $n$ 個の等間隔の区間に分割する. つまり, $x_i = a + i \cdot \frac{b - a}{n}$ とする.
+1. 各区間を台形で近似する. よって近似式は以下のようになる.
+
+$$
+\int_{a}^{b} f(x) \,dx \simeq \sum_{i=1}^{n} (x_i - x_{i-1}) \frac{f(x_{i-1}) + f(x_i)}{2}
+$$
+
+:::
+
+![Vizualization of Trapezoidal Rule](/static/cetz/trapezoid_rule.svg){#fig-trapezoid-rule width=100%}
+
+ここでは, $f(x) = \sqrt{1 - x^2}$ の $[0, 1]$ での積分を計算してみましょう. 単位円の1/4の面積であるため, 解析解は $\pi / 4$ です.
+
+```{julia}
+#| label: compute-trapezoid-rule
+
+function trapezoid_rule(f, a, b, n)
+    xs = range(a, b, length=n)
+    return sum((xs[i] - xs[i-1]) * (f(xs[i-1]) + f(xs[i])) / 2 for i in 2:n)
+end
+
+sol_tr100 = trapezoid_rule(x -> sqrt(1 - x^2), 0.0, 1.0, 100)
+sol_tr1000 = trapezoid_rule(x -> sqrt(1 - x^2), 0.0, 1.0, 1000)
+
+π / 4, sol_tr100, sol_tr1000
+```
+
+### ガウス求積 (Gaussian Quadrature)
+
+::: {.callout-note}
+
+## ガウス求積 (Gaussian Quadrature)
+
+$n$ 次の[ルジャンドル多項式](https://ja.wikipedia.org/wiki/ルジャンドル多項式) $P_n(x)$ の零点を $x_1, \dots, x_n$ とし, $L_i(x) = \prod_{j \neq i} (x - x_j)$, $w_i = \int_{-1}^{1} \frac{L_i(x)}{L_i(x_i)} \,dx$ とすると,
+
+$$
+\int_{-1}^{1} f(x) \,dx = \sum_{i=1}^{n} w_i f(x_i)
+$$
+
+が任意の $2n-1$ 次の多項式 $f(x)$ において成り立つ.
+
+:::
+
+この方法は近似値ではなく, $2n-1$ 次の多項式に対して**厳密な**値を計算することができるという点で強力です. また, $f(x)$ が $2n-1$ 次の多項式で十分近似できる場合, 精度の高い計算が可能です.
+
+::: {.callout-tip}
+
+## 定義域の変換 (ガウス求積)
+
+`FastGaussQuadrature.jl` 等のパッケージを利用する際には, 定義域を $[-1, 1]$ に変換する必要があります. $x = \frac{b-a}{2} z + \frac{a+b}{2}$ と変換すると
+
+$$
+\int_{a}^b f(x) \,dx = \frac{b - a}{2} \int_{-1}^1 f\left(\frac{b - a}{2} z + \frac{a + b}{2}\right) \,dz
+$$
+
+を得られます.
+
+:::
+
+```{julia}
+#| label: compute-gaussian-quadrature
+
+function gaussian_quadrature(f, a, b, n)
+    z, w = gausslegendre(n)
+    return (b - a) / 2 * sum(w .* f.((b - a) / 2 * z .+ (a + b) / 2))
+end
+
+sol_gl10 = gaussian_quadrature(x -> sqrt(1 - x^2), 0.0, 1.0, 10)
+sol_gl100 = gaussian_quadrature(x -> sqrt(1 - x^2), 0.0, 1.0, 100)
+
+π / 4, sol_gl10, sol_gl100
+```
+
+10個程度の評価点で少数第三位まで, 100個程度の評価点で少数第六位までの精度が得られていることがわかります.
+
+#### ガウスエルミート求積
+
+ガウス求積は上にあげたガウス・ルジャンドル求積の他にも, ガウス・エルミート求積などの類似系があります.
+
+::: {.callout-note}
+
+## ガウス・エルミート求積 (Gaussian-Hermite Quadrature)
+
+$n$ 次の[エルミート多項式](https://ja.wikipedia.org/wiki/エルミート多項式) $H_n(x)$ の零点を $x_1, \dots, x_n$ とし, $w_i = \frac{2^{n-1} n! \sqrt{\pi}}{\left(n H_{n-1}(x_i)\right)^2}$ とすると,
+
+$$
+\int_{-\infty}^{\infty} f(x) e^{-x^2} \,dx \simeq \sum_{i=1}^{n} w_i f(x_i)
+$$
+
+:::
+
+被積分関数が $e^{-x^2}$ という部分を持つ場合により高精度に計算することができます.
+具体的には, 正規分布に基づく積分の計算などに利用可能です.
+ここで, @eq-max-utility によって意思決定する人々の時間給 $w$ が次のような分布に従っているとします.
+
+$$
+\log w \sim \mathcal{N}(\mu, \sigma).
+$$
+
+この時, 平均労働時間を積分によって求めてみましょう.
+
+$$
+\overline{h} = \int_{0}^{\infty} h^*(w) \,dF(w; \mu, \sigma).
+$$
+
+ここで, $h^*(w)$ は時給 $w$ の下での最適労働時間, $F(w; \mu, \sigma)$ は $w$ の累積分布関数です. ここで $F(w; \mu, \sigma)$ が対数正規分布であることを利用して, ガウス・エルミート求積を用いて計算します.
+
+$$
+\begin{aligned}
+\overline{h} &= \int_{-\infty}^{\infty} h^*(\exp(y)) \,d\Phi(y; \mu, \sigma) \\
+&= \int_{-\infty}^{\infty} h^*(\exp(y)) \frac{1}{\sqrt{2\pi} \sigma} \exp\left(-\frac{(y - \mu)^2}{2\sigma^2}\right) \,dy \\
+&=\int_{-\infty}^{\infty} h^*\left(\exp\left(\sqrt{2}\sigma z + \mu\right)\right) \frac{1}{\sqrt{\pi}} \exp\left(-z^2\right) \,dz \\
+&\simeq \sum_{i=1}^{n} w_i h^*\left(\exp\left(\sqrt{2}\sigma x_i + \mu\right)\right) \frac{1}{\sqrt{\pi}}.
+\end{aligned}
+$$
+
+ここでは $w = \exp(y)$, $y = \sqrt{2}\sigma z + \mu$ とした.
+
+```{julia}
+#| label: compute-gaussian-hermite
+
+function hours_worked(w; γ_c=1.5, α_l=1.2, γ_l=1.5)
+    y::Float64 = find_zero(y -> foc(1 / (1 + exp(y)), w=w, γ_c=γ_c, α_l=α_l, γ_l=γ_l), 0.0)
+    l = 1 / (1 + exp(y))
+    return 1 - l
+end
+
+function mean_hours(; γ_c=1.5, α_l=1.2, γ_l=1.5, μ=0.0, σ=0.5, n=10)
+    x, w = gausshermite(n)
+    return sum(w .* hours_worked.(exp.(sqrt(2) * σ * x .+ μ), γ_c=γ_c, α_l=α_l, γ_l=γ_l) / sqrt(π))
+end
+```
+
+### モンテカルロ法
+
+期待値を求める積分の場合, モンテカルロ法による近似も有効です. 速度は遅いですが, 実装が簡単であり, ガウス求積などたの方法による積分の検算などにも利用できます.
+
+```{julia}
+#| label: compute-monte-carlo
+mc_hours(; γ_c=1.5, α_l=1.2, γ_l=1.5, μ=0.0, σ=0.5, n=10^6) = mean(
+    hours_worked(rand(LogNormal(μ, σ)), γ_c=γ_c, α_l=α_l, γ_l=γ_l)
+    for _ in 1:n
+)
+
+mc_hours()
+```
+
+## 非線形最適化
+
+### 非線形最適化問題の解法
+
+#### 非線形最適化問題
+
+非線形最適化問題は, 一般に以下のような形で表されます.
+
+$$
+\min_{\mathbf{x} \in \mathbb{R}^n} f(\mathbf{x}).
+$$
+
+この時, $f(\mathbf{x})$ を**目的関数**といいます. この時, $\mathbf{x}$ に制約条件がある場合があります.
+
+**1. 境界制約** (Bound constraints, Box constraints)
+
+$$
+lb_{i} \le x_{i} \le ub_{i}, \quad i = 1, \dots, n.
+$$
+
+**2. 不等式制約** (Inequality constraints)
+
+$$
+c_i(x_i) \le 0, \quad i = 1, \dots, n.
+$$
+
+**3. 等式制約** (Equality constraints)
+
+$$
+h_i(x_i) = 0, \quad i = 1, \dots, n.
+$$
+
+制約付き最適化問題を扱えるかどうか, どの種類の制約まで扱えるかはアルゴリズムによって異なります.
+
+#### 最適化アルゴリズム
+
+最適化アルゴリズムは日々進化しており, 様々なアルゴリズムが提案されています. どのアルゴリズムを用いるべきかは, 一般に判断が難しく, いくつかのアルゴリズムを実際に試してみる必要があります. ここでは, アルゴリズムを選ぶ際の概ねの考え方を紹介します. 詳細な解説は, 後に紹介する Nlopt パッケージの[ドキュメント](https://nlopt.readthedocs.io/en/latest/NLopt_Introduction/) を参照にしてください.
+
+**Global vs. Local Method**
+
+基本的に非線形最適化の数値計算では局所解しか求められません ($\mathbb{R}^n$ の全体を探索することはできないため). しかし, 数値計算の文脈では以下の意味で Global Method と Local Method に分けることができます.
+
+- **Global Method**: Box constraints の中で満遍なく探索した場合, 最適である
+- **Local Method**: 初期値からの探索の結果, 最適である
+
+この意味で, NLopt では `GN_DIRECT` や `GN_ISRES` などのいくつかのアルゴリズムが Global Method に分類されます. しかし, これらのアルゴリズムは計算時間が長く, 特に次元数の多い場合は計算が (現実的な研究時間の範囲で) 終了しない場合があります. そのため, これらの Global Method を用いる場合は, 評価回数や評価時間を制限してある程度の精度で計算を終了する必要があります. また, ここで求められた値を初期値として Local Method を用いることでより精度の高い解を求めることができます.
+
+**Gradient-based vs. Derivative-free Method**
+
+最適化アルゴリズムは, 一階微分を用いるものと用いないものに分けることができます. 一階微分が事前に分かっている場合, 自動微分などで計算できる場合は, 一階微分を用いる方が計算が速く, 精度も高いです. これまで見てきたニュートン法などもこれに該当します. しかし, 複雑な問題では一階微分を計算することが困難な場合があります. その場合, Derivative-free なアルゴリズムを用いる必要があります.
+
+**Juliaのパッケージ**
+
+Juliaでよく使われる [`Optim.jl`](https://julianlsolvers.github.io/Optim.jl/stable/) というパッケージでは, Gradient-based な local method として BFGS (ニュートン法の一種) がよく用いられており, Derivative-free な local method として Nelder-Mead がよく用いられています. さらに複雑なアルゴリズムを扱う場合は, [`NLopt.jl`](https://github.com/jump-dev/NLopt.jl) というパッケージを用いることが多いです. 数多くの最適化手法が Global, Local, Gradient-based, Derivative-free 満遍なく実装されており, それぞれのアルゴリズムを選ぶことができます. また, NLopt 自体はC++, Python, Rなどでも利用可能なライブラリです.
+
+私は簡単な最適化の場合は `Optim.jl` を用い, 複雑な最適化 (特に後述するSMM) の場合は `NLopt.jl` を用いることが多いです.
+
+#### Optimization.jl
+
+`Optimization.jl` は, 多くの最適化パッケージを統一的に扱うために作成されたパッケージです. すでに紹介した `Optim.jl` や `NLopt.jl` などのパッケージを同じ文法で扱うことができるため, 様々な最適化アルゴリズムを試す際に便利です.
+
+今回は, `NLopt.jl` と `Optim.jl` の両方を用いて, Rosenbrock 関数の最適化を行ってみます.
+
+::: {.callout-note}
+
+## Rosenbrock 関数
+
+$\mathbf{x} = (x_1, \dots, x_n)' \in \mathbb{R}^n$ に対して,
+
+$$
+f(x_1, \dots, x_n) = \sum_{i=1}^{n-1} \left(100 (x_{i+1} - x_i^2)^2 + (1 - x_i)^2\right).
+$$
+
+:::
+
+Rosenbrock 関数は, 凸性がないため, 最適化アルゴリズムの性能を比較するために用いられることが多いです. また, 解として $f(1, \dots, 1) = 0$ が知られています. 2変数の場合, 以下のような形になります.
+
+```{julia}
+#| label: fig-rosenbrock
+#| fig-cap: "**Rosenbrock function**. Z-axis is log plus one of Rosenbrock function."
+
+rosenbrock(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
+x_grid = -2:0.01:2
+y_grid = -1:0.01:3
+
+p1 = contour(x_grid, y_grid, (x, y) -> log1p(rosenbrock(x, y)), xlabel=L"x", ylabel=L"y", label=false)
+p2 = surface(x_grid, y_grid, (x, y) -> log1p(rosenbrock(x, y)), xlabel=L"x", ylabel=L"y", label=false)
+
+plot(p1, p2, layout=(1, 2), size=(800, 400))
+```
+
+これをOptimization.jlを用いて解いてみましょう. まずは, `Optim.jl` のNelder-Mead法を用いて解いてみます.
+
+```{julia}
+#| label: rosenbrock-optim
+using Optimization
+using OptimizationOptimJL
+
+prob = OptimizationProblem((x, p) -> rosenbrock(x[1], x[2]), [0., 0.])
+sol = solve(prob, NelderMead())
+```
+
+`Optimization.jl` のやや癖のあるところは, $f(\mathbf{x}, \mathbf{p})$ のように, パラメータ $\mathbf{p}$ を必ず与える必要があるところです. そのため, 匿名関数を用いて, $f(\mathbf{x}, \mathbf{p})$ 型に変換しています.
+
+次に, `NLopt.jl` を用いて解いてみます. 今回は, local method の COBYLA (`LN_COBYLA`) を用いて解いてみます. これも, derivative-free なアルゴリズムです.
+
+```{julia}
+#| label: rosenbrock-nlopt
+using OptimizationNLopt
+
+prob = OptimizationProblem((x, p) -> rosenbrock(x[1], x[2]), [0., 0.])
+sol = solve(prob, NLopt.LN_COBYLA())
+```
+
+次に, `NLopt.jl` の global method の `GN_DIRECT` を用いて解いてみます. こちらは, 探索範囲を制限し, 評価回数を制限して計算を終了します.
+
+```{julia}
+#| label: rosenbrock-nlopt-direct
+prob = OptimizationProblem(
+    (x, p) -> rosenbrock(x[1], x[2]), [0., 0.], lb=[-2, -2], ub=[2, 3])
+sol = solve(prob, NLopt.GN_DIRECT(), maxiters=10000)
+```
+
+### Simulated Method of Moments (SMM)
+
+モデルのパラメータの決定方法には以下の3つの方法があります.
+
+1. 先行研究のパラメータを用いる ($\beta = 0.96$, @prescott1986 など)
+1. データから回帰分析などを用いて直接推定する.
+1. モデルのシミュレーション結果とデータを比較し, それに合うようにパラメータを調整する (Simulated Method of Moments, SMM)
+
+2の方法は, モデルごとに設定した関数形の一階条件などから導かれる式にデータを代入することでパラメータを推定する方法です. モデルごとに工夫がなされているため, 今後の授業でモデルを学ぶ際に紹介します. また1の方法で用いられるパラメータも先行研究において, 2の方法で推定された値を用いていることが多いです.
+
+この節では, 3の方法であるSMMの概略を紹介します. 今後の授業で扱うモデルでももほとんど共通の方法が用いられています.
+
+::: {.callout-note}
+
+## Simulated Method of Moments (SMM)
+
+$n$ 次元のパラメータ $\theta$ を推定するとする. $\theta$ を代入した際にモデル (のシミュレーション) によって得られる $m \ge n$ 次元のモーメントを $\mathcal{M}(\theta)$ とする. また, データから得られる同様のモーメントを $\text{Data}$ とする. 任意の対称重み行列 $W$ を用いて, 以下の最適化問題を解く.
+
+$$
+\hat{\theta} = \arg\min_{\theta} \left(\mathcal{M}(\theta) - \text{Data}\right)' W \left(\mathcal{M}(\theta) - \text{Data}\right)
+$$
+
+:::
+
+ここで, 重み行列 $W$ は, 単位行列, $\text{diag}(\text{Data})$, $\text{diag}(\mathbb{V}(\text{Data}))$ を用いることが多いです. また推定値に対する標準誤差も計算すべきですが, 分散共分散行列の計算が必ずしも計算できない場合があるなど, かなり複雑な問題があります. 詳細は @cocci2024 の議論を参照してください. 実際の論文では標準誤差を示さない場合も多いです.
+
+#### SMMの実践
+
+ここでは, SMMを用いて労働供給のパラメータを推定する. かなり簡略化された例を用いるため, モデルの当てはまりは悪いが, SMMの考え方を理解するための例として利用する.
+
+**モデル**
+
+$$
+\max_{c, l} u(c, l) = \log c + \alpha \log (1-l) \quad \text{s.t.} \quad c = w (1 - l)
+$$
+
+- $c$: 消費
+- $w$: 時給
+- $l$: 余暇時間
+
+時給 $w$ は以下のような分布に従うとする.
+
+$$
+\log w \sim \mathcal{N}(\mu, \sigma).
+$$
+
+標準化のため, $\mu = 0$ とする. この時, $\theta = (\alpha, \sigma)$ を推定する.
+
+**データ**
+
+リクルートワークス研究所の [全国就業実態パネル調査](https://www.works-i.com/surveys/panel-surveys.html) を用いる. なお, [JPSED.stat](https://jpsed-stat.com/data) から集計データをダウンロードすることができる. ここでは, 最新の2023年の20-29歳男性のデータを用いる.
+
+- 労働時間分布: 週あたりの労働時間 33.4時間
+    - 週あたりの利用可能な労働時間は, $16 \times 7 = 112$ 時間とし, $1 - \bar{l} = 1 - 33.4 / 112 \simeq 0.7$ 
+- 所得分布: 主な仕事からの年収. @fig-dist-earn.
+    - 50万円未満は25万円, 50-100万円は75万円のように間の値を用い, 1200万円以上は1200万円とする
+    - 対数所得の分散をターゲットとする
+
+```{julia}
+#| label: fig-dist-earn
+#| fig-cap: "**Distribution of earnings.** Data from JPSED.stat. 20-29 aged men in 2023."
+
+mean_leisure_data = 1 - 33.4 / (16 * 7)
+earn = [25, 75, 150, 250, 350, 450, 550, 650, 750, 850, 950, 1100, 1200]
+density = [13.7, 12.2, 12.3, 14.8, 20.2, 16.3, 7.0, 2.0, 0.6, 0.4, 0.1, 0.3, 0.2] / 100
+mean_learn_data = density' * log.(earn)
+sd_learn_data = sqrt(density' * (log.(earn) .- mean_learn_data) .^ 2)
+
+plot(earn, density, label="Density", xlabel="Earnings (10K JPY)",
+    ylabel="Density", lw=2, legend=false)
+```
+
+一階条件から容易に $l = \frac{\alpha}{w + \alpha}$ となることがわかります. ガウス・エルミート求積を用いて, 労働時間の平均は以下のように計算できます.
+
+$$
+\begin{aligned}
+\mathbb{E}[l] &= \int_{-\infty}^{\infty} l(w) \,dF(w; \mu, \sigma) \\
+&= \int_{-\infty}^{\infty} \frac{\alpha}{w + \alpha} \,dF(w; \mu, \sigma) \\
+&\simeq \sum_{i=1}^{n} \xi_i \frac{\alpha}{\exp\left(\sqrt{2}\sigma x_i + \mu\right) + \alpha} \frac{1}{\sqrt{\pi}} \\
+\end{aligned}
+$$
+
+ここで, $\xi_i, x_i$ はガウス・エルミート求積の重みと評価点です. 同様に, 対数収入 $\log e$ の平均と分散は以下のように計算できます.
+
+$$
+\begin{aligned}
+\mathbb{E}[\log e] &= \int_{-\infty}^{\infty} \log(w(1-l)) \,dF(w; \mu, \sigma) \\
+&= \int_{-\infty}^{\infty} \log\left(\frac{w^2}{\alpha + w}\right) \,dF(w; \mu, \sigma) \\
+&= \int_{-\infty}^{\infty} 2\log w \,dF(w; \mu, \sigma) - \int_{-\infty}^{\infty} \log (\alpha + w) \,dF(w; \mu, \sigma) \\
+&= 2\mu - \int_{-\infty}^{\infty} \log (\alpha + w) \,dF(w; \mu, \sigma) \\
+&\simeq 2\mu - \sum_{i} \xi_i \log\left(\alpha + \exp(\sqrt{2}\sigma x_i + \mu)\right)\frac{1}{\sqrt{\pi}}\\
+\text{Var}(\log e) &= \int_{-\infty}^{\infty} \left(\log(w(1-l)) - \overline{\log e}\right)^2 \,dF(w; \mu, \sigma) \\
+&= \int_{-\infty}^{\infty} \left(2\log w - \log(\alpha + w) - \overline{\log e}\right)^2 \,dF(w; \mu, \sigma) \\
+&\simeq \sum_{i}^{n} \xi_i \left(2(\sqrt{2}\sigma x_i + \mu) - \log\left(\alpha + \exp(\sqrt{2}\sigma x_i + \mu)\right) - \overline{\log e}\right)^2 \frac{1}{\sqrt{\pi}}\\
+\end{aligned}
+$$
+
+
+```{julia}
+#| label: compute-smm
+function moment(α, σ; n_gh=10)
+    x, ξ = gausshermite(n_gh)
+    μ = 0.0
+    mean_leisure = ξ' * (α ./ (exp.(sqrt(2) * σ * x .+ μ) .+ α)) / sqrt(π)
+    mean_learn = 2μ - ξ' * log.(α .+ exp.(sqrt(2) * σ .* x .+ μ)) / sqrt(π)
+    sd_learn = sqrt(ξ' * (2 * (sqrt(2) * σ .* x .+ μ) - log.(α .+ exp.(sqrt(2) * σ .* x .+ μ)) .- mean_learn) .^ 2 / sqrt(π))
+
+    return [mean_leisure, sd_learn]
+end
+
+loss(α, σ; d=[mean_leisure_data, sd_learn_data]) = sqrt(sum(((moment(α, σ) .- d) ./ d) .^ 2))
+prob = OptimizationProblem((x, p) -> loss(x[1], x[2]), [0.5, 0.5])
+sol = solve(prob, NelderMead()) # Optim.jl
+α, σ = sol.x
+```
+
+なお, ほとんどの場合は3変数以上の最適化問題を解くため確認することができませんが, 2変数の場合はプロットにより損失関数の形状を確認することができます.
+
+```{julia}
+#| label: fig-smm-contour
+#| fig-cap: "**Contour plot of loss function.**"
+contour(0.01:0.01:5, 0.01:0.01:1, loss)
+scatter!([α], [σ], label="Solution", markersize=5)
+```
+
+おそらく唯一の (局所) 解であることがわかります.
+
+```{julia}
+#| label: tbl-smm
+#| tbl-cap: Results of SMM
+#| code-fold: true
+
+mnt = moment(α, σ)
+
+data = (
+    Parameter=["α", "σ"],
+    Value=[α, σ],
+    Target=["Mean of Leisure Hours", "S.D. of Log Earnings"],
+    Data=[mean_leisure_data, sd_learn_data],
+    Model=mnt
+)
+
+simple_table(data)
+```
+
+@tbl-smm の結果から, モデルから得られたモーメントがデータのモーメントとほとんど一致していることがわかります. このモデルの当てはまりを確認するためにターゲットとしていないモーメントとして, 労働時間の分布を確認してみましょう. 推定された $\alpha, \sigma$ の値を用いてモンテカルロシミュレーションを行い, 労働時間の分布を確認します. なお, 労働時間は $h^*(w) = 1 - \frac{\alpha}{w + \alpha}$ で計算でき, 週あたりの労働時間に直すために $h^*(w) \times 16 \times 7$ を計算します.
+
+```{julia}
+#| label: fig-untarget-hours
+#| fig-cap: "**Distribution of hours worked.**"
+lbl_hours = ["0-19", "20-34", "35-44", "45-59", "60+"]
+dens_hours_data = [22.4, 12.1, 44.7, 17.9, 3.8] / 100
+hours_model = [(w / (w + α)) * 16 * 7 for w in rand(LogNormal(0, σ), 10^6)]
+
+bins = [0, 20, 35, 45, 60, 113]
+dens_hours_model = [mean(bins[i] .<= hours_model .< bins[i+1]) for i in 1:(length(bins)-1)]
+
+bar(lbl_hours, dens_hours_data, label="Model")
+scatter!(lbl_hours, dens_hours_model, label="Data", xlabel="Hours Worked per Week")
+```
+
+@fig-untarget-hours で分かるように, モデルの労働時間の分布はデータの労働時間の分布とかなり異なります. これは, モデルが単純化されすぎているためです. 例えば, 20-29歳の男性のデータを用いてるため, 学生や新卒の人々が多く含まれており, 労働時間が短くなっている可能性があります. また, 賃金に対する労働時間の弾力性 (フリッシュ弾力性) が重要な役割を果たしていると考えられるにもかかわらず, 対数型効用関数という柔軟性のない効用関数を用いていることに問題がある可能性があります. ターゲットとしたモーメントの当てはまりは定義から良いので, ターゲットとしていないモーメントによる評価も重要です.

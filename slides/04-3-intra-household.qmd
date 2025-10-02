@@ -1,0 +1,292 @@
+---
+title: Intra-household Allocation
+subtitle: "@lise2019"
+description: "@lise2019"
+date: 2026-01-19
+image: /static/img/article/lise2019/fig4a.jpeg
+---
+
+## Foundations: Generalized Method of Moments (GMM)
+
+$$
+\hat{\theta} = \arg \min_{\symbf{\theta}} \left( \frac{1}{N} \sum_{i=1}^{N} g(\mathbf{x}_i, \symbf{\theta}) \right)^{\top} W \left( \frac{1}{N} \sum_{i=1}^{N} g(\mathbf{x}_i, \symbf{\theta}) \right),
+$$
+
+- $\mathbf{x}$: 観測可能な変数
+- $\symbf{\theta}$: $p$ 次元の推定したいパラメータ
+- $g(\mathbf{x}, \symbf{\theta})$: $m (\ge p)$ 次元のモーメント条件. $E[g(\mathbf{x}, \symbf{\theta})] = 0$ を満たす
+- $W$: 任意の重みづけ行列. 2段階 GMM など機械的に選択することも可能
+- 標準偏差の推定や最適な $W$ の選択などの詳細は @newey1994 を参照
+
+{{< v 0.5em >}}
+
+**GMM vs. SMM** (Simulated Method of Moments)
+
+- **GMM**: 基本的にモデルの一階条件をモーメント条件として利用
+    - 全ての変数が観測可能である必要がある. 消費 $c$ や公共財支出 $g$ は観測可能?
+- **SMM**: $g(\mathbf{x}_i, \theta)$ をシミュレーションで計算した任意のモーメント
+    - 一階条件として表されないモーメントも利用可能 (e.g., サーチモデルの結婚率)
+    - シミュレーションを毎回行うため計算コストが高い
+
+
+# @lise2019
+
+## Japanese Panel Survey of Consumers (JPSC)
+
+**JPSC** (消費生活に関するパネル調査)
+
+- 1993年から毎年実施されているパネル調査. 独身女性と夫婦世帯を対象
+- 基本的なデモグラフィック情報や収入に関する情報のほか, 以下の詳細な情報を収集
+- 年齢人口的に代表的なサンプルでないこと, 独身男性が含まれないことに注意
+
+{{< v 0.5em >}}
+
+**変数**
+
+- **消費**: 夫婦 $j \in \{W, H\}$ の個人支出 $(c_W, c_H)$, 家族への支出 $g$ (全体, 子ども, その他)
+    - 個人支出や家族支出などにカテゴリーが分かれているのが特徴的
+- **時間**: (市場) 労働時間 $(m_W, m_H)$ , 家事育児時間 $(h_W, h_H)$ , 余暇時間 $(l_W, l_H)$
+    - 余暇時間を直接観測できるのは珍しい (Time-Use Survey を除く)
+    - 通常は総時間から労働時間と家事育児時間を引いて計算
+
+このユニークなデータにより, 詳細なモデルのGMMによる推定が可能になっている.
+
+## Household Allocation
+
+:::: {layout-ncol=2}
+::: {.column}
+
+**個人消費** $\frac{c_{W}}{c_{W} + c_{H}}$
+
+![](/static/img/article/lise2019/fig1a.jpg){width=50%}
+
+:::
+
+::: {.column}
+
+**余暇時間** $\frac{l_{W}}{l_{W} + l_{H}}$
+
+![](/static/img/article/lise2019/fig1b.jpg){width=50%}
+
+:::
+::::
+
+- 個人消費は妻の方が少ない $\Rightarrow$ Pareto weight が妻の方が小さい可能性
+- 余暇時間は比較的均等
+
+---
+
+:::: {layout-ncol=2}
+::: {.column}
+
+**家事時間** $\frac{h_{W}}{h_{W} + h_{H}}$
+
+![](/static/img/article/lise2019/fig1c.jpg){width=50%}
+
+:::
+
+::: {.column}
+
+**(市場) 労働時間** $\frac{m_{W}}{m_{W} + m_{H}}$
+
+![](/static/img/article/lise2019/fig1d.jpg){width=50%}
+
+:::
+::::
+
+- 家事は妻側, 市場労働は夫側に偏る (家庭内分業)
+
+---
+
+:::: {layout-ncol=2}
+::: {.column}
+
+**公共財支出** $\frac{g}{C_W + C_H + g}$
+
+![](/static/img/article/lise2019/fig1e.jpg){width=50%}
+
+:::
+::: {.column}
+**時給** $\frac{w_W}{w_W + w_H}$
+
+![](/static/img/article/lise2019/fig1f.jpg){width=50%}
+:::
+::::
+
+- 家計の支出の大部分は公共財 (家族全体や子どものための支出)
+- 時給は夫の方が高い傾向 $\Rightarrow$ 家庭内分業の結果と整合的
+
+## Correlation with Wages
+
+{{< v -0.5em >}}
+
+![](/static/img/article/lise2019/fig2.jpeg){width=65% fig-align="center"}
+
+- 消費, 労働時間, 家事時間などの関係が Pareto weight を用いた collective model と整合的 
+
+## Model
+
+$$
+U_0 = \mathbb{E}_0 \sum_{t=0}^{T} \delta_W^t \mu_t u_t^W(c_{W, t}, l_{W, t}, q_{t}) + \delta_H^t (1 - \mu_t) u_t^H(c_{H, t}, l_{H, t}, q_{t})
+$$
+
+subject to
+
+$$
+\begin{aligned}
+l_{j, t} + m_{j, t} + h_{j, t} = 1 \quad j \in \{W, H\} \\
+c_{W, t} + c_{H, t} + g_t = w_{W, t} m_{W, t} + w_{H, t} m_{H, t} + (1+r_t) a_{t} - a_{t+1}
+\end{aligned}
+$$
+
+- $\mu_t$: 時点 $t$ における妻の Pareto weight
+- $q_t$: Home production. $q(h_{W, t}, h_{H, t}, g_t) = \left(\pi_t h_{W, t}^{\gamma} + (1-\pi_t) h_{H, t}^{\gamma}\right)^{\frac{\rho}{\gamma}}g_t^{1-\rho}$
+
+**Preferences**
+
+$$
+u^j(c_{j, t}, l_{j, t}, q_t) = \frac{\xi_t^j}{1-\sigma^j}\left(
+    \alpha_{1t}^j c_{j, t}^{\phi^j} + \alpha_{2t}^j l_{j, t}^{\phi^j} + (1 - \alpha_{1t}^j - \alpha_{2t}^j ) q_t^{\phi^j}
+\right)^{\frac{1-\sigma^j}{\phi^j}}
+$$
+
+---
+
+{{< v -0.5em >}}
+
+**Parameteric Heterogeneity**
+
+{{< v -0.5em >}}
+
+$$
+\begin{aligned}
+\alpha_{kt}^j &= \frac{\exp\left(\alpha_k^{j}^{\top} \mathbf{x}_{j, t}^{\alpha}\right)}{1 + \exp(\alpha_1^{j}^{\top} \mathbf{x}_{j, t}^{\alpha}) + \exp(\alpha_2^{j}^{\top} \mathbf{x}_{j, t}^{\alpha})} \quad k \in \{1, 2\} \\
+\pi_t &= \frac{\exp\left(\pi^{\top} \mathbf{x}_{j, t}^{\pi}\right)}{1 + \exp\left(\pi^{\top} \mathbf{x}_{j, t}^{\pi}\right)}
+\end{aligned}
+$$
+
+- $\mathbf{x}_{j, t}^{\alpha}$: 年齢, 教育年数, 子どもの人数
+- $\mathbf{x}_{j, t}^{\pi}$: 定数, 7歳以下の子どもの人数
+
+**Wage Process**
+
+{{< v -0.5em >}}
+
+$$
+\begin{aligned}
+\log w_{j, t} &= \theta_0^{j} + \theta_1^{j} a_{j, t} + \theta_2^{j} a_{j, t}^2 + \varepsilon_{j, t} & \quad j \in \{W, H\}\\
+\varepsilon_{j, t} &= \varrho_{j, t} + e_{j, t} \\
+\varrho_{j, t} &= \varrho_{j, t-1} v_{j, t} & \varrho_{j, -1} = 0
+\end{aligned}
+$$
+
+なお, 線形回帰から, 予測値 $\omega_{j, t} := \hat{\theta_0^{j}} + \hat{\theta_1^{j}} a_{j, t} + \hat{\theta_2^{j}} a_{j, t}^2$ と 残差 $\varepsilon_{j, t} := \log w_{j, t} - \omega_{j, t}$ が計算できる.
+
+## Limited Commitment
+
+@mazzocco2007 を参考に, Limited Commitment を導入
+
+- **Full commitment**: $t=0$ で決定された Pareto weight が全期間にわたって維持 $\mu_t = \mu_0$
+- **Limited commitment**: $t=0$ 時点の情報 $\mathbf{z}_0$ と各時点 $t$ の情報 $\mathbf{z}_{t}$ を用いて, $\mu_t$ を調整
+    1. 離婚が発生しないように (結婚の参加制約を満たすように) $\mu_t$ を調整
+    1. パラメトリックな関数形で $\mu_t$ を決定
+
+この論文では, 2つめの方法を採用し, 情報 $\mathbf{z}_0$, $\mathbf{z}_{1t}$ を用いて以下のように $\mu_t$ を決定する.
+
+$$
+\mu_t = \frac{\exp(\mu_0^\top \mathbf{z}_0 + \mu_{1}^{\top} \mathbf{z}_{1t})}{1 + \exp(\mu_0^\top \mathbf{z}_0 + \mu_{1}^\top \mathbf{z}_{1t})}
+$$
+
+- $\mathbf{z}_{0} = (\omega_{W, 0} - \omega_{W, 0}, \Delta\omega_{H, 10} - \Delta\omega_{H, 10}, v_0)^{\top}$
+    - $\Delta\omega_{j, t} := \omega_{j, t} - \omega_{j, 0}$
+    - $v_0 := \hat{\theta}_0^y + \hat{\theta}_1^{y}a_{W, 0} + \hat{\theta}_2^{y}a_{W, 0}^2 + \hat{\theta}_3^{y}a_{H, 0} + \hat{\theta}_4^{y}a_{H, 0}^2$, 線形回帰による世帯収入の予測値
+- $\mathbf{z}_{1t} = \varepsilon_{W, t} - \varepsilon_{H, t}$
+
+## GMM Estimation
+
+{{< v -1em >}}
+
+![](/static/img/article/lise2019/table3.svg){width=45% fig-align="center"}
+
+- 式 (A.1) - (A.11) を用いてGMM推定. 結果は Table 2 を参照
+- 子どもの数が多いほど, 公共財の preference $\alpha_3^j := 1 - \alpha_1^j - \alpha_2^j$ が高くなる傾向
+
+## Decomposition of Relative Pareto Weight
+
+{{< v -0.5em >}}
+
+:::: {layout-ncol=2}
+::: {.column}
+$\quad\mu_0(\mathbf{z}_0) = \exp(\symbf{\mu}_0^{\top}\mathbf{z}_0)$
+
+![](/static/img/article/lise2019/fig3a.jpeg){width=50% fig-align="center"}
+
+:::
+::: {.column}
+$\quad\mu_{1}(\mathbf{z}_{1t}) = \exp(\symbf{\mu}_1^{\top}\mathbf{z}_{1t})$
+
+![](/static/img/article/lise2019/fig3b.jpeg){width=50% fig-align="center"}
+:::
+::::
+
+- 相対パレートウェイトは, $\frac{\mu_0(\mathbf{z}_0)}{1 - \mu_1(\mathbf{z}_{1t})} = \mu_0(\mathbf{z}_0)\mu_1(\mathbf{z}_{1t})$ に分解可能
+- パレートウェイトは結婚時のウェイト $\mu_0(\mathbf{z}_0)$ で大部分が決定される
+
+## Dual vs. Single Earner Households
+
+{{< v -0.5em >}}
+
+:::: {layout-ncol=2}
+::: {.column}
+$\quad\mu_0(\mathbf{z}_0) = \exp(\symbf{\mu}_0^{\top}\mathbf{z}_0)$
+
+![](/static/img/article/lise2019/fig4a.jpeg){width=50% fig-align="center"}
+
+:::
+::: {.column}
+$\quad\mu_{1}(\mathbf{z}_{1t}) = \exp(\symbf{\mu}_1^{\top}\mathbf{z}_{1t})$
+
+![](/static/img/article/lise2019/fig4b.jpeg){width=50% fig-align="center"}
+:::
+::::
+
+- 共働き世帯は結婚時のパレートウェイトに大きなばらつきがある
+- 夫のみが働く世代では, パレートウェイトの改定がかなり少ない
+
+## Elasticities to Wages
+
+{{< v -1em >}}
+
+![](/static/img/article/lise2019/table5.svg){width=50% fig-align="center"}
+
+- 自身の賃金の上昇, 配偶者の賃金の上昇どちらも余暇時間を減少させる
+- 配偶者の賃金の上昇による余暇時間の減少は, パレートウェイト変更を通じた効果が大きい
+    - パレートウェイトが弱くなることで, 自分の余暇時間が家庭内で軽視される
+    - 消費も同様に配偶者の賃金上昇がパレートウェイトを通じて影響
+
+## まとめ
+
+**JPSC** (Japanese Panel Survey of Consumers)
+
+- 家庭内の消費, 時間配分に関する詳細なデータ
+- 家庭内の gender assymmetry を直接的に観察可能
+
+{{< v 0.5em >}}
+
+**GMM**
+
+- 家庭内の消費, 時間配分に関するモーメント条件を用いてGMM推定
+- 詳細なデータと組み合わせることで, 多くのパラメータを高速に推定可能
+
+{{< v 0.5em >}}
+
+**Limited Commitment Model**
+
+- 配偶者の賃金変動に応じてパレートウェイトが変化
+- 結婚のメリットの一つであるリスク共有が限定的にしか達成されないことを示唆
+
+
+## 参考文献
+
+:::{refs}
+:::

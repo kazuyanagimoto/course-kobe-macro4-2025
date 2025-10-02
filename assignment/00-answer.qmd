@@ -1,0 +1,156 @@
+---
+title: "Exercise 0: Life Cycle Model"
+date: today
+date-format: "YYYY年M月D日"
+author: YOUR NAME
+execute: 
+  echo: false
+  warning: false
+  message: false
+format: typst
+engine: julia #knitr for R, jupyter for Python
+brand:
+  typography:      
+    fonts:
+      - family: Noto Serif JP
+        source: google
+      - family: IBM Plex Sans JP
+        source: google
+    base: Noto Serif JP
+    headings:
+      family: IBM Plex Sans JP
+      weight: regular
+number-sections: true
+---
+
+```{julia}
+#| label: setup
+#| include: false
+import Pkg
+Pkg.add(["QuantEcon", "Plots", "LaTeXStrings"]) # Add packages used for its replication
+
+using Plots
+using LaTeXStrings
+default(size=(500, 307), titlefontsize=10, fmt=:svg)
+```
+
+# Stochastic Life Cycle Model
+
+## オイラー方程式
+
+予算制約より, $c = (1+r) a + z w - a'$ を代入して, FOCとECを取ると,
+
+$$
+\begin{aligned}
+&\left((1+r) a + z w - a'\right)^{-\gamma} = \beta \mathbb{E}\left[V_a(t+1, z', a') \mid z\right] & \text{ FOC of } a' \\
+&V_a(t, z, a) = (1+r) \left((1+r) a + z w - a'\right)^{-\gamma} & \text{ EC of } a. \\
+\end{aligned}
+$$
+
+$c(z) = (1+r) a + z w - a'$ なので, 時間 $t$ を揃えて,
+
+$$
+c(z)^{-\gamma} = \beta (1+r) \mathbb{E}\left[c'(z')^{-\gamma} \mid z\right].
+$$
+
+## 部分均衡
+
+```{julia}
+#| label: model-life-cycle
+#| include: false
+module My
+using QuantEcon
+
+@kwdef struct Model{TF<:AbstractFloat,TI<:Integer}
+
+    # Utility function
+    γ::TF = 2.0
+    β::TF = 0.97
+    T::Int = 10
+
+    # Prices
+    r::TF = 0.07
+    w::TF = 5.0
+
+    # Grid for a (You have to set it by yourself)
+    n_a::TI = 30
+    a_min::TF = 0.1
+    a_max::TF = 4.0
+    a_grid::Vector{TF} = collect(range(start=a_min, stop=a_max, length=n_a))
+
+    # Grid for z: parameters for Tauchen
+    n_z::TI = 10
+    σ::TF = 0.02058
+    ρ::TF = 0.99
+    mc::MarkovChain = tauchen(n_z, ρ, σ, 0.0)
+    z_grid::Vector{TF} = exp.(mc.state_values)
+    P::Matrix{TF} = mc.p
+
+    # Value function
+    V::Array{TF,3} = zeros(n_a, n_z, T)
+end
+
+u(c, m::Model) = isone(m.γ) ? log(c) : c^(1 - m.γ) / (1 - m.γ)
+
+function solve!(m::Model)
+    (; T, n_a, n_z, r, w, β, P, a_grid, z_grid) = m
+
+    V = zeros(n_a, n_z, T)
+
+    for t = T:-1:1, i_a = 1:n_a, i_z = 1:n_z
+
+        utility = -Inf
+        for i_a′ = 1:n_a
+
+            expected = (t == T) ? 0.0 :
+                       sum(P[i_z, i_z′] * V[i_a′, i_z′, t+1] for i_z′ = 1:n_z)
+            c = (1 + r) * a_grid[i_a] + z_grid[i_z] * w - a_grid[i_a′]
+
+            if c > 0
+                utility = max(u(c, m) + β * expected, utility)
+            end
+
+        end
+
+        V[i_a, i_z, t] = utility
+    end
+
+    m.V .= V
+
+    return nothing
+end
+
+end # module My
+```
+
+```{julia}
+#| label: solve-life-cycle
+using .My
+
+m = My.Model()
+My.solve!(m);
+```
+
+$\log z$ を10等分のグリッドしたときの1, 5, 10番目の値でプロットする.
+
+```{julia}
+#| label: fig-life-cycle
+#| fig-cap: "Value function for different values of $z$."
+ps = []
+
+y_min, y_max = minimum(m.V) * 1.1, maximum(m.V) + 0.1
+for (i, t) ∈ enumerate([1, 4, 7, 10])
+
+    p = plot(m.a_grid, m.V[:, 1, t],
+        xlabel=L"Asset $x$",
+        ylims=(y_min, y_max),
+        label=L"z_1",
+        legend=:bottomright,
+        title="t = $t")
+    plot!(m.a_grid, m.V[:, 5, t], label=L"z_5")
+    plot!(m.a_grid, m.V[:, 10, t], label=L"z_{10}")
+    push!(ps, p)
+end
+
+plot(ps...)
+```

@@ -1,0 +1,443 @@
+---
+title: Frictionless Marriage Market II
+subtitle: "@reynoso2024"
+description: "@reynoso2024"
+date: 2025-11-17
+image: /static/img/article/reynoso2024/fig1.svg
+---
+
+## 結婚の経済学
+
+{{< v 1em >}}
+
+### [サーチモデル (Search and Matching)]{style="color: gray"}
+
+1. [@greenwood2009]{style="color: gray"}
+1. [@greenwood2016]{style="color: gray"}
+
+{{< v 1em >}}
+
+### 摩擦のない結婚市場 (Frictionless Marriage Market)
+
+1. @gayle2019
+    - 基本的な TU (Transferable Utility) の結婚モデル
+    - 静的なマッチングの枠組みで離婚などが起きない
+1. **@reynoso2024**
+    - 0期目のマッチングの後, ライフサイクル上で離婚が起きる
+    - 離婚後の非協力ゲームを導入した ITU (Imperfectly Transferable Utility) モデル
+    - 離婚制度の変更が同類婚傾向 (Assortative Mating) に与える影響を分析
+
+# @reynoso2024
+
+## Background
+
+{{< v 0.5em >}}
+
+### 協議離婚から単意離婚へ
+
+アメリカでは1970年代から2010年代にかけて, 離婚の形態が協議離婚 (Mutual Consent Divorce, MCD) から単意離婚 (Unilateral Divorce, UD) に変化した.
+
+{{< v 0.5em >}}
+
+- **協議離婚 (MCD)**: 夫婦の合意が必要. 片方のみが希望する場合, DVや不貞を証明する必要
+- **単意離婚 (UD)**: 片方の希望のみで離婚可能
+
+{{< v 0.5em >}}
+
+離婚制度の変更は
+
+- 結婚相手の選択に影響を与えただろうか?
+- 結婚時の行動, 特に人的資本への投資に影響を与えただろうか?
+
+## Stylized Facts
+
+**事実 1: 単意離婚は契約できない婚姻内投資を減らす**
+
+先行研究から, 単意離婚精度は, 契約できない (non-contractible), つまり離婚後分与できない婚姻内投資を減少させると考えられる. 代表的な例は以下のようなもの.
+
+{{< v 0.5em >}}
+
+- 子供への教育投資
+- 配偶者のキャリアや人的資本への投資
+
+{{< v 0.5em >}}
+
+@stevenson2006 では, 単意離婚を導入した州では, 配偶者の人的資本への投資が減少したことが示されている.
+
+---
+
+**事実 2: 単意離婚は同類婚を促進する**
+
+単意離婚の導入による同類婚の変化を示すために, 以下の回帰式^[
+    論文の表記と異なるが, 新婚夫婦の新婚時点のデータを用いているので, $t(m)$, $g(m)$ という表記を用いている. (ある $m$ に対して, 異なる $t$, $g$ のデータがあるわけではない.) また, 定数項は $\delta_g$ に含まれているとみなしても問題はない. $g \times \text{Ed}_{mtg}^h$ という表現の $g$ はおそらくダミー変数なので, $\delta_g$ の表記の方が適切のように思われる.
+]を考える.
+
+$$
+\text{Ed}_{m}^{w} = \sum_{k} \left[\beta_1^{k} \text{UD}_{t(m)g(m)}^k + \beta_2^k\left(\text{Ed}_{m}^h \times \text{UD}_{t(m)g(m)}^k\right)\right]
++ \delta_{t(m)} + \delta_{g(m)} + \delta_{g(m)} \times \text{Ed}_m^h + \epsilon_{m}
+$$
+
+- $\text{Ed}_{m}^w, \text{Ed}_{m}^h$: 新婚カップル $m$ の Wife, Husband の教育年数
+- $t(m)$: 新婚カップル $m$ の結婚年 (2年以内)
+- $g(m)$: 新婚カップル $m$ の居住州
+- $UD_{tg}^k$: $t + \tilde{k}$ 年に単意離婚 (UD) が導入されたことを示すダミー変数
+- $\tilde{k} \in k \in \{\{\dots, -10\}, \{-9, -8\}, \dots, \{-2, -1\}, 0, \{1, 2\}, \dots, \{10, \dots\}\}$
+- PSIDの1968-1992に結婚した初婚かつ新婚のカップルのデータを用いて推定
+
+---
+
+{{< v -0.5em >}}
+
+![](/static/img/article/reynoso2024/fig1.svg){width=60% fig-align="center"}
+
+{{< v -0.5em >}}
+
+単意離婚の導入後:
+
+- 夫の教育年数に対する妻の教育年数の傾き $\beta_{2}^k$ が有意に増加している
+- 同類婚の傾向が強まったと解釈できる
+
+## ベッカー・コースの定理と Imperfectly Transferable Utility (ITU)
+
+::: {.callout-note}
+
+## Becker-Coase Theorem (BCT) の必要条件 (Chiappori et al., -@chiappori2015a)
+
+「MCDかUDかは離婚率に影響を与えない」 というBCTには以下の条件が必要である.
+
+1. 効用関数が結婚時に移転可能 (TU) である
+1. 効用の移転が離婚後も可能である
+1. 結婚時と離婚後の効用の移転率が同一である (効用の基数性が同一)
+
+:::
+
+{{< v 0.5em >}}
+
+- BCTは定理と名が付くが, @becker1991 で提示された概念的な洞察
+- @chiappori2015a は, BCTを定式化し, 反例となるモデルを示した
+- Stylized facts で示した単意離婚の導入後の変化は, BCTを反証する
+    - 離婚後の仮定に無理がある. 離婚後は非協力ゲームを仮定するのが自然
+    - 離婚後の配分に非効率性が生じるため, ITU モデル
+
+
+## モデル
+
+{{< v -0.5em >}}
+
+![](/static/img/article/reynoso2024/fig2.svg){width=60% fig-align="center"}
+
+{{< v -0.5em >}}
+
+- 女性 $f \in \mathcal{X}$ と男性 $m \in \mathcal{Y}$ が存在 ($\mathcal{X}, \mathcal{Y}$ は連続体)
+- 各個人 $i \in \{f, m\}$ は教育レベル $s_i \in \mathcal{S} = \{\text{hs}, \text{sc}, \text{c+}\}$ を外生的に持つ. 各ジェンダーの教育レベルの密度は $\mu_{s_{i}}$ と表記する
+- 各個人は $t = 0$ で結婚し, $T$ 期間の間結婚生活を続けるが, 途中に離婚することもある
+- $t= 0$ で離婚制度 $\mathcal{D} \in \{\text{MCD}, \text{UD}\}$ に直面し, 変わらないと仮定する
+
+## 効用関数
+
+**有配偶者**
+
+$$
+\begin{aligned}
+u_f^M(c_{ft}, q_t, k_t) &= \log \left(q_t(c_{ft} + \alpha^{s_f, s_m}k_t)\right) + \theta_{fm, t} \\
+u_m^M(c_{mt}, q_t, k_t) &= \log \left(q_t(c_{mt})\right) + \theta_{mf, t}
+\end{aligned}
+$$
+
+- $c_{it}$: 個人 $i$ の個人消費 (private consumption)
+- $q_t$: 公共財消費 (public consumption)
+- $k_t$: 専業主婦ダミー. $k_t = 0$ ならば労働市場で働く
+- $\theta_{fm}, t$: 夫婦別の match quality. 以下のようにランダムウォークする
+
+$$
+\theta_{fm, t} = \theta_{fm, t-1} + \epsilon_{fm, t}, \quad \epsilon_{fm, t} \sim \mathcal{N}\left(0, {\sigma_{\theta}^{s_f, s_m}}^2\right).
+$$
+
+---
+
+**離婚者**
+
+$$
+\begin{aligned}
+u_f^D(c_{ft}, q_t) &= \log \left(c_{ft}q_t\right) \\
+u_m^D(c_{mt}, q_t) &= \log \left(c_{mt}q_t^{\gamma}\right)
+\end{aligned}
+$$
+
+- 離婚後は, 元夫は親権を持たないと仮定するため, $\gamma < 1$ の割り引かれた公共財効用を持つ
+
+**単身者**
+
+$$
+u_i^{\emptyset} = \log \left(c_{it}\right)
+$$
+
+- 単身者は公共財消費を持たない (子どもを持つには結婚が必要)
+
+## 賃金 $w_{it}$
+
+$$
+\log w_{it} = \log W_{i}(s_i) + a_{1}^{\mathcal{G}_i}(s_i) \text{exper}_{it}
++ \alpha_{2}^{\mathcal{G}_i}(s_i) \text{exper}_{it}^2
++ a_{3}(s_i)K_t \mathbb{1}\{\mathcal{G}_i = \mathcal{Y}\} + \varepsilon_{it}.
+$$
+
+- $W_{i}(s_i)$: 教育の市場価値
+- $\text{exper}_{it}$: 労働市場での経験年数
+- $K_t = \sum_{r=1}^{t-1}k_{ir}$: 専業主婦期間
+- $\varepsilon_{it} = \varepsilon_{it-1} + \xi_{it}, \quad \xi_{it} \sim \mathcal{N}\left(0, {\sigma_{\xi}^{\mathcal{G}_i}}^2\right)$
+
+重要なポイントは
+
+- $a_3$ は有配偶の男性のみに適用される. 妻が専業主婦の場合, 夫の賃金は上昇する
+- 専業主婦期間は $\text{exper}$ に加算されないので, (離婚後も続く) 賃金のペナルティを受ける
+
+## 結婚市場
+
+### 配偶者の選択
+
+独身でいることまたは配偶者の学歴を選ぶことが可能である. したがって選択集合 $S_0$ は
+
+$$
+\mathcal{S}_0 = \emptyset \cup \mathcal{S} = \{\emptyset, \text{hs}, \text{sc}, \text{c+}\}.
+$$
+
+学歴 $s_f$ の女性が配偶者 $s \in \mathcal{S}_0$ を選ぶ時の効用は以下で与えられる.
+
+$$
+U_f^{s_f, s} = \overline{U}_{\mathcal{X}}^{s_f, s} + \beta_f^{s_f, s}.
+$$
+
+ここで $\overline{U}_{\mathcal{X}}^{s_f, s}$ は $(s_f, s)$ の結婚から得られる期待効用である. 同様に, $s_m$ の男性が配偶者 $s \in \mathcal{S}_0$ を選ぶ時の効用は以下で与えられる.
+
+$$
+U_m^{s, s_m} = \overline{U}_{\mathcal{Y}}^{s, s_m} + \beta_m^{s, s_m}.
+$$
+
+結婚市場では, $s_i$ の相手と結婚した時の期待効用はすでに与えられていると考える. その意味で, 結婚市場は _競争的_ で参加者は (効用の意味で) _price takers_ である.
+
+---
+
+### 独身者の期待効用
+
+個人 $i$ の独身者としての期待効用 $\overline{U}^{\emptyset} \in \{\overline{U}_{\mathcal{X}}^{s, \emptyset}, \overline{U}_{\mathcal{Y}}^{\emptyset, s}\}$ は以下のように表される.
+
+$$
+\overline{U}^{\emptyset} = \mathbb{E}_{0} \sum_{t-1}^T \delta^{t-1} u_{i}^{\emptyset} \left(\rho w_{it}(\varepsilon_{it})\right) + \overline{\theta}^{s_i}
+$$
+
+- $\delta$: 割引因子
+- $\overline{\theta}^{s_i}$: ジェンダー $i$, 教育レベル $s_i$ の独身時の non-economic な生涯効用
+
+---
+
+### 結婚経験者の期待効用
+
+結婚経験者 (有配偶者または離婚者) の意思決定は, 以下の状態変数に依存する
+
+$$
+\symbf{\omega}_{t} = \left\{\lambda_{t}^{s_f, s_m}, K_t, \varepsilon_{ft}, \varepsilon_{mt}, \theta_{fm, t}\right\} \in \Omega_t
+$$
+
+- $\lambda_{t}^{s_f, s_m}$: 妻側の交渉時における効用ウェイト
+
+結婚経験者は $\symbf{\omega}_t$ に基づいて配分 $a_t(\symbf{\omega}_t)$ を決定する.
+
+$$
+a_t(\symbf{\omega}_t) = \{c_{ft}(\symbf{\omega}_t), c_{mt}(\symbf{\omega}_t), q_t(\symbf{\omega}_t), k_t(\symbf{\omega}_t), D_t(\symbf{\omega}_t), \tau_{t}(\symbf{\omega}_t)\} \in \mathcal{A}_t.
+$$
+
+- $D_t(\symbf{\omega}_t)$: 離婚ダミー. $D_t = 1$ ならば離婚状態
+- $\tau_{t}(\symbf{\omega}_t)$: 離婚後の夫から妻への送金
+- シュタッケルベルグゲーム. 夫が $\tau_{t}$ を決定し, 妻が $\tau_{t}$ を所与として配分を決定
+
+---
+
+タイプ $s_m$ の男性がタイプ $s_f$ の女性と結婚した時の期待効用は以下で与えられる.
+
+$$
+\overline{U}_{\mathcal{Y}}^{s_f, s_m} = \max_{\mathbf{a} \in \{\mathcal{A}_t\}_{t=1}^{T}}
+\mathbb{E}_0 \sum_{t=1}^T \delta^{t-1} \left((1-D_t)u_{m}^M(a_t(\symbf{\omega})) + D_t u_m^D(a_t(\symbf{\omega}))\right)
+$${#eq-objective-function}
+
+subject to
+
+$$
+\mathbb{E}_0 \sum_{t=1}^T \delta^{t-1} \left((1-D_t)u_{f}^M(a_t(\symbf{\omega})) + D_t u_f^D(a_t(\symbf{\omega}))\right) \ge \overline{U}_{\mathcal{X}}^{s_f, s_m}
+$${#eq-participation-constraint}
+
+女性側の参加制約 (-@eq-participation-constraint) のラグランジュ乗数を $\lambda_0^{s_f, s_m}$ とする.
+
+**予算制約**
+$$
+\begin{aligned}
+&c_{ft} + c_{mt} + q_t = w_{ft}(\symbf{\omega})(1-k_t) + w_{mt}(\symbf{\omega}) & \text{if } D_t = 0 \\
+&x_{ft} + q_t = w_{ft}(\symbf{\omega}) + \tau_t; x_{mt} = w_{mt}(\symbf{\omega}) - \tau_{t} & \text{if } D_t = 1
+\end{aligned}
+$${#eq-budget-constraint}
+
+## 離婚制度
+
+### 協議離婚 (MCD)
+
+$$
+D_t = \begin{cases}
+1 & \mathbb{E}_0 \sum_{r=0}^{T-t} \delta^{r} u_g^M(a_{t+r}(\symbf{\omega})) \le \mathbb{E}_0 \sum_{r=0}^{T-t} \delta^{r} u_g^D(a_{t+r}(\symbf{\omega})), \quad\exists \{a_{t+r}\}_{r=0}^{T-t}, \forall g \in \{f, m\}, t > 1\\
+0 & \text{ otherwise}
+\end{cases}
+$${#eq-mcd}
+
+- 両者が離婚によって better off する配分 ${a_{t+r}(\symbf{\omega})}$ が存在する場合, $D_t = 1$ となる
+
+{{< v 0.5em >}}
+
+**離婚調停** (divorce settlement) の仮定
+
+$$
+\max_{a_{t^D}} \lambda_t^{D} \left(u_{f, t}(a_{t^D}) + \delta \mathbb{E}[v_{f, t^{D}s+1}]\right) + (1 - \lambda_t^{D}) \left(u_{m, t}(a_{t^D}) + \delta \mathbb{E}[v_{m, t^{D}+1}^A]\right)
+$$
+
+- 離婚が決定した時点 $t^D$ で, 両者の配分はパレート効率的に決定される
+- $v_{g, t^{D}+1}^A$: 離婚後の期 $t^{D}+1$ 以降の非協力的な状態 (autarky) の価値関数
+- 単意離婚 (UD) の場合は離婚調停はなく, すぐに非協力な状態 $v_{g, t^{D}}$ に移行する
+
+---
+
+{{< v 0.5em >}}
+
+### 単意離婚 (UD)
+
+$$
+D_t = \begin{cases}
+0 & \mathbb{E}_0 \sum_{r=0}^{T-t} \delta^{r} u_g^M(a_{t+r}(\symbf{\omega})) \ge \mathbb{E}_0 \sum_{r=0}^{T-t} \delta^{r} u_g^D(a_{t+r}(\symbf{\omega})), \quad\exists\{a_{t+r}\}_{r=0}^{T-t}, \forall g \in \{f, m\}, t > 1\\
+1 & \text{ otherwise}
+\end{cases}
+$${#eq-ud}
+
+{{< v 0.5em >}}
+
+**再交渉** (renegotiation) の仮定
+
+- 一方が離婚によって better off する場合, $\lambda_t^{s_f, s_m}$ を修正し, 離婚を防ぐことができる
+- 両者が結婚によって better off する配分 ${a_{t+r}(\symbf{\omega})}$ と $\lambda_{t}^{s_f, s_m}$ が存在しない場合, $D_t = 1$
+- 協議離婚 (MCD) の場合は, 両者が離婚によって better off するので, 再交渉はしない
+
+
+
+## 結婚市場均衡
+
+::: {.callout-note}
+
+## 結婚市場均衡
+
+1. 男性と女性の効用価格の行列を定義する. $\Upsilon := \left\{\left(\overline{U}_{\mathcal{X}}^{s_f, s_m}, \overline{U}_{\mathcal{Y}}^{s_f, s_m}\right)\right\}_{(s_f, s_m) \in \mathcal{S}^2}$
+1. 女性のタイプから男性性のタイプへの割り当て $\mu: \mathcal{S} \to \mathcal{S}$ が以下を満たす.
+
+$$
+\begin{aligned}
+&\mu_{s_f \to s_m}(\Upsilon) = \mu_{s_f \leftarrow s_m}(\Upsilon) & \forall (s_f, s_m) \in \mathcal{S}^2 \\
+&\mu_{s_f} = \mu_{s_f \to \emptyset} + \sum_{s_m \in \mathcal{S}} \mu_{s_f \to s_m}(\Upsilon) & \forall s_f \in \mathcal{S} \\
+&\mu_{s_m} = \mu_{s_m \to \emptyset} + \sum_{s_f \in \mathcal{S}} \mu_{s_f \leftarrow s_m}(\Upsilon) & \forall s_m \in \mathcal{S}
+\end{aligned}
+$$
+
+:::
+
+- ここでは, 配偶者の最低効用 $\Upsilon$ が価格として振る舞い, 内生的に決定する
+- 均衡の存在と一意性は @reynoso2024 の Appendix B で示されている
+
+## Calibration
+
+### Constrained SMM
+
+$$
+(\hat{\Pi}, \hat{\Lambda}) = \arg \min_{\Pi, \Lambda} (\mathcal{M}(\Pi, \Lambda) - \text{Data})'\mathcal{V}(\mathcal{M}(\Pi, \Lambda) - \text{Data})
+$$
+
+subject to
+
+$$
+\forall (s_f, s_m): \mu_{s_f \rightarrow s_m}(\Pi, \Lambda) = \mu_{s_f \leftarrow s_m}(\Pi, \Lambda).
+$$
+
+{{< v 0.5em >}}
+
+- $\Upsilon$ はパレートウェイト $\Lambda := \left\{\lambda_0^{s_f, s_m}\right\}_{(s_f, s_m) \in \mathcal{S}^2}$ から求められる
+    - 導出は @reynoso2024 の Online Appendix B を参照
+- モデル内の54のパラメータ $\Pi$ と $\Lambda$ を求めるために, 252のモーメントを用いる.
+- @gayle2019 と同様に, @su2012 によって高速化する
+- **協議離婚 (MCD)** の場合のデータを用いてカリブレーションする
+- 結果は @reynoso2024 の Table 1 を参照のこと
+
+## Assortative Mating (協議離婚, MCD)
+
+![](/static/img/article/reynoso2024/table2.svg){width=60% fig-align="center"}
+
+- ここでは $\lambda = \frac{\lambda_0}{\lambda_0 + 1} \in (0, 1)$ に変換されている
+- 学歴が高いほど高いパレートウェイト (交渉力)
+
+## 単位離婚 (UD) の影響
+
+### 同類婚 (Assortative Mating)
+
+![](/static/img/article/reynoso2024/table3.svg){width=60% fig-align="center"}
+
+- 単意離婚 (UD) の導入により, 同類婚の傾向が強まる (South Central 以外)
+
+---
+
+### 同類婚のメカニズム
+
+![](/static/img/article/reynoso2024/table4.svg){width=80% fig-align="center"}
+
+- 離婚調停 (divorce settlement) がある, 再交渉 (renegotiation) がないと同類婚が弱まる
+- 離婚は人的資本を積み上げられない専業主婦 (夫) にとって不利
+    - 学歴差婚は, 学歴の低い配偶者が専業主婦 (夫) になる可能性が高い
+    - 離婚調停は離婚後の生活を向上させ, 再交渉は専業主婦の交渉力を弱める
+
+---
+
+### 専業主婦率
+
+![](/static/img/article/reynoso2024/fig5.svg){width=50% fig-align="center"}
+
+- 単意離婚 (UD) は基本的には専業主婦率を減少させる (離婚のリスクが高い)
+- ただし, 均衡効果もあるため, 専業主婦が増加する場合 (地域, 学歴による) もある
+
+
+### 離婚率
+
+![](/static/img/article/reynoso2024/fig6.svg){width=60% fig-align="center"}
+
+- 単意離婚 (UD) の導入により, 離婚率は増加する
+
+### 結婚の利益 (Gains from Marriage, GM)
+
+![](/static/img/article/reynoso2024/fig7.svg){width=50% fig-align="center"}
+
+- 単意離婚 (UD) が結婚の利益を増加させるかは曖昧
+    - 離婚の自由度が高まることによる結婚の利益の増加
+    - 離婚後の保証が減ることによる結婚の利益の減少
+
+## まとめ
+
+**協議離婚 (MCD)** から **単意離婚 (UD)** へ
+
+- 単意離婚 (UD) の導入により, 同類婚 (Assortative Mating) が強まった
+- 学歴差婚は, 学歴が低い配偶者の離婚のリスクを高めるため, 忌避される
+- Becker-Coase theorem (離婚制度は婚姻に影響を与えない) を実証的に反証した
+
+{{< v 0.5em >}}
+
+**Frictionless Marriage Market under ITU**
+
+- 離婚後の非効率性を考慮した Imperfectly Transferable Utility (ITU) モデルを構築
+- 実証的な事実と整合的な結果 (同類婚の強化) を得た
+- 単意離婚 (UD) の導入の影響が学歴ごとに異なることを示唆する結果
+
+{{< appendix >}}
+
+## 参考文献
+
+:::{refs}
+:::

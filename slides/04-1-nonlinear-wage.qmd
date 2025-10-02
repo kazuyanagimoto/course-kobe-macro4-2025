@@ -1,0 +1,347 @@
+---
+title: Non-linear Wage
+subtitle: "@erosa2022"
+description: "@erosa2022"
+date: 2026-01-05
+format:
+  clean-typst:
+    commands: [align]
+    environments: [align]
+    include-in-header:
+      - text: '#import "@preview/cetz:0.3.4"'
+      - text: '#import "@preview/cetz-plot:0.1.1"'
+image: /static/cetz/nonlinear_wage.svg
+---
+
+## 労働供給の経済学
+
+労働供給 (Labor Supply) といった時, 次の二つの要素がある.
+
+- Extensive Margin: 労働市場に参加するかどうか
+- Intensive Margin: 労働市場に参加した場合, 何時間働くか
+
+**Extensive Margin**
+
+- 労働参加率 (Labor Force Participation Rate) を指す場合が多い
+- 女性の労働参加 (Female Labor Force Participation, FLFP) も重要
+
+**Intensive Margin**
+
+- (週あたり) 労働時間を指す場合が多い
+- 労働参加を所与とした統計か, 労働非参加を0として含むか (extensive margin)
+
+## 労働供給の弾力性
+
+労働供給の賃金に対する弾力性には主に以下の3つがある:
+
+1. Marshallian 弾力性: 所得を一定とした下での労働供給の弾力性
+2. Hicksian 弾力性: 効用のレベルを一定とした下での労働供給の弾力性
+3. Frisch 弾力性: 限界効用を一定にした下での労働供給の弾力性
+
+{{< v 0.5em >}}
+
+マクロ経済学で関心があるのは基本的に Frisch 弾力性:
+
+- 動学モデルでは, 各期の労働供給は将来の限界効用を所与として決定する
+- そのため, 景気循環や政策の影響を受ける労働供給の弾力性は Frisch 弾力性である
+
+## Frisch 弾力性
+
+$$
+V(a) = \max_{c, h, a'} u(c, h) + \beta V(a') \quad \text{s.t. } c + a' = (1 + r)a + wh
+$$
+
+$\lambda$ をラグランジュ乗数とした一階条件から $u_c(c, h) = \lambda$, $u_h(c, h) = -\lambda w$ より, 
+
+$$
+u_{cc} \frac{\partial c}{\partial w} + u_{ch} \frac{\partial h}{\partial w} = 0 \text{ and }
+u_{hc} \frac{\partial c}{\partial w} + u_{hh} \frac{\partial h}{\partial w} = -\lambda.
+$$
+
+これを $\frac{\partial h}{\partial w}$ について解くと,
+
+$$
+\frac{\partial h}{\partial w} = \frac{u_{h}}{u_{hh} - \frac{u_{ch}^2}{u_{cc}}} \frac{1}{w}.
+$$
+
+Frisch 弾力性 $\eta := \frac{\partial h}{\partial w}\frac{w}{h}$ より,
+
+$$
+\eta = \frac{u_{h}}{h\left(u_{hh} - \frac{u_{ch}^2}{u_{cc}}\right)}.
+$$
+
+## Frisch 弾力性: マクロ vs ミクロ
+
+マクロ経済学でよく用いられる (separable) なCRRA 効用関数を考えると,
+
+$$
+u(c, h) = \frac{c^{1-\sigma}}{1-\sigma} - \alpha \frac{h^{1+\phi}}{1+\phi} \Rightarrow \eta = \frac{1}{\phi}.
+$$
+
+@chetty2011 はメタ分析を行い, Frisch 弾力性の平均的な推定値を報告した.
+
+- ミクロ分析 (擬似実験, quasi-experiment): 0.82
+- マクロモデル: 2.84
+    - RBCモデルなどで, 雇用は実質賃金よりも volatile
+
+{{< v 0.5em >}}
+
+Puzzle:「マクロモデルの Frisch 弾力性はミクロモデルよりもかなり大きい」
+
+- Frisch 弾力性の推定値に関しては, 今も議論が続いている
+    - 例: @erosa2016
+
+## 労働供給と家族経済学
+
+![@greenwood2023](/static/img/article/greenwood2023/fig2_1.svg){width=70% fig-align="center"}
+
+- 1940年以降, 男女別の労働時間はあまり変化していない
+- 過去150年で女性の労働参加率は大きく上昇した
+- 通常のマクロ経済学が仮定する単一 (unitary) な家計のモデルでは説明できない
+
+
+# @erosa2022
+
+## Linear vs. Non-linear Jobs
+
+@goldin2014 は男女平等の "Last Chapter" として, 職種による賃金構造の違いを指摘した
+
+**Linear Jobs** (薬剤師など)
+
+- 収入が労働時間に比例する. 標準的な経済モデルでの仮定 $e = w h$
+
+**Non-linear Jobs** (MBA, 弁護士など)
+
+- 労働時間が長いほど時給が高くなる (凸的, convex wage profile)
+
+{{< v 0.5em >}}
+
+@erosa2022 はこれに着想を得て, 男女間の職種の違いと賃金格差を分析した
+
+- Non-linear jobs は長時間労働を要求されるため, 家事・育児の負担が大きい女性に不利
+- 女性は賃金が比較的低い linear jobs を選択しやすい
+
+## Stylized Facts
+
+### 職業と労働時間
+
+{{< v -0.5em >}}
+
+![](/static/img/article/erosa2022/fig1.svg){width=80% fig-align=center}
+
+- データ: Current Population Survey (CPS) 1986-1995, United States
+- 3桁の職業分類ごとに平均値を算出
+- 職業ごとに平均労働時間にバリエーション
+- 労働時間と**時給**に正の相関 $\Rightarrow$ Non-linear jobs
+
+---
+
+### 職業と労働時間のジェンダーギャップ
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/erosa2022/fig3.svg)
+
+![](/static/img/article/erosa2022/fig4.svg)
+
+:::
+
+- 男性の平均順に職業を並べ, 同じ職業の女性の値をプロット
+- 平均労働時間, 時給ともに女性の方が低い
+
+---
+
+### Linar vs. Non-linear Jobs
+
+![](/static/img/article/erosa2022/table1.svg){width=80% fig-align=center}
+
+- 3桁の職業分類のうち, 平均労働時間が中央値より大きいものを Non-linear jobs と定義
+- Non-linear jobs の方が賃金も高い
+
+## モデル
+
+### 設定
+
+- 静的なカップルの意思決定モデル. 男性 $g = m$, 女性 $ g = f$
+- カップルは職業 $j_m, j_f \in \{1, 2\}$ と労働時間 $h_{m}, h_{f}$ を選択
+- 男女の家事労働時間 $T_m, T_f$ は _外生的_ に与えられる ($T_m < T_f$)
+- カップルごとに職業に応じた能力 $a_{m1}, a_{m2}, a_{f1}, a_{f2}$ と労働への選好 $\phi_m, \phi_f$ が与えられる
+
+### 家計の問題
+
+$$
+\max_{c_m, c_f, h_m, h_f, j_m, j_f} u_m(c_m, h_m) + u_f(c_f, h_f)
+\quad\text{subject to } c_m + c_f \leq e_{j_m}(h_m) + e_{j_f}(h_f)
+$$
+
+ここで, $e_j(h)$ は職業ごとの収入関数であり, 効用関数は
+
+$$
+u_g(c_g, h_g) = \log c_g - \phi_g \frac{(T_g+h_g)^{1+\gamma}}{1+\gamma}.
+$$
+
+---
+
+### Convex Wage Profile
+
+```{=typst}
+#let xbar = 0.5
+#let color_base = rgb("#107895")
+#let theta1 = 2.0
+#let theta2 = 0.5
+#let e(x, theta, xbar: xbar) = {
+  if x < xbar {
+    return calc.pow(x, 1+theta)
+  } else {
+    return calc.pow(xbar, theta) * x
+  }
+}
+
+#let e_nl(x) = e(x, theta1)
+#let e_l(x) = e(x, theta2)
+```
+
+::: {layout-ncol=2}
+
+```{=typst}
+#cetz.canvas(length: 5cm, {
+  import cetz.draw: *
+  import cetz-plot: *
+
+  plot.plot(axis-style: "school-book", x-label: $h$, y-label: $e_1(h)$,
+            size: (2, 1), x-tick-step: none, y-tick-step: none, {
+    plot.add(e_nl, domain: (0., 0.75), style: (stroke: color_base))
+    plot.add-vline(xbar, min: 0, max: e_nl(xbar), style: (stroke: (dash: "dashed" , paint: gray)))
+    plot.annotate({
+      content((xbar, -0.02), [ $ overline(h) $])
+    })
+    
+  })
+
+})
+```
+
+```{=typst}
+#cetz.canvas(length: 5cm, {
+  import cetz.draw: *
+  import cetz-plot: *
+
+  plot.plot(axis-style: "school-book", x-label: $h$, y-label: $e_2(h)$,
+            size: (2, 1), x-tick-step: none, y-tick-step: none, {
+    plot.add(e_l, domain: (0., 0.75), style: (stroke: color_base))
+    plot.add-vline(xbar, min: 0, max: e_l(xbar), style: (stroke: (dash: "dashed" , paint: gray)))
+    plot.annotate({
+      content((xbar, -0.05), [ $ overline(h) $])
+    })
+    
+  })
+
+})
+```
+
+:::
+
+
+$$
+e_j(h) = \begin{cases}
+a_{j} h^{1+\theta_j} & \text{if } h \le \overline{h} \\
+a_{j} \overline{h}^{1+\theta_j} h & \text{if } h > \overline{h}
+\end{cases}
+$$
+
+ここでは $\theta_1 > \theta_2 > 0$ を仮定 (Non-linear jobs の方が凸的)
+
+## カリブレーション
+### Exogenous Parameters
+
+- $\theta_1=0.6$, $\theta_2=0.2$: Literature. Appendix Bにて詳細な議論
+- $\overline{h} = 2500$
+    - @bick2022 は, 週50時間以上働く人の時給が低いことを指摘
+    - 年50週労働と仮定
+- $T_m = 0$, $T_f = 500$: @aguiar2007 の1993年のデータに基づく
+- $\gamma = 3$: Literature. Frisch 弾力性 $\eta = 1/3$
+
+### Ability
+
+:::: {.align options="center"}
+::: {style="font-size: 16pt"}
+
+$$
+\begin{aligned}
+\log
+\begin{pmatrix}
+a_{m1} \\ a_{f1} \\ a_{m2} \\ a_{f2}
+\end{pmatrix}
+&\sim \mathcal{N}\left(
+    \begin{pmatrix}
+    0 \\ 0 \\ \mu_{a_2} \\ \mu_{a_2}
+    \end{pmatrix},
+\begin{pmatrix}
+    \sigma_1^2 & \rho_{a_m, a_f}\sigma_1^2 & \rho_{a_1, a_2}\sigma_1\sigma_2 & 0 \\
+    \cdot & \sigma_1^2 & 0 & \rho_{a_1, a_2}\sigma_1\sigma_2 \\
+    \cdot & \cdot & \sigma_2^2 & \rho_{a_m, a_f}\sigma_2^2 \\
+    \cdot & \cdot & \cdot & \sigma_2^2 
+\end{pmatrix}
+\right)\\
+\log
+\begin{pmatrix}
+\phi_m \\ \phi_f
+\end{pmatrix}
+&\sim \mathcal{N}\left(
+    \begin{pmatrix}
+    \mu_{\phi} \\ \mu_{\phi}
+    \end{pmatrix},
+\begin{pmatrix}
+    \sigma_{\phi}^2 & \rho_{\phi}\sigma_{\phi}^2 \\
+    \cdot & \sigma_{\phi}^2
+\end{pmatrix}
+\right)
+\end{aligned}
+$$
+
+:::
+::::
+
+---
+
+### Simulated Method of Moments (SMM)
+
+{{< v -0.5em >}}
+
+![](/static/img/article/erosa2022/table2.svg){width=70% fig-align=center}
+
+- 男性側のモーメントで推定. ジェンダーギャップはモデルからの含意
+- 男女で能力や選好の差はないと仮定. ジェンダーギャップは $T_m < T_f$ によって生じる
+
+## Untargeted Moments
+
+{{< v -0.5em >}}
+
+![](/static/img/article/erosa2022/table3.svg){width=60% fig-align=center}
+
+- Occupation はNLの割合の男女差. Hours, Wagesは対数値の男女差
+- 多くの割合をモデルが再現
+
+
+## まとめ
+
+**労働供給の経済学**
+
+- Intensive margin と extensive margin
+- Frisch 弾力性のマクロ vs ミクロの違い
+- 古典的な unitary モデルの限界 $\Rightarrow$ 家庭内 (夫婦) の意思決定モデル
+
+**@erosa2022**
+
+- @goldin2014 は職業ごとの賃金構造の違いを指摘
+    - Nonlinearな職業は長時間労働の代わりに高賃金
+- 男女の職業選択にNonlinear vs Linear jobs の違いがある
+- 家事負担の男女差が職業選択の男女差をもたらし, 賃金格差の一因となっている
+
+
+{{< appendix >}}
+
+## 参考文献
+
+:::{refs}
+:::

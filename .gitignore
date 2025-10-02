@@ -1,0 +1,26 @@
+# Julia
+Manifest.toml
+
+# R
+.Renviron
+
+# VS Code
+.vscode/
+
+# Quarto
+*_files/
+.quarto/
+_site/
+_book/
+
+# Other
+.DS_Store
+refs/
+.Rproj.user
+air.toml
+_targets.yaml
+/.quarto/
+data/raw/
+typst-template.pdf
+typst-show.pdf
+**/*.quarto_ipynb

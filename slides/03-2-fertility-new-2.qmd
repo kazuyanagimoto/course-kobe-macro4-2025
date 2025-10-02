@@ -1,0 +1,358 @@
+---
+title: New Theory of Fertility II
+subtitle: "@adda2017"
+description: "@adda2017"
+date: 2025-12-22
+image: /static/img/article/adda2017/fig3f.jpeg
+---
+
+# @adda2017
+
+## Data
+
+- German social security records (IABS): 行政データ. 被雇用者の2%をカバー
+- German Socio-Economic Panel (GSOEP): サーベイ. デモグラフィック, キャリアなど
+- Income And Expenditure Survey (EVS): サーベイ. 貯蓄
+- 1955年から1975年の間に西ドイツで生まれた女性を対象
+- low- and intermediate-track school の卒業生を対象
+    - 15/16歳から2-3年の職業訓練を受ける
+    - ホワイトカラー, ブルーカラーのどちらの仕事もあり, 他国では大卒資格が必要な仕事も含まれる (e.g., nurse, medical assistant, accountant)
+    - 基本的に大学には進学しない
+
+### 職種
+
+- **Routine**: ルーティン仕事. 必要なスキルが変わりにくい. (e.g., shop assisntant, sewer)
+- **Abstract**: 分析的. 必要なスキルが変わりやすい. (e.g., bank clerk, medical assistant)
+- **Manual**: 肉体労働だがルーティンではない (e.g., nurse, steward)
+
+## Stylized Facts
+
+{{< v -1.5em >}}
+
+:::: {layout-ncol=2}
+
+::: {.column}
+
+![](/static/img/article/adda2017/table1_1.svg){width=50%}
+
+:::
+
+::: {.column}
+
+{{< v 4em >}}
+
+![](/static/img/article/adda2017/table1_2.svg){width=50%}
+
+:::
+::::
+
+{{< v -1em >}}
+
+- 職種間の移動がほとんどない (Panel A)
+- Abstractは賃金が高く, 経験による賃金上昇も大きい (Panel B)
+- Abstractは経験年数やフルタイムの割合が高い (Panel C)
+- Abstractは休業による賃金の減少が大きい (Panel D)
+- Abstractは初産年齢が高く, 子どもの数が少ない (Panel E)
+
+---
+
+### 貯蓄の重要性
+
+![](/static/img/article/adda2017/fig1.jpeg){width=50% fig-align="center"}
+
+- 女性は子どもを産む前に貯蓄を始める
+- 貯蓄は晩産化の理由になりうる. またキャリアとの兼ね合いの結果かもしれない
+
+## Model
+
+### 設定
+
+- 15-80歳の女性のライフサイクルモデル. モデル内の一期間は半年
+- $f_i =(f_i^P, f_i^L, f_i^C, f_i^F)$:　女性 $i$ のタイプ
+    - $f_i^P$: 仕事の能力
+    - $f_i^L$: 余暇への選好
+    - $f_i^C$: 子どもへの選好
+    - $f_i^F$: 不妊性. 5%の女性が該当と仮定. 自分からはわからない
+- 女性は初めに職業 $o_{it} \in \{\text{routine}, \text{abstract}, \text{manual}\}$ を選択する
+- 各期ごとに消費, 貯蓄, 職業, 労働時間, 新たに子どもを持つかどうかを決定する
+- 各期ごとに確率的に新しい職種と労働時間のオファーがなされ, 転職を決定する
+
+
+### 労働市場
+
+- 労働時間 $l_{it}$ は フルタイム $FT$, パートタイム $PT$, 失業 $U$, 休業 $OLF$ のいずれか
+- 職種ごとにオファーの確率は異なる
+- 各期, 外生的な確率 $\delta$ で失業する
+
+### 効用関数
+
+$$
+u_{it} = u_{1}(c_{it}, l_{it}; n_{it}, f_{i}^L) + u_{2}(n_{it}; f_{i}^C, age_{it}^K, l_{it}, o_{it}, h_{it}) + u_{3}(b_{it}, \Upsilon_{it})
+$$
+
+- $c_{it}$: 消費
+- $l_{it} \in \{FT, PT, U, OLF\}$: 労働時間
+- $n_{it}$: 子どもの人数
+- $\text{age}_{it}^K$: 最も若い子どもの年齢
+- $b_{it}$: 子どもを持つかどうか
+- $\Upsilon_{it} = (\eta_{it}^C, \eta_{it}^{NC})$: 子どもを持とうとすること (conception) に対する選好 $\eta_{it}^C$ と持とうとしないこと (non-conception) に対する選好 $\eta_{it}^{NC}$ のベクトル
+
+---
+
+
+### 予算制約
+
+$$
+A_{it+1} = (1+r)A_{it} + \text{net}(GI_{it}; h_{it}, n_{it}) - c_{it}^{HH} - \kappa(\text{age}_{it}^K, n_{it})I_{l_{it} = FT, PT, n_{it} > 0}.
+$$
+
+- $A_{it}$: 資産
+- $r$: 利子率
+- $GI_{it}$: Gross Income. 税引き前の所得
+- $\text{net}(GI; h, n)$: 税引き後の所得. 結婚している場合 ($h = 1$) と独身の場合 ($h = 0$) や子どもの人数 ($n$) によって異なる
+- $\kappa(age^K, n)$: 子育てコスト. 最も若い子どもの年齢 $age^K$ と子どもの人数 $n$ によって異なる
+
+---
+
+### スキルと賃金
+
+フルタイムの日給 $w_{it}$ は以下のように決定される (パートタイムの場合, $0.5w_{it}$).
+
+$$
+\log w_{it} = f_{i}^P + \alpha_{O}(o_{it}) + \alpha_{X}(o_{it})x_{it} + \alpha_{XX}(o_{it})x_{it}^2 + \eta_{it}.
+$$
+
+仕事の能力 $f_{i}^P$, 職種 $o_{it}$, スキル $x_{it}$ によって賃金が決定される. スキルは, 労働時間によって増加するが, 仕事を離れていた場合は減少する.
+
+$$
+x_{it+1} = \begin{cases}
+x_{it} + 1 & \text{if } l_{it} = FT \\
+x_{it} + 0.5 & \text{if } l_{it} = PT \\
+x_{it}\rho(x_{it}, o_{it}) & \text{if } l_{it} \in \{OLF, U\}
+\end{cases}.
+$$
+
+スキルの減少率はそれまでのスキルのレベル $x_{it}$ と職種 $o_{it}$ によって異なる.
+
+$$
+\rho(x_{it}, o_{it}) = \rho_{1}(o_{it})I_{x_{it} \in [0, 5)} + \rho_{2}(o_{it})I_{x_{it} \in [5, 7)} + \rho_{3}(o_{it})I_{x_{it} \in [7, \infty)}.
+$$
+
+## ライフイベント
+
+**結婚と離婚**
+
+年齢 $\text{age}_{it}^M$ , スキル $x_{it}$, 子供への選好 $f_{i}^C$, 子どもの人数 $n_{it}$ によって確率的に決定
+
+$$
+\begin{aligned}
+P(h_{it} = 1 | h_{it-1} = 0; \text{age}_{it}^M, x_{it}, f_{i}^C) &= \lambda_{0}^M + \lambda_{1}^Ms(\text{age}_{it}^M) + \lambda_{2}^M x_{it} + \lambda_{3}^M f_{i}^C \\
+P(h_{it} = 0 | h_{it-1} = 1; \text{age}_{it}^M, n_{it}) &= \lambda_{0}^D + \lambda_{1}^D s(\text{age}_{it}^M) + \lambda_{2}^D n_{it}
+\end{aligned}
+$$
+
+**夫の収入**
+
+$$
+\text{earn}_{it}^h = \alpha_{0}^h + \alpha_{a1}^h \text{age}_{it}^M + \alpha_{a2}^h \text{age}_{it}^{M^2} + \sum_{j} \alpha_j^h I_{o_{it} = j} + \alpha_{P}^h f_{i}^P + \eta_{it}^h
+$$
+
+**出産**
+
+- 出産を決定した際, 妊娠する確率は $\pi(\text{age}_{it}, f_{i}^F)$ で決定される.
+- 不妊症である $f_{i}^F \in \{0, 1\}$ ことは女性側が知ることはできない
+
+## ベルマン方程式
+
+$$
+V_t(\Omega_{it}) = \max_{b_{it}, c_{it}, o_{it}, l_{it}} u(c_{it}, o_{it}, l_{it}; n_{it}, h_{it}, \text{age}_{it}^{K}, \Upsilon_{it}, f_{i}) + \beta \mathbb{E}_t[V_{t+1}(\Omega_{i, t+1})]
+$$
+
+- 状態変数: $\Omega_{it} = \left(l_{it-1}, o_{it-1}, A_{it-1}, h_{it-1}, \text{age}_{it}^M, x_{it}, n_{it}, \text{age}_{it}^K, \Upsilon_{it}, f_{i}\right)$
+- 単に期待値 $\mathbb{E}_t$ と表しているが, 以下の要因を考慮する必要がある (元論文のAppendix)
+    - 子どもが生まれる確率 $\pi(\text{age}_{it}^M, f_{i}^F)$ 
+    - 外生的な失業リスク $\delta$
+    - 新たな仕事のオファー $\phi_0(o_{it}, l_{it})$
+
+**最初の職業選択**
+
+$$
+o_{i0} = \arg\max_{o} \beta^6 \mathbf{E}_{0} V_{6}(\Omega_{i, 6}) - \text{cost}(o, R_i, \text{Year}_{i}) - \omega_{i0}
+$$
+
+初職の職業訓練は6期間 (3年) 行われる. それを考慮して, 最初の職業を離散選択する.
+
+- $R_i$: 住んでる地域
+- $\omega_{i0}$: Preference shock. ガンベル分布に従う
+- 訓練期間は子どもを持つことができない
+
+## 結果
+
+{{< v -1em >}}
+
+:::: {layout-ncol=2}
+
+::: {.column}
+
+![](/static/img/article/adda2017/table3.svg){width=50% fig-align="center"}
+
+:::
+
+::: {.column}
+
+**Wage Function** (Panel B)
+
+![](/static/img/lecture/adda2017_wage.svg){width=50% fig-align="center"}
+
+:::
+
+::::
+
+- 一年の休職に伴うスキルの減耗 (atrophy) は, Abstractで最も大きい
+- Abstractは賃金が高く, より凹でない (離職による賃金の減少が大きい)
+- 職種ごとの子育てのしやすさ (amenity) は, Abstract < Manual < Routine
+
+---
+
+{{< v -0.5em >}}
+
+![](/static/img/article/adda2017/fig2.jpeg){width=50% fig-align="center"}
+
+- 子どもを持つ数年前から貯蓄を始める
+- 子どもを持つことにかかるコスト (消費, 時間, 人的資本) を想定
+
+## Career Costs of Children
+
+{{< v -0.5em >}}
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/adda2017/fig3a.jpeg){width=45%}
+
+![](/static/img/article/adda2017/fig3b.jpeg){width=50%}
+
+:::
+
+{{< v -0.5em >}}
+
+- Career costs of children: $\pi(\cdot) = 0$, 子どもを持てないと知っている場合との比較
+- Abstract を選ぶ女性の増加(a). 労働時間の増加(b).
+
+---
+
+{{< v -0.5em >}}
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/adda2017/fig3c.jpeg){width=50%}
+
+![](/static/img/article/adda2017/fig3d.jpeg){width=50%}
+
+:::
+
+{{< v -0.5em >}}
+
+- パートタイムの増加(c). Baseline では子育て期に利用されている
+- 賃金の上昇(d). Abstract の増加, 労働時間の増加による
+
+## Career Costs of Children
+
+$$
+NPV_{i}^s = \sum_{t=0}^{T} \beta^t \left(
+    w_{it}^s\mathbb{1}\{\text{working}\}_{it}^{s} +
+    b_{U, it}^s\mathbb{1}\{\text{unemployed}\}_{it}^{s} +
+    b_{M, it}^s\mathbb{1}\{\text{matternity leave}\}_{it}^{s}
+    \right)
+$$
+
+{{< v 0.5em >}}
+
+- $s \in \{F, NF\}$: シナリオ. 子どもを産む($F$) / 産まない($NF$)
+- $NPV_{i}^s$: 15歳時点での生涯所得の現在価値 (Net Present Value). $\beta = 0.95$ は割引因子
+- $NPV^{F}$, $NPV^{NF}$ を各シナリオの平均値とすると, 子どもの相対的なコストを定義できる
+
+$$
+\text{Relative Costs of Children} = \frac{NPV^{F} - NPV^{NF}}{NPV^{F}}.
+$$
+
+## Decomposition of Costs of Children
+
+::: {.callout-note}
+## Kitagawa-Oaxaca-Blinder分解
+
+ある2つのグループ $g \in \{1, 2\}$ に関して, 線形のモデルを考える.
+$y_{i}^{g} = X_{i}^{g}\symbf{\gamma}^{g} + \varepsilon_{i}^{g}$.
+この時, 非説明変数の平均の差は以下のように分解できる.
+
+$$
+\overline{y}^{1} - \overline{y}^{2} = \overline{X}^{1} \hat{\symbf{\gamma}}^{1} - \overline{X}^{2} \hat{\symbf{\gamma}}^{2}= \left(\overline{X}^{1} - \overline{X}^{2}\right) \hat{\symbf{\gamma}}^{1} + \overline{X}^{2} (\hat{\symbf{\gamma}}^{1} - \hat{\symbf{\gamma}}^{2}).
+$$
+
+:::
+
+この論文では (おそらく) $NPV = h w + \varepsilon_i$ と仮定し, 以下のように分解している.
+$$
+\begin{aligned}
+\frac{NPV^{F} - NPV^{NF}}{NPV^{F}} &= \underbrace{\frac{\overline{h}^{F} - \overline{h}^{NF}}{NPV^{F}} w^{F}}_{\text{Labor supply contribution}} + \underbrace{\frac{\overline{h}^{NF}}{NPV^{F}} (w^{F} - w^{NF})}_{\text{Wage contribution}} & \quad\text{(Table 6a)}\\
+\end{aligned}
+$$
+
+Table 6bでは, Wage contribution をさらに2通りに分解している
+
+1. Atrophy (スキルの減少) vs Other factors
+1. Occupation (初職の違い) vs Other factors
+
+---
+
+{{< v -0.5em >}}
+
+![](/static/img/article/adda2017/table6.svg){width=80% fig-align="center"}
+
+- Career Cost of Children: 全体としては35.3%のNPVの減少
+- 労働時間の減少がより大きな要因
+- スキルの減少 (atrophy), 初職の違いもWage contributionのうち20%弱を説明
+
+
+## Gender Wage Gaps and Fertility
+
+{{< v -0.5em >}}
+
+![](/static/img/article/adda2017/fig3f.jpeg){width=45% fig-align="center"}
+
+- サンプルの女性と同様のプロファイル(生年, 学歴)の男性の賃金をプロット
+- 25歳以降の男女格差の大きな部分が子育てによって説明される
+
+## Pro-Fertility Policy
+
+{{< v -1em >}}
+
+![](/static/img/article/adda2017/table8.svg){width=80% fig-align="center"}
+
+- 子どもが生まれるごとに出産一時金として6000€を支給する政策を考える
+- 政策によって子どもを早く多く持つ女性が増え, スキルが低い女性が増える
+- 15歳 (職業選択前) で政策が開始されると, Abstractを選ぶ女性が減少する
+    - 稼ぐ必要性が減るため. 貯蓄の必要性も減る (本文Fig. 4c)
+
+## まとめ
+
+**Stylized facts**
+
+- 高賃金かつ経験による賃金上昇の大きい職種は, 子育てに伴う賃金の減少が大きい
+- 子どもを持つ前に貯蓄を始める
+
+**Career cost of children**
+
+- 女性は子育てに時間を割くために労働時間を減らし, スキルが停滞および減少する
+- 子どもを持つ (持てる) ことによって生涯所得の現在価値が35%減少する
+- 労働時間の減少が大きな要因
+
+**Pro-fertility policy**
+
+- 出産一時金は出生率を上昇させるが, 貯蓄の減少やスキルの低下をもたらす
+
+{{< appendix >}}
+
+## 参考文献
+
+:::{refs}
+:::

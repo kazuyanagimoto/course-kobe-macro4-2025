@@ -1,0 +1,284 @@
+---
+title: Search and Matching I
+subtitle: "@greenwood2009"
+date: 2025-10-27
+include-in-header:
+  - text: '#import "@preview/cetz:0.3.4"'
+image: /static/img/article/greenwood2009/figure6.svg
+description: "@greenwood2009"
+---
+
+## 結婚の経済学的な意義
+
+経済学においては以下の4つが主たる結婚のインセンティブとして議論される.
+
+1. **Economies of scale**: 実質的な所得効果
+1. **公共財の供給**: 家事労働, 子供
+1. **リスクシェアリング**: 所得リスクなど
+1. **愛**: 上記3つで説明されない (確率的) 要素
+
+モデルを理解する際に, これらの要素に着目すると整理しやすくなる.
+
+{{< v 0.5em >}}
+
+::: {.callout-warning}
+
+## 結婚の定義
+
+近年では多様な形のパートナーシップも広がっているが, 本講義では, 注釈のない限り異性間の法律婚を対象とする. しかし, 特に西欧諸国では事実婚と法律婚の違いが小さくなっているため, 事実婚や同居 (cohabitation) を含めた研究も多い.
+
+:::
+
+## 結婚モデルの2つの流派
+
+{{< v 1em >}}
+
+**1. サーチモデル (Search and Matching Model)**
+
+- @shimer2000 を起源とした毎期ランダムに相手を探す動学的モデル
+- 結婚のタイミング (晩婚化) や再婚などを扱いやすい
+- 講義では @greenwood2009, @greenwood2016 を紹介
+
+{{< v 1em >}}
+
+**2. 摩擦のない結婚市場モデル (Frictionless Marriage Market)**
+
+- @choo2006 などの初期時点で全ての人が結婚相手を見つけるモデル
+- より詳細な家庭の意思決定 (家庭内配分など) をモデル化しやすい
+- 講義では @gayle2019, @reynoso2024 を紹介
+
+# @greenwood2009
+
+## 設定
+
+{{< v -0.5em >}}
+
+- 1期を1年とした無限期間モデル. 毎期の死亡確率 $\delta$
+- エージェントは性別を持たない中性の未婚者または既婚者
+- 独身者は毎期ランダムに他の独身者と出会い, マッチングの質 $b$ に基づいて結婚
+- 有配偶者は毎期, マッチングの質 $b$ が前期の $b_{-1}$ から上下し, $b$ の値に基づいて離婚を決定
+
+{{< v 0.25em >}}
+
+```{=typst}
+#align(center)[
+#cetz.canvas(length: 0.85cm, {
+  import cetz.draw: *
+  for y in range(0, 2) {
+    for x in range(0, 2) {
+      circle((8 * x, 4 * y -1.5), radius: 0.7)
+      rect((8 * x -1, 4 * y -4.2), (rel: (2, 2)), radius: (north: 50%))
+      content((8 * x, 4 * y - 3.2), ($M$, $S$).at(y))
+    }
+    
+    line((3.5, 4 * y - 3.2), (6.5, 4 * y - 3.2), mark: (end: "straight"))
+    line((8 * 0, 4 - 9 * y ), (8 * 1, 4 - 9 * y))
+    line((8 * 1, 4 - 9 * y), (8 * 1, 4 - 9 * y + y - 0.5))
+    line((8 * 0, 4 - 9 * y), (8 * 0, 4 - 9 * y + y - 0.5), mark: (end: "straight"))
+    content((4, 4 - 9 * y - y + 0.5), $1 - delta$)
+  }
+  content((2.25 - 0.75 * 0, 4 * 0 - 3.2), $b | b_(-1)$)
+  content((2.25 - 0.75 * 0, 4 * 1 - 3.2), $b$)
+  line((3.5, 4 * 1 - 3.2 - 0.5), (6.5, 4 * 0 - 3.2 + 0.5), mark: (end: "straight"))
+  line((3.5, 4 * 0 - 3.2 + 0.5), (6.5, 4 * 1 - 3.2 - 0.5), mark: (end: "straight"))
+
+  circle((-3.5, 3), radius: 0.35)
+  rect((-4, 1.65), (rel: (1, 1)), radius: (north: 50%))
+  content((-3.5, 2.125), $delta$)
+  line((-2.5, 2), (-1.5, 1), mark: (end: "straight"))
+})
+]
+```
+
+---
+
+### 効用関数
+
+$$
+\begin{aligned}
+U^S(c, n) &= \alpha \log (c - \overline{c}) + (1-\alpha) n^\zeta / \zeta \\
+U^M(c, n) + b &= \alpha \log \left((c - \overline{c}) / 2^\phi \right) +
+(1-\alpha) (n / 2^\phi)^\zeta / \zeta + b
+\end{aligned}
+$$
+
+{{< v 0.5em >}}
+
+- $c$: 消費. $\overline{c}$ は最低消費
+- $n$: 家庭内生産 (Home production)
+- $b$: マッチングの質 (Match quality, Bliss shock)
+- $2^\phi$: 消費のスケーリング (Economies of scale)
+    - 一人当たりの消費は家計の人数の規模に応じて効率化されるという仮定
+    - OECD equivalence scale: 配偶者を0.7人, 子供を0.5人として数える
+    - OECD modified scale: 配偶者を0.5人, 子供を0.3人として数える
+
+---
+
+### 家庭内生産 (Home Production)
+
+$$
+\begin{aligned}
+n &= \left(\theta d^\kappa + (1-\theta)h^\kappa \right)^{1/\kappa} \\
+\end{aligned}
+$$
+
+- $d$: 家事財の消費量. 価格は $wp$, つまり時間給で計測
+- $h$: 家事時間
+
+{{< v 1em >}}
+
+### マッチングの質 (Matching Quality, Bliss shock)
+
+- 独身者は毎期, 他の独身者と会い, その質 $b$ をCDF $F(b)$ から引く: $b \sim \mathcal{N}(\mu_s, \sigma_s^2)$
+- 有配偶者の $b$ は毎期AR(1)過程によって変動する. CDF $G(b'\mid b)$:
+$$
+b' = (1 - \rho)\mu_m + \rho b + \sigma_m\sqrt{1-\rho^2}\xi \text{ with } \xi \sim \mathcal{N}(0, 1)
+$$
+
+## 家計の意思決定
+
+**独身者**
+
+$$
+W = \max_{c, d, h} U^S(c, n) + \beta \int_{-\infty}^{\infty} \max\left\{W, V(b)\right\}\, dF(b)
+$$
+
+subject to
+
+$$
+c = w(1 - h) - wpd.
+$$
+
+**有配偶者**
+
+$$
+\begin{aligned}
+V(b) &= \max_{c, d, h} U^M(c, n) + b + \beta \int_{-\infty}^{\infty} \max\left\{W, V(b') \right\}\, dG(b' \mid b)
+\end{aligned}
+$$
+
+subject to
+
+$$
+c = w(2 - h) - wpd.
+$$
+
+## 結婚市場の均衡
+
+結婚市場の均衡において, 有配偶者の累積密度関数 $M(b)$ と単身者の密度 $s$ は以下を満たす.
+
+$$
+\begin{aligned}
+s & = \delta + (1-\delta) s\int_{-\infty}^{\infty} \mathbb{1}\{V(b') \le W\} \,dF(b')
++ (1 - \delta) \int_{-\infty}^{\infty}\int_{-\infty}^{b}
+\mathbb{1}\{V(b') \le W\} \,dG(b' \mid b_{-1})\,dM(b_{-1})  \\
+M(b) &= (1-\delta)s \int_{-\infty}^{b} \mathbb{1}\{V(b') > W\} \,dF(b')
++ (1 - \delta) \int_{-\infty}^{\infty}\int_{-\infty}^{b}
+\mathbb{1}\{V(b') > W\} \,dG(b' \mid b_{-1})\,dM(b_{-1})
+\end{aligned}
+$$
+
+{{< v 0.5em >}}
+
+- 毎期, 密度 $\delta$ の人が死亡するため, 毎期 $\delta$ の人が独身者として生まれる
+- 独身者 $s$ は $b'$ を引き, $V(b') > W$ を満たすと結婚する
+- 有配偶者は $b'$ を引き, $V(b') \le W$ を満たすと離婚する
+- なお, 定義から $s = 1 - \int_{-\infty}^{\infty} \,dM(b)$ を満たす
+
+## カリブレーション
+
+### A priori information
+
+以下のパラメータは, モデルから外生的に決定される.
+
+- $1/\delta = 47$: 平均寿命 (18歳から65歳までの期間)
+- $\beta = 0.96 \times (1 - \delta)$: 1年あたりの割引率 $0.96$ と生存確率 $1-\delta$ の積
+- $\phi = 0.766$: OECD Equivalence Scale $1 + 0.7 = 2^\phi$
+- $\theta = 0.206, \kappa = 0.189$: @mcgrattan1997
+- $w_{1950} = 1.00$: 基準化
+- $w_{t} = w_{1950} \exp(0.022 (t - 1950))$
+    - 1950年から2000年まで平均賃金上昇率を $x$ % として, $w_{2000} = w_{1950} \exp(x \times (2000 - 1950))$ を解いて $x = 0.022$
+
+---
+
+### Simulated Method of Moments (SMM)
+
+残った10個のパラメータはSMMでカリブレーションする.
+$$
+\lambda := \left(\overline{c}, p_{1950}, \gamma, \alpha, \zeta, \mu_s, \sigma_s, \mu_m, \sigma_m, \rho \right)
+$$
+
+ターゲットとして, 1950年から2000年までの16個の統計量を用いる.
+
+- 婚姻世帯の余暇時間 (1950, 1960, 1970, 1980, 1990)
+- 独身世帯の余暇時間 (1950, 1960, 1970, 1980, 1990)
+- 婚姻率, 結婚確率, 離婚確率 (1950, 2000)
+
+---
+
+![](/static/img/article/greenwood2009/table2.svg){width=80% fig-align="center"}
+
+---
+
+$\mu_s = -4.252$
+
+- 独身者のマッチングの質は平均的に負
+- 良い相手を待つ (waiting for the right person)
+
+$\sigma_s^2 = 8.063 > \sigma_m^2 = 0.680$
+
+- 独身者のマッチングの質の分散は有配偶者のそれよりもかなり大きい
+- 結婚後のマッチングは安定している
+
+$\mu_m = 0.521, \rho = 0.896$
+
+- 有配偶者のマッチングは平均的に正 (the right person)
+- 有配偶者のマッチングの質は自己相関が高く, 安定的
+
+
+{{< v 1em >}}
+
+直感的 (intuitive, narrative) にも納得できる推定結果ではないだろうか.
+
+
+## 結果
+
+{{< v -0.5em >}}
+
+::: {layout-ncol=2}
+
+![](/static/img/article/greenwood2009/figure6.svg){width=50%}
+
+![](/static/img/article/greenwood2009/figure7.svg){width=50%}
+
+:::
+
+{{< v -0.5em >}}
+
+- 婚姻率の減少と離婚率の上昇を説明できている
+- 有配偶者と独身者の効用の差 $u_m - u_s$ が小さくなっている
+
+## まとめ
+
+**サーチモデル**
+
+- 結婚と離婚を確率的な match quality とサーチの過程でモデル化
+- 賃金の上昇と家庭内生産の効率化によって, 結婚の減少と離婚率の上昇が説明できる
+
+**結婚のメリットの減少**
+
+- 有配偶者と独身者の効用の差 $u_m - u_s$ が小さくなっている
+- モデルでは結婚のメリットは Economies of scale のみ $\Rightarrow$ 実質的な差は所得の差
+- $w$ の上昇
+    - 最低消費 $\bar{c}$ の影響は低所得者 (独身者) に大きく, 高所得者 (有配偶者) に小さい
+    - $w$ の上昇によって, 独身者と有配偶者の $\bar{c}$ に対する影響の差が小さくなった
+- $p$ の下落: 
+    - 消費 $c$ よりも家庭内生産 $n$ の方が効用関数がより凹である
+    - 低所得者 (独身者) の方が $p$ の影響を受けやすい
+
+{{< appendix >}}
+
+## 参考文献
+
+::: {refs}
+:::

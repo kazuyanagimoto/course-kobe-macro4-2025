@@ -1,0 +1,56 @@
+---
+title: Lecture Materials
+listing:
+  - id: foundation
+    contents:
+      - 01-**.qmd
+      - ../slides/01-**.qmd
+    sort: "date"
+    fields: [date, image, title, description]
+  - id: marriage
+    contents: ../slides/02-**.qmd
+    sort: "date"
+    fields: [date, image, title, description]
+  - id: fertility
+    contents: ../slides/03-**.qmd
+    sort: "date"
+    fields: [date, image, title, description]
+  - id: gender
+    contents: ../slides/04-**.qmd
+    sort: "date"
+    fields: [date, image, title, description]
+  - id: appendix
+    contents: 10-**.qmd
+    sort: "date"
+    fields: [date, image, title, description]
+date-format: "YYYY年M月D日"
+suppress-bibliography: true
+---
+
+
+## 講義資料
+
+### 基礎編
+
+::: {#foundation}
+:::
+
+### 結婚の経済学
+
+::: {#marriage}
+:::
+
+### 出生の経済学
+
+::: {#fertility}
+:::
+
+### ジェンダー格差
+
+::: {#gender}
+:::
+
+## Appendix
+
+::: {#appendix}
+:::

@@ -1,0 +1,219 @@
+---
+title: Introduction
+subtitle: Kuznet's Facts for Family Economists
+date: 2025-10-06
+shift-heading-level-by: 0
+image: /static/img/article/greenwood2023/fig2_6.svg
+---
+
+## クズネッツ的6つの事象
+
+@greenwood2023 は @kuznets1957 に着想を得て, 過去百数十年の間に起きた, 家族経済学にまつわる6つの事象を示した.
+
+{{< v 0.5em >}}
+
+1. (家事) 労働時間の減少
+2. 出生率の減少
+3. 結婚の減少
+4. 世帯サイズの縮小
+5. 高学歴者の増加
+6. ブルーカラーからホワイトカラーへの転換
+
+{{< v 1em >}}
+
+- 論文ではアメリカを念頭に置いているが, 日本を含む多くの先進国においても同様の傾向
+- 家族経済学をマクロ的に捉えるための重要な事象
+
+## 1. (家事) 労働時間の減少
+
+
+![](/static/img/article/greenwood2023/fig2_2.svg){width=60% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 20世紀は家事労働時間が減少し続けた時代. 洗濯機, 冷蔵庫, 電子レンジなどの家電の普及
+
+---
+
+![](/static/img/article/greenwood2023/fig2_1.svg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 第二次世界大戦まで労働時間の減少の傾向
+- 女性の労働参加率の上昇. 家事負担の減少も一つの要因
+
+## 2. 出生率の減少
+
+![](/static/img/article/greenwood2023/fig2_6.svg){width=70% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- ベビーブームを除いて, Total Fertility Rate (TFR, 合計特殊出生率) は長期的に減少傾向
+
+---
+
+### 2つの出生率
+
+**Total Fertility Rate** (TFR, 合計特殊出生率)
+
+$$
+TFR = \sum_{x=15}^{49} \frac{\text{\# of births to women aged} x}{\text{\# of women aged} x}
+$$
+
+- 年齢に対する出生行動が変わらないと仮定すると, 女性が一生に産む子供の数を表す
+- 年齢に対する出生行動の変化 (晩産化など) が起きると, 一時的にTFRは変化する
+
+**Complete Cohort Fertility** (CCF, 完結コーホート出生率)
+
+$$
+CCF = \frac{\text{\# of children to women born at year} b}{\text{\# of women born at year} b}
+$$
+
+- ある年に生まれた女性が一生に産む子供の数を表す. 通常, 50歳時点まで確定しない
+- Human Fertility Database (HFD) では「少なくとも44歳」の定義を採用
+
+
+---
+
+### GDPと出生率
+
+![](/static/img/article/greenwood2023/fig2_7.svg){width=90% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 国ごとのパネルデータを用いると, GDP per capita と TFR の間には負の相関がある
+- 経済成長に伴い, 出生率は減少する傾向がある
+
+
+---
+
+### 日本の出生率の推移
+
+:::: {layout-ncol=2}
+
+::: {.column}
+
+**Total Fertility Rate** (TFR)
+
+![](/static/img/lecture/tfr.svg)
+
+:::
+
+::: {.column}
+
+**Cohort Fertility Rate** (CCF)
+
+![](/static/img/lecture/ccf.svg)
+
+:::
+
+::::
+
+- 1966年は[丙午](https://ja.wikipedia.org/wiki/%E4%B8%99%E5%8D%88)年であり, 出産を回避する傾向があった. 一応, 2026年が次の丙午年
+
+## 3. 結婚の減少
+
+![](/static/img/article/greenwood2023/fig2_8.svg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 1960年以降, 未婚化, 晩婚化が進行
+- 法律婚によらない関係 (同居, cohabitation で観測) を考慮しても減少傾向にある
+
+---
+
+![](/static/img/article/greenwood2023/fig2_10.svg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 未婚化, 晩婚化傾向は, 所得と正の相関がある
+- 独身の価値の上昇 (家事労働の減少, 女性の労働参加)
+
+
+---
+
+### 日本の結婚率の推移
+
+:::: {layout-ncol=2}
+
+::: {.column}
+
+**Share of Never-married** at Age 45-54
+
+![](/static/img/lecture/share_nmarried.svg){width=50% fig-align="center"}
+
+:::
+
+::: {.column}
+
+**Age at First Marriage**
+
+![](/static/img/lecture/age_firstmarriage.svg){width=50% fig-align="center"}
+
+:::
+::::
+
+- 未婚化, 晩婚化は日本においても進行している
+- 日本は婚外子の割合が欧米諸国と比べてかなり低い (2.4%, 2020) という点には注意
+
+
+## 4. 世帯サイズの縮小
+
+![](/static/img/article/greenwood2023/fig2_11.svg){width=100% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 世帯サイズは縮小傾向にあり, 所得と負の相関
+- 少子化の影響もあるが, 3世帯同居も所得と負の相関がある
+
+
+## 5. 高学歴者の増加
+
+
+![](/static/img/article/greenwood2023/fig2_12.svg){width=80% fig-align="center"}
+
+---
+
+![](/static/img/article/greenwood2023/fig2_13.svg){width=70% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 高学歴化と所得には正の相関がある
+- **供給側**: 親の教育投資の増加. 質と量のトレードオフ (quality-qfuantity trade-off)
+- **需要側**: 高学歴者の賃金プレミアムの上昇 (Fact 6 ともの関連)
+
+## 6. ブルーカラーからホワイトカラーへの転換
+
+![](/static/img/article/greenwood2023/fig2_14.svg){width=80% fig-align="center"}
+
+---
+
+![](/static/img/article/greenwood2023/fig2_15.svg){width=80% fig-align="center"}
+
+- ホワイトカラーの割合と所得の上昇と正の相関がある
+- Skill-biased technological change (e.g. @acemoglu2011)
+
+## まとめ
+
+**Kuznet's Facts**
+
+1. (家事) 労働時間の減少
+2. 出生率の減少
+3. 結婚の減少
+4. 世帯サイズの縮小
+5. 高学歴者の増加
+6. ブルーカラーからホワイトカラーへの転換
+
+{{< v 0.5em >}}
+
+**For Family Economists**
+
+- この授業で学習していくモデルたちの大きな背景にこれらの事実がある
+- 元論文, @greenwood2023 のモデルも授業の中盤で解説する
+
+{{< appendix >}}
+
+## 参考文献
+
+::: {#refs}
+:::

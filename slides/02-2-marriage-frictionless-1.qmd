@@ -1,0 +1,370 @@
+---
+title: Frictionless Marriage Market I
+subtitle: "@gayle2019"
+description: "@gayle2019"
+date: 2025-11-10
+image: /static/img/dist_gumbel.svg
+---
+
+## Frictionless Marriage Market
+
+**摩擦のない結婚市場モデル**
+
+- モデルの初期時点において, 全ての個人が結婚市場に参加し, 結婚相手を選ぶことができる
+- 全ての独身者が全ての潜在的な独身者に会うことができ, 相手の特徴を完全に知っているとする意味で「摩擦がない」とされる
+- 結婚後は静的なモデルまたはライフサイクルモデルなどの動学的なモデルを用いる.
+
+{{< v 0.5em >}}
+
+**前提知識**
+
+Frictionless marriage market model の理解には以下の前提知識が必要である.
+
+- 二部マッチング問題 (bipartite matching problem)
+- 離散選択モデル (discrete choice model)
+- パレート効率性 (Pareto efficiency)
+
+## 二部マッチング問題 (Bipartite Matching Problem)
+
+**二部マッチング問題**
+
+- エージェントが二つのグループに分かれている (男性と女性, 会社と労働者, 学校と生徒)
+- 各エージェントは他のグループのエージェントとマッチングする
+- Non-Transferable Utility (NTU) と Transferable Utility (TU) の2つの場合がある
+
+**Non-Transferable Utility (NTU)**
+
+- $U_{ij}^{i}$, $U_{ij}^{j}$ はそれぞれのエージェントの効用であり, 互いに移転可能ではない
+- 例: 生徒と学校のマッチング. 金銭の授受によって効用の移転が起きるとは考えにくい
+
+**Transferable Utility (TU)**
+
+- $U_{ij}^{i}$, $U_{ij}^{j}$ の間で移転可能な効用を持つ
+- 結婚市場では, 結婚後に (効率的な) の配分ができるため, TU のモデルが適切である
+- 配分に非効率性がある場合は, Imperfectly Transferable Utility (ITU) と呼ばれる
+- 次回は離婚後の配分に非効率性のある ITU のモデルである @reynoso2024 を扱う
+
+## 離散選択モデル (Discrete Choice Model)
+
+### 設定
+
+- 消費者 $i$ は $J$ 個の選択肢の中から最も効用の高いものを1つを選ぶ
+- 消費者 $i$ の $j \in \{1, \dots, J\}$ に対する効用は以下のように表される
+
+$$
+U_{ij} = V_{ij} + \varepsilon_{ij}.
+$$
+
+- $V_{ij}$: 観察可能な効用. 消費者 $i$ や選択肢 $j$ の属性に依存する
+- $\varepsilon_{ij}$: 観察できないショック. 第一種極値分布に i.i.d. で従うと仮定する
+    - ガンベル分布 (Gumbel distribution) とも呼ばれる
+    - CDF: $F(x; \mu, \theta) = \exp\left(-\exp\left(-\frac{x - \mu}{\theta}\right)\right)$
+    - 平均 $\mu + \theta \gamma$. ($\gamma$ は[オイラー定数](https://ja.wikipedia.org/wiki/オイラーの定数). $\gamma \approx 0.5772$). 分散 $\frac{\pi^2}{6} \theta^2$
+
+---
+
+### 選択確率
+
+消費者の選択 $d_i$ は以下のように表される.
+
+$$
+d_{i} = \arg \max_{j} U_{ij}.
+$$
+
+
+観察できないショック $\varepsilon_{ij}$ があるため, 消費者 $i$ が選択肢 $j$ を選ぶ事象は確率で表される.
+
+$$
+\begin{aligned}
+\Pr(d_i = j) = \Pr(U_{ij} > U_{ik}; \forall k \ne j)
+\end{aligned}
+$$
+
+この時, 選択確率は以下のように表される (導出は @train2001 の Chapter 3 など)
+
+$$
+\Pr(d_i = j) = \frac{\exp(U_{ij} / \theta)}{\sum_{k=1}^{J} \exp(U_{ik} / \theta)}.
+$$
+
+## パレート効率性と厚生最大化
+
+::: {.callout-note}
+
+## パレート効率性と厚生最大化
+
+各エージェント $i$ が重み $\lambda_i > 0$ を持つ, 以下の厚生関数を考える.
+
+$$
+W(x) = \sum_{i} \lambda_i U_i(x).
+$$
+
+この時, 厚生関数を最大化する配分 $x_w \in \arg \max_{x} W(x)$ はパレート効率的である. また, 重み $\lambda_i$ をパレートウェイト (Pareto weights) とも呼ぶ.
+
+:::
+
+典型的な夫婦の最大化問題は, 以下のように表される.
+
+$$
+\max_{x} (1-\lambda) U_m(x) + \lambda U_f(x).
+$$
+
+- パレートウェイト $\lambda \in (0, 1)$ は妻 $f$ の交渉力の強さ (bargaining power) に直結する
+
+# @gayle2019
+
+## Model
+### 設定
+
+- $i = 1, \dots, I$ タイプの男性と $j = 1, \dots, J$ タイプの女性が無数に存在
+- 各タイプの密度は $m_i > 0$ と $f_j > 0$. $\sum_{i=1}^{I} m_i = \sum_{j=1}^{J} f_j = 1$
+- Type-$i$ の男性と Type-$j$ の結婚した時の密度を $\mu_{ij}$ とすると (独身の場合, 相手は Type-$0$)
+
+$$
+\mu_{i0} + \sum_{j=1}^{I} \mu_{ij} = m_i, \mu_{0j} + \sum_{i=1}^{J} \mu_{ij} = f_j
+$$
+
+- 各個人は $L_0$ の時間をもち, そのうち $h_w$ を労働, $h_Q$ を家事, 残りの $l$ を余暇に使う
+
+$$
+L_0 = h^i_w + h^i_Q + l^i = h^j_w + h^j_Q + l^j
+$$
+
+- 論文では, 最適課税を議論するために, 課税システム $T$ を導入する. この授業では, 摩擦のない結婚市場モデルの概略を説明することを目的とするため, 課税システムは説明しない.
+
+
+## 独身者の時間配分
+
+$$
+\max_{\mathbf{a}^i \in \mathbf{A}^i} u^i(l^i, q^i, Q^i; X^i) + \epsilon_{\mathbf{a}^i}
+$$
+
+subject to
+
+$$
+\begin{aligned}
+q^i &= y^i + w^i h^i_w - T(w^i h^i_w, y^i; X^i) - FC(h^i_w; X^i) & \text{(Budget constraint)} \\
+Q^i &= \zeta_{i0}(X^i) h^i_Q & \text{(Home production)}
+\end{aligned}
+$$
+
+- $\mathbf{a}^i = (l^i, h_w^i, h_Q^i)$: 時間配分. 離散的な選択肢
+- $\epsilon_{a}$: 選択 $a$ に対する観察できないショック
+- $FC(h^i_w; X^i) \ge 0$: 労働に対する固定費用
+- $T(w^i h^i_w, y^i; X^i)$: 課税システム
+- 間接効用を $v_{i0}^{i}(\cdot), v_{0j}^{j}(\cdot)$ とし, 期待効用を定義する
+
+$$
+\begin{aligned}
+U_{i0}^i(T) &= \mathbb{E}[v_{i0}^{i}(w^i, y^i, X^i, \boldsymbol{\epsilon}^i; T)] \\
+U_{0j}^j(T) &= \mathbb{E}[v_{0j}^{j}(w^j, y^j, X^j, \boldsymbol{\epsilon}^j; T)]
+\end{aligned}
+$$
+
+## 夫婦の時間配分
+
+$$
+\max_{\mathbf{a^i} \in \mathbf{A}^i, \mathbf{a}^j \in \mathbf{A}^j, s_{ij} \in [0, 1]}
+(1-\lambda_{ij})\left(u^i(l^i, q^i, Q; X^i) + \epsilon_{a^i}\right) +
+\lambda_{ij}\left(u^j(l^j, q^j, Q; X^j) + \epsilon_{a^j}\right)
+$$
+
+subject to
+
+$$
+\begin{aligned}
+q^i + q^j &= y^i + y^j + w^i h^i_w + w^j h^j_w - T(w^i h^i_w, w^j h^j_w, y^i, y^j; X^i, X^j) - FC(h^i_w, h^j_w; X^i, X^j) \\
+q_j &= s_{ij} (q^i + q^j) \\
+Q &= \tilde{Q}_{ij}(h^i_Q, h^j_Q; X^i, X^j)
+\end{aligned}
+$$
+
+- $\lambda_{ij}$: 家庭内交渉における効用の重み (Pareto weight). 外生的に与えられる
+- Type-$i$ と Type-$j$ が結婚した時の間接効用を $v_{ij}^{i}(\cdot)$, $v_{ij}^{j}(\cdot)$ とし, 期待効用を定義する
+
+$$
+\begin{aligned}
+U_{ij}^i(T, \lambda_{ij}) &= \mathbb{E}[v_{ij}^{i}(w^i, w^j, y^i, y^j, X^i, X^j, \boldsymbol{\epsilon}^i, \boldsymbol{\epsilon}^j; T, \lambda_{ij})] \\
+U_{ij}^j(T, \lambda_{ij}) &= \mathbb{E}[v_{ij}^{j}(w^i, w^j, y^i, y^j, X^i, X^j, \boldsymbol{\epsilon}^i, \boldsymbol{\epsilon}^j; T, \lambda_{ij})]
+\end{aligned}
+$$
+
+## 配偶者の選択確率
+
+Type-$i$ の男性 $g$ が Type-$j$ の女性を選ぶ際に, $\theta_{ij}^{ig}$ のショックを受けるとする.
+
+$$
+j = \arg \max_{j = 0,\dots,J} U_{ij}^{i}(\lambda_{ij}) + \theta_{ij}^{ig}
+$$
+
+ここで, $\theta_{ij} \sim \text{Type-I}(0, \sigma_\theta)$ を仮定すると,
+
+$$
+p_{ij}^{i}(T, \Lambda_{i\cdot}) = \frac{\exp\left(\frac{U_{ij}^{i}(T, \lambda_{ij})}{\sigma_{\theta}}\right)}{\exp\left(\frac{U_{i0}^{i}}{\sigma_{\theta}}\right) + \sum_{h=1}^{J} \exp\left(\frac{U_{ih}^{i}(T, \lambda_{ih})}{\sigma_{\theta}}\right)}.
+$$
+
+ここで, $\Lambda_{i\cdot} = (\lambda_{i1}, \dots, \lambda_{iJ})$ とする. 同様に, Type-$j$ の女性が Type-$i$ の男性を選ぶ確率は
+
+$$
+p_{ij}^{j}(T, \Lambda_{\cdot j}) = \frac{\exp\left(\frac{U_{ij}^{j}(T, \lambda_{ij})}{\sigma_{\theta}}\right)}{\exp\left(\frac{U_{0j}^{j}}{\sigma_{\theta}}\right) + \sum_{g=1}^{I} \exp\left(\frac{U_{gj}^{j}(T, \lambda_{gj})}{\sigma_{\theta}}\right)}.
+$$
+
+## 結婚市場均衡
+
+結婚市場の均衡は, $I \times J$ の行列で表されるパレートウェイト $\Lambda = \{\lambda_{ij}\}_{i \in \mathcal{I}, j \in \mathcal{J}}$ で定義される.
+
+::: {.callout-note}
+
+## 結婚市場均衡
+
+Type-$i$ の男性から Type-$j$ の女性への需要 $\mu_{ij}^{d}(T, \Lambda)$:
+
+$$
+\mu_{ij}^{d}(T, \Lambda) := m_i p_{ij}^{i}(T, \Lambda_{i\cdot}).
+$$
+
+Type-$j$ の女性から Type-$i$ の男性への供給 $\mu_{ij}^{s}(T, \Lambda)$:
+
+$$
+\mu_{ij}^{s}(T, \Lambda) := f_j p_{ij}^{j}(T, \Lambda_{\cdot j}).
+$$
+
+結婚市場均衡において $\Lambda$ は以下を満たす:
+
+$$
+\mu_{ij}^{d}(T, \Lambda) = \mu_{ij}^{s}(T, \Lambda) \quad \forall i = 1, \in \mathcal{I}, j \in \mathcal{J}.
+$$
+
+:::
+
+均衡の存在と一意性は, @gayle2019 のAppendix A にて示されている.
+
+---
+
+**直感的な解釈**
+
+- 一般に結婚相手の所得は高いほど良い (消費が増えるため, 所得効果)
+- 所得が高い (学歴が高い) タイプへの需要は過多になる
+- 需要を調整する価格のような働きをするのが $\lambda_{ij}$ である
+- 均衡において, $\lambda_{ij}$ は所得の低い方が所得の高い相手を選んだ際, 所得が低い方に不利な値になる (家庭内交渉力が低くなる)
+
+**存在と一意性**
+
+- いくつかの条件と, 効用関数が以下を満たすとき, 結婚市場均衡は存在し, 一意的である. 証明は @gayle2019 のAppendix A を参照のこと.
+
+$$
+\lim_{q^i \to 0} u^i(l^i, q^i, Q; X^i) = \lim_{q^i \to \infty} u^i(l^i, q^i, Q; X^i) = -\infty.
+$$
+
+
+## Empirical Specification
+
+**効用関数**
+
+$$
+u(l, q, Q; X) = \frac{q^{1-\sigma_{q}}-1}{1-\sigma_q} + \beta_l \frac{l^{1-\sigma_l}-1}{1-\sigma_l} + \beta_Q \frac{Q^{1-\sigma_Q}-1}{1-\sigma_Q}.
+$$
+
+**家庭内生産関数**
+
+$$
+\widetilde{Q}_{ij}(h^i_Q, h^j_Q; X^i, X^j) = \zeta_{ij}(X^i, X^j) (h^i_Q)^{\alpha}(h^j_Q)^{1-\alpha}.
+$$
+
+ここで, $X_i, X_j$ は家庭内での子供の数を表すとし,
+
+$$
+\zeta_{ij}(X^i, X^j) = \begin{cases}
+1 & \text{without children} \\
+\widetilde{\zeta}_j \vartheta_{j}^{\mathbb{1}\{i = j\}} & \text{with children}
+\end{cases}
+$$
+
+- $\vartheta_{j}^{\mathbf{1}\{i = j\}}$: 夫婦の学歴が同じ場合の補正項
+
+## Constrained Simulated Method of Moments
+
+パラメータは, 結婚市場均衡の制約付きSMMによって推定する.
+
+$$
+\hat{\symbf{\beta}}, \Lambda(\hat{\symbf{\beta}}) = \arg \min_{\symbf{\beta}, \Lambda} (\mathcal{M}(\symbf{\beta}, \Lambda) - \text{Data})'W(\mathcal{M}(\symbf{\beta}, \Lambda) - \text{Data})
+$${#eq-object-smm}
+
+subject to
+
+$$
+\mu_{ijk}^{d}(\symbf{\beta}, \Lambda_k) = \mu_{ijk}^{s}(\symbf{\beta}, \Lambda_k) \quad \forall i \in \mathcal{I}, j \in \mathcal{J}, k \in \mathcal{K}.
+$${#eq-constraint-smm}
+
+- タイプ集合 $\mathcal{I}, \mathcal{J}$ は学歴 (High School and below, Some college, College and above)
+- 結婚市場は9つ (近隣の州でグループ化, $k = 1, \dots, 9$) あると仮定 $\Lambda = \{\Lambda_k\}_{k\in \mathcal{K}}$
+- @su2012 のアプローチによって推定
+    - 通常のSMMでは, 最適化の一ステップ $\symbf{\beta}$ ごとに結婚市場の均衡価格 $\Lambda(\symbf{\beta})$ を求める必要があるが, @su2012 のアプローチでは, 最適化の終了時に均衡条件を満たしていれば良い. そのため, 計算時間を大幅に短縮することができる.
+    - 制約付き最適化問題を解くアルゴリズムはいくつかあるが, 代表的な拡張ラグランジュ法 (Augmented Lagrangian method) を紹介する.
+
+---
+
+::: {.callout-note}
+
+## 拡張ラグランジュ法 (Augmented Lagrangian method)
+
+次の制約付き最適化問題を考える.
+
+$$
+\min_{\mathbf{x}} f(\mathbf{x}) \quad \text{s.t.} \quad \forall i: c_i(\mathbf{x}) = 0.
+$$
+
+拡張ラグランジュ関数法では以下の無制約最適化問題を考える.
+
+$$
+\min_{\mathbf{x}} f(\mathbf{x}) + \sum_{i} \lambda_i c_i(\mathbf{x}) + \frac{\mu}{2} \sum_{i} c_i(\mathbf{x})^2.
+$$
+
+ここで $\lambda_i$ はラグランジュ乗数, $\mu$ はペナルティ項の重みである.
+
+:::
+
+ここで $\mathbf{x} = (\mathbf{\beta}, \Lambda)$,  $f(\mathbf{x})$ を @eq-object-smm, $c_i(\mathbf{x})$ を各 $(\mu_{ijk}^{d}, \mu_{ijk}^{s})$ に対する @eq-constraint-smm とすれば, 実用上は単にターゲットの数が制約条件の数だけ増えたSMMと考えることができる.
+
+## Assortative Matching (Targeted)
+
+{{< v -0.5em >}}
+
+![](/static/img/article/gayle2019/table1.svg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 同類婚 (assortative matching) のパターンを表している
+- そのほかのターゲットモーメントは @gayle2019 のFigure 1-3 を参照
+
+## Pareto Weights
+
+{{< v -0.5em >}}
+
+![](/static/img/article/gayle2019/table2.svg){width=80% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 夫婦間で学歴が高いほどパレートウェイトが高い (交渉力が強い)
+
+## まとめ
+
+**Frictionless Marriage Market**
+
+- TUな二部マッチング問題と離散選択モデルの組み合わせで結婚市場をモデル化できる
+- 家庭内交渉力を説明するパレートウェイトが結婚市場の均衡価格の役割を果たす
+
+{{< v 0.5em >}}
+
+**Assortative Mating** (同類婚)
+
+- 学歴 (収入) の高い相手と結婚すると
+    - 消費が増える (所得効果)
+    - 家庭内交渉力 (パレートウェイト) が低くなる
+- 同程度の学歴であれば, ウェイトを悪くせずに結婚の便益 (ここでは公共財) を享受できる
+
+{{< appendix >}}
+
+## 参考文献
+
+::: {refs}  
+:::

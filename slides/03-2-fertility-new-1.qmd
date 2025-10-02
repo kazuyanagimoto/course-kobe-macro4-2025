@@ -1,0 +1,257 @@
+---
+title: New Theory of Fertility I
+subtitle: "@kim2024"
+description: "@kim2024"
+date: 2025-12-15
+image: /static/img/article/kim2024/fig3.svg
+---
+
+# @kim2024
+
+## 背景
+
+{{< v -0.5em >}}
+
+![](/static/img/article/kim2024/table1.svg){width=75% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 韓国では超少子化が進んでおり, 出生率が世界で最も低い国の一つである (0.78, 2022)
+- 原因の一つと考えられるのが, 高い教育熱. 塾 (hagwon) の利用率が多い
+
+## 所得と出生率
+
+![](/static/img/article/kim2024/fig1.svg){width=80% fig-align="center"}
+
+- 所得と子どもの数の負の相関. 古典的な quality-quantity trade-off とはの逆
+- 多大な教育投資 (平均的に世帯所得の9.2%) と関連する可能性
+
+## 教育投資のスピルオーバー
+
+**Private Education Curfew**
+
+- 近年, 午後10時または11時以降の私的教育を禁止する政策が導入されている
+- 特に高所得者層の教育投資を減少させている
+- これは同じ地域の低所得者層の教育投資にも影響を与えただろうか?
+
+{{< v 0.5em >}}
+
+**Two Stage Least Squares** (2SLS)
+
+$$
+\begin{aligned}
+\ln E_{st} &= \delta_{10} \Lambda_{st}^{10} + \delta_{11} \Lambda_{st}^{11} + \gamma'\mathbf{X}_{ist} + \epsilon_{ist} \\
+\vartheta_{ist} &= \beta \ln \hat{E}_{st} + \symbf{\eta}'\mathbf{X}_{ist} + \varepsilon_{ist}.
+\end{aligned}
+$$
+
+家族 $i$, 地域 $s$, 時間 $t$ において,
+
+- $E_{st}$: 高所得 (高学歴) 家族の教育投資額の平均
+- $\Lambda_{10}, \Lambda_{11}$: 午後10時と11時の塾の時間制限 (curfew) の有無のダミー変数
+- $\vartheta_{ist}$: 低所得 (低学歴) 家族の教育投資の支出に占める割合
+
+---
+
+{{< v -0.5em >}}
+
+![](/static/img/article/kim2024/table3.svg){width=60% fig-align="center"}
+
+{{< v 0.5em >}}
+
+- Year FE を含めない会期では, $\beta$ は有意に正. 教育投資のスピルオーバー効果を示唆
+- 著者らは教育レベル (人的資本) が社会的なステータスと指摘
+
+## モデル
+
+**設定**
+
+- Overlapping generations model (OLG): 子どもと親の二期間
+- 中性なエージェント. 子どもへの教育投資に男女差がないと仮定
+- 結婚は考慮せず, 親世代は子どもの人数と教育投資を選択する
+- 子どもの教育レベルに対する Status Externality が存在すると仮定
+
+**Status Externality**
+
+$$
+\phi(n) \log \left(h' - \chi \tilde{h}'\right)
+$$
+
+- $n \in \{0, 1, 2, 3\}$: 子どもの数. $\phi(0) = 0$, $\phi(n) = \phi_n > 0$
+- $h'$: 子どもの人的資本 (human capital)
+- $\tilde{h}'$: 人的資本のベンチマーク
+
+自分の子供の人的資本 (教育レベル) が相対的に高いほど効用が高い.
+
+## 効用関数
+
+$$
+U(c, l, n, h', \tilde{h}') = b \log \left(\frac{c}{\Lambda(n)}\right)
++ \nu \frac{l^{1-\gamma}}{1-\gamma} + \phi(n) \log \left(h' - \chi \tilde{h}'\right)
+$$
+
+- $c$: 消費. $\Lambda(n) = 1.5 + 0.3n$ は modified OECD equivalence scale
+- $l$: 余暇時間
+- $b$: 消費の効用の重み. $\log b \sim \mathcal{N}(0, \sigma_b^2)$
+- $\nu, \gamma > 0$ は $b$ と異なりエージェント間で共通
+
+{{< v 0.5em >}}
+
+**Human Capital** (人的資本)
+
+$$
+h' = A_h \kappa (\theta + x^{\alpha})
+$$
+
+- $\kappa$: 親から (確率的に) 受け継ぐ才能. $\log \kappa = \rho_k \log \kappa^{p} + \varepsilon_{\kappa}$, $\varepsilon_{\kappa} \sim \mathcal{N}(0, \sigma_{\kappa}^2)$
+- $x$: 子への (金銭的な) 教育投資量. 親は $\kappa$ を観測してから教育投資を行う.
+- $A_h > 0, \theta > 0, \alpha \in (0, 1)$
+
+## 親の意思決定
+
+**Step 1**: 子どもの数の選択
+
+$$
+\max_{n} \mathbb{E}_{\kappa|\kappa^p}\left[V\left(h, b, \kappa, n; \tilde{h}\right)\right]
+$$
+
+- 子どもの才能 $\kappa$ を観測する前に子どもの数 $n$ を選択する.
+- 同じ親から生まれた子どもの才能は全て同じとする
+
+{{< v 0.5em >}}
+
+**Step 2**: 配分の決定
+
+$$
+V\left(h, b, \kappa, n; \tilde{h}\right) = \max_{c, l, x} U(c, l, n, h', \tilde{h}') + \beta \mathbb{E}_{\kappa'|\kappa}\left[V\left(h', b, \kappa', n; \tilde{h}'\right)\right]
+$$
+
+subject to
+
+$$
+c + xn \le w h (1 - \lambda n - l)
+$$
+
+- $\lambda$: 子ども一人あたりに必要な子育て時間
+
+## カリブレーション
+
+**External Parameters**
+
+- $\gamma = 2$: Literature. Intertemporal elasticity of substitution が 0.5
+- $\lambda = 0.041$: 子ども一人あたりに必要な子育て時間 (KLIPS). モデル上の値に基準化
+
+**Internal Parameters**
+
+{{< v -0.25em >}}
+
+![](/static/img/article/kim2024/table4.svg){width="60%" fig-align="center"}
+
+## 結果 (Untargeted Moments)
+
+![](/static/img/article/kim2024/table5.svg){width="90%" fig-align="center"}
+
+{{< v 0.5em >}}
+
+- 子どもの人数と所得の正の相関を再現できている
+- 無子世帯の割合は特に 1st quintile で高く再現できている
+- 教育投資割合と所得の負の相関も再現できている
+
+## 低出生率の原因
+
+### Status Externality $\chi = 0$
+
+![](/static/img/article/kim2024/fig3.svg){width="40%" fig-align="center"}
+
+- 子どもの数の増加. 所得と子どもの数が負の相関 (quantity-quality trade-off)
+- Status extenality $\Rightarrow$ 子どもの人的資本のレベルを高く保つために子どもの数を減らす
+
+## Policy Evaluation
+
+{{< v 0.5em >}}
+
+### Pro-natal Transfers (出産奨励金)
+
+韓国では 2003年ごろから, 地域ごとに出産奨励金が導入されている:
+
+$$
+c + xn + T \le w h (1 - \lambda n - l) + T_n(n).
+$$
+
+- $T$: lump-sum (一括) 税. 出産奨励金と均衡する必要がある.
+- $T(n) = \psi n$: 出産奨励金
+
+{{< v 0.5em >}}
+
+### Private Education Investment Tax (塾税)
+
+過剰な教育投資を抑えるために, 塾 (hagwons) に対する税金を導入することが考えられる:
+
+$$
+c + (1 + \tau_{x}) x n \le wh(1 - \lambda n - l) + T.
+$$
+
+- $\tau_{x}$: 塾に対する税率
+- $T$: lump-sum (一括) 補助金. 塾に対する税金と均衡する必要がある.
+
+---
+
+{{< v -0.5em >}}
+
+![](/static/img/article/kim2024/table8.svg){width="80%" fig-align="center"}
+
+どちらの政策も
+
+- 出生率を高める. また, 所得に対する出生率の弾力性が減少
+- 子ども一人あたりの教育投資が減り, 結果として格差 (Gini 係数) が拡大する
+
+## Optimal Policy
+
+### $\mathcal{A}$-Efficiency [@golosov2007a]
+
+- 内生的な出生率の文脈で効率性の議論には, これらから生まれる世代も含まれる
+- そのために Pareto 効率性を拡張した定義の一つが $\mathcal{A}$-効率性 である
+- 二つの政策を比較した際, どちらの政策によっても生まれる子どもを含めた効率性の概念
+- Golosov et al. (-@golosov2007a) は第一世代の厚生最大化の解が $\mathcal{A}$-効率的と示した^[
+    正確には, 第一世代の効用関数の正の加重和最大化問題の解が唯一であれば, その解が $\mathcal{A}$-効率的であること.
+]
+
+{{< v 0.5em >}}
+
+### Optimal Policy
+
+- 社会計画者 (social planner) は第一世代の重みづき効用最大化問題を解く
+    1. 均等ウェイト: マクロ経済学でよく使われる
+    2. 根岸ウェイト: 消費の限界効用の逆数. 環境経済学でよく使われる
+- 第一世代の根岸加重厚生最大化問題の解を $\tau_{x} = 0.216$, $\psi = 0.0175$ と求めた
+- ベースラインのモデルと比べて, 最適政策では根岸厚生が 0.0126 改善した
+
+## Optimal Policy Results
+
+{{< v -0.5em >}}
+
+![](/static/img/article/kim2024/fig5.svg){width="50%" fig-align="center"}
+
+- 最適政策では, 教育投資が減少し, 子どもの数が増加し, 第一世代の厚生が改善する
+- 教育投資が減少したため, 第二世代以降の厚生は悪化する
+
+## まとめ
+
+**Status Externality**
+
+- 子どもの人的資本に対する status externality をモデルに組み入れ, 韓国の低出生率を説明
+- Status externality がない場合, 出生率は28%上昇. 特に低所得者層での上昇が大きい
+
+{{< v 0.5em >}}
+
+**Optimal Policy**
+
+- 出産一時金と塾税は教育投資の減少と出生率の上昇をもたらす
+- 現在の世代から見た最適政策は出生率を上昇させるが, 後の世代の厚生が悪化する
+
+{{< appendix >}}
+
+## 参考文献
+
+:::{refs}
+:::

@@ -1,0 +1,267 @@
+---
+title: Old Facts, Old Models 
+subtitle: "@doepke2023"
+description: "@doepke2023"
+date: 2025-12-01
+image: /static/img/article/doepke2023/fig8.svg
+---
+
+# @doepke2023
+
+## Stylized Facts
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/doepke2023/fig1.svg)
+
+![](/static/img/article/doepke2023/fig3.svg)
+
+:::
+
+これらの現象を説明するための重要なアイディアが以下の2つである.
+
+1. **質と量のトレードオフ** (Quality-Quantity Trade-off)
+1. **女性の時間の機会費用** (Opportunity Cost of Women's Time)
+
+## 質と量のトレードオフ
+
+![](/static/img/article/doepke2023/fig4.svg){fig-align="center" width=70%}
+
+- 子供の数 (量) と子どもの教育水準 (質) との間にトレードオフがあるという考え方
+- 先進国においては平均教育年数の上昇が少子化と共に同時に進行している事実と整合的
+
+## 親のインセンティブ
+
+子の教育水準を高める親のインセンティブとしては次の2つがある:
+
+**Warm glow**
+
+- 子供の人的資本によって直接的に親の幸福感が増す
+- @becker1973 に始まる
+
+{{< v 1em >}}
+
+**利他主義** (Altruism)
+
+- 子どもの生涯効用が親の効用関数に含まれる
+- 子どもの教育水準を高めることで, 人的資本の増加によって子の効用が増加し, 間接的に親の効用が上昇する
+- @becker1988 に始まる
+
+## Simple Model
+
+Warm glow 型の効用関数を考える.
+
+$$
+\max_{c, n, e} u(c, n, h) = \log (c) + \delta \log (n h(\theta, e))
+$$
+
+subject to
+
+$$
+c + pen \leq (1 - \phi n) w.
+$$
+
+- $c$: 消費
+- $n$: 子どもの数
+- $h$: 子どもの人的資本
+- $p$: 教師の時間あたりの賃金
+- $\theta$: 子どもの生来の人的資本
+- $e$: 子ども一人当たりの教育時間
+- $\phi$: 子どもの一人当たりの子育て時間
+
+---
+
+子どもの人的資本の関数形 $h = (\theta + e)^\gamma, \gamma < 1$ とおくと, 以下の解を得る.
+
+$$
+\begin{aligned}
+n &= \frac{\delta}{1 + \delta} \frac{1-\gamma}{\phi - \frac{p}{w}\theta} \\
+e &= \frac{\gamma \phi w - p\theta}{p (1-\gamma)}.
+\end{aligned}
+$$
+
+賃金 $w$ が上昇すると
+
+- 子どもの数 $n$ は減少
+- 子ども一人当たりの教育時間 $e$ は増加
+
+先進国の少子化と教育水準の上昇が賃金の上昇によって説明される.
+
+## 女性の時間の機会費用
+
+
+![](/static/img/article/doepke2023/fig5.svg){fig-align="center" width=80%}
+
+- 高所得国において, 20世紀を通して女性の賃金が上昇し, 労働参加率が上昇した
+- 女性が子育てを行う時間の機会費用が上昇を意味し, 望ましい子どもの数が減少
+
+## Simple Model
+
+モデルを拡張して, 女性の時間の機会費用を考慮する. $w_m, w_f$ を男性と女性の賃金とし, 
+
+$$
+\max_{c, n, e} u(c, n, h) = \log (c) + \delta \log (n h(\theta, e))
+$$
+
+subject to
+
+$$
+c + p e n = w_m + (1 - \phi n) w_f.
+$$
+
+{{< v 1em >}}
+
+
+- 女性が全ての子育てを担当すると仮定している
+- これは子育てが完全に代替可能で $w_m > w_f$ の場合に成り立つ
+
+---
+
+一階条件から以下を得る.
+
+$$
+\begin{aligned}
+n &= \frac{\delta}{1+\delta}\frac{(w_m + w_f)(1-\gamma)}{\phi w_f - p\theta} \\
+e &= \frac{\gamma \phi w_f - p\theta}{p(1-\gamma)}.
+\end{aligned}
+$$
+
+$n > 0$ において ($\phi w_ff - p \theta > 0$),
+
+$$
+\begin{aligned}
+\log n &= \text{Const.} + \log (w_m + w_f) - \log (\phi w_f - p\theta) \\
+\frac{\partial \log n}{\partial w_f} & = \frac{1}{w_m + w_f} - \frac{\phi}{\phi w_f - p\theta} \\
+& = \frac{-p\theta - \phi w_m}{(w_m + w_f)(\phi w_f - p\theta)} < 0.
+\end{aligned}
+$$
+
+よって女性の賃金 $w_f$ が上昇すると, 子どもの数 $n$ は減少する.
+
+## Old Facts, Old Models
+
+{{< v 0.5em >}}
+
+### Old Facts
+
+- 20世紀を通して先進国では出生率が低下した
+- 2010年時点ではGDP per capita と出生率の間に負の相関がある
+- 同時期に教育水準の上昇と女性の賃金や労働参加率の上昇が見られた
+
+{{< v 1em >}}
+
+### Old Models
+
+- **質と量のトレードオフ**
+    - 子どもの数と教育水準のトレードオフ
+    - 賃金が高い ($\approx$ 先進国) と教育のリターンが高く, 子どもの数が少なくなる
+- **女性の時間の機会費用**
+    - 女性の賃金が高い ($\approx$ 先進国) と子育ての (機会費用) が高い
+    - 女性の労働と比べて相対的に子どもの数の価値が低くなる
+
+## 古典的出生理論の限界
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/doepke2023/fig8.svg)
+
+![](/static/img/article/doepke2023/fig12.svg)
+
+:::
+
+21世紀に入ってから, (先進国では) 出生率と経済成長, 女性の労働参加率の関係は逆転
+
+- GDP per capita が高い国ほど出生率が高い
+- 女性の労働参加率が高い国ほど出生率が高い
+
+$\Rightarrow$ 質と量のトレードオフ, 女性の時間の機会費用の仮定は成り立っているのだろうか?
+
+## 質と量のトレードオフの変化
+
+{{< v 0.5em >}}
+
+### 児童労働の消滅
+
+- かつては, 教育の費用の一つに児童労働に対する機会費用があった
+- 児童労働はほとんどなくなり, 中卒で働いて家計に貢献するという事例もかなり減少した
+- 言い換えると 「量」 に対するインセンティブがかなり減少している
+
+{{< v 1em >}}
+
+### 公共教育の充実
+
+- 公共教育の無料化が進んだ
+- 先進国では全体的な教育水準がそもそもかなり高くなっている (高卒以上がほとんど)
+- 教育水準 (質) の選択が, 親ではなく子の意思へと変化している
+
+{{< v 1em >}}
+
+@liu2015 のレビューでは質と量のトレードオフは基本, 発展途上国で確認されるとしている
+
+## 子育てのアウトソーシング
+
+$$
+\max_{c, n, s} \log c + \delta \log n
+$$
+
+subject to
+
+$$
+c + \psi n + s p_s n \phi = w_m + w_f(1 - (1-s)n\phi).
+$$
+
+- ベビーシッターなど, 子育ての時間をを市場で購入することで女性が子育てに費やす時間を減らすことができるようになった
+- モデルを拡張して, 子育ての割合 $s$ を価格 $p_s$ で購入できるとする.
+
+{{< v 1em >}}
+
+一階条件から以下を得る.
+
+$$
+n = \frac{\delta}{1+\delta} \frac{w_m + w_f}{\psi + (sp_s + (1-s)w_f)\phi}.
+$$
+
+
+---
+
+{{< v -1em >}}
+
+![](/static/img/lecture/fertility_outsource.svg){fig-align="center" width=55%}
+
+$$
+\frac{\partial \log n}{\partial w_f} = \frac{1}{w_m + w_f} - \frac{(1-s)\phi}{\psi + (sp_s + (1-s)w_f)\phi}
+\Rightarrow
+\frac{\partial n}{\partial w_f} = \begin{cases}
+> 0 & \text{if } s > \frac{w_m \phi - \psi}{(p_s + w_m)\phi} \\
+\le 0 & \text{otherwise}.
+\end{cases}
+$$
+
+- 子育てのアウトソーシング可能な比率 $s$ が高くなると, 賃金と出生率の関係は正になる
+
+## まとめ
+
+### 古典的出生理論
+
+- **質と量のトレードオフ**
+    - 賃金が高い ($\approx$ 先進国) と教育のリターンが高く, 子どもの数が少なくなる
+    - @greenwood2023 によるより洗練されたモデルを紹介
+- **女性の機会費用**
+    - 女性の賃金が高い ($\approx$ 先進国) と子育ての (機会費用) が高い
+    - 女性の労働と比べて相対的に子どもの数の価値が低くなる
+
+### 新しい出生理論
+
+- **質と量のトレードオフの変化**
+    - 児童労働の消滅や公共教育の充実によって減少
+    - 子の教育に対する新しい視点として @kim2024 を紹介
+- **女性の機会費用の変化**
+    - 子育て時間の購入が可能になり, 所得の高い女性ほど子育ての時間を減らせる
+    - @adda2017 による子育てのキャリアコストを紹介
+
+{{< appendix >}}
+
+## 参考文献
+
+::: {refs}
+:::

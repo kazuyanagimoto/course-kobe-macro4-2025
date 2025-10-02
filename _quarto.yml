@@ -1,0 +1,41 @@
+project:
+  type: website
+  render: 
+    - "*.qmd"
+    - "!assignment/*"
+  resources:
+    - schedule.ics
+    - assignment/*
+  preview:
+    port: 3334
+
+website:
+  title: Family Macroeconomics
+  favicon: static/img/logo.drawio.svg
+  page-navigation: true
+  navbar:
+    left:
+      - text: Materials
+        file: lecture.qmd
+    right:
+      - icon: github
+        href: "{{< var repo-url >}}"
+
+format:
+  html:
+    theme:
+      - brand
+      - static/html/custom.scss
+    toc: true
+    highlight-style: atom-one
+
+bibliography: references.bib
+bibliographystyle: chicago-author-date
+
+crossref:
+  fig-prefix: 図
+  tbl-prefix: 表
+  eq-prefix: 式
+
+execute: 
+  freeze: auto 

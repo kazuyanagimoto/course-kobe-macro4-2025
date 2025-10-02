@@ -1,0 +1,472 @@
+---
+title: Juliaの基礎
+date: 2025-10-01
+engine: julia
+execute:
+  echo: true
+---
+
+## なぜJuliaを使うのか
+### 数値計算におけるプログラミング言語の壁
+
+数値計算をする上でプログラミング言語の選択はとても重要です.
+経済学でよく使われるプログラミング言語は速度の意味で概ね以下のような関係があります.
+
+$$
+\text{C/C++, Fortran, Julia} \gg \text{Python, Matlab} > \text{R}
+$$
+
+![[Julia Micro Benchmarks](https://julialang.org/benchmarks/)](/static/img/benchmarks.svg){#fig-julia-benchmark}
+
+おおむね, C/C++, Fortran, Juliaは10-100倍ほどPython, Matlab, Rより速く計算が可能です.
+なおベクトル化というテクニックやPythonの[Numba](https://numba.pydata.org)を用いることで,
+Python, Matlab, Rでも同様の速度も出すことが可能ですが,
+C/C++, Fortran, Juliaなどの言語とはそもそも質的に異なるという事実は頭に入れておいた方が良いでしょう.
+
+### Juliaの特徴
+
+JuliaはC並の速さとPython, Matlab, Rの使いやすさを目指して開発された比較的新しい言語です [@bezanson2012].
+私自身, 高速化のためにはある程度の前提知識が必要なものの,
+C/C++, Fortranよりもデバックが容易であるため, 数値計算においてはJuliaを使っています.
+
+また, 無料かつオープンソースであるため, アカデミアを離れたとしても使い続けることができます.
+
+## 環境構築
+
+### Julia
+
+[Juliaup](https://github.com/JuliaLang/juliaup)を用いたインストールを推奨します.
+
+**Windows**
+
+パワーシェルを開き, 以下のコマンドを実行します.
+
+```powershell
+winget install julia -s msstore
+```
+
+**Mac, Linux**
+
+ターミナルを開き, 以下のコマンドを実行します.
+
+```bash
+curl -sSL https://julialang.org/juliaup | bash
+```
+
+なお, インストール後はパワーシェル/ターミナルで以下のコマンドを実行することで最新版のJuliaにアップデートすることができます.
+
+```bash
+juliaup update
+```
+
+## 関数, forループ, if文
+
+### 関数
+
+```{.julia}
+function f(K, L; α)
+    return K^α * L^(1 - α)
+end
+
+f(0.3, 0.7, α=0.5)
+```
+
+- `function`と`end`で囲まれた部分が関数の定義です.
+- 引数は`()`内に`,`で区切って列挙します.
+- 引数のうち, `;` 以降はキーワード引数と呼ばれ, 呼び出す際に引数名を用いる必要があります.
+
+```{.julia}
+function f(K, L, A=1.0; α)
+    return A * K^α * L^(1 - α)
+end
+
+f(0.3, 0.7, α=1/3) # or equivalently, f(0.3, 0.7, 1.0, α = 1/3)
+```
+
+- 引数にデフォルトの値を持たせることができます.
+- デフォルトの値をもつ引数は, デフォルトを持たない引数の後に配置する必要があります.
+
+**一行関数**
+
+```{.julia}
+f(x, y) = 2x + y^2 + x * y
+f(1.0, 2.0)
+```
+
+- `function`-`end`を省略し, `=`によって関数を定義することができます.
+- なお, 変数の前の数値の`*`は省略可能です.
+
+### forループ
+
+```{julia}
+for i in 1:5
+    println(i)
+end
+```
+
+- `for`-`end`で囲まれた部分がforループです.
+- `in`の後にイテレータを指定します.
+
+```{.julia}
+for i in 1:5
+    for j in 1:3
+		println((i, j))
+	end
+end
+
+# Or equivalently
+for i in 1:5, j in 1:3
+	println((i, j))
+end
+```
+
+- 2次元のforループを行う場合は, `for`-`end`をネストするか`,`で区切って複数のイテレータを指定します.
+
+### if文
+
+```{.julia}
+function f(x)
+	if x > 0
+		return "Positive"
+	elseif x < 0
+		return "Negative"
+	else
+		return "Zero"
+	end
+end
+```
+
+- `if`-`end`で囲まれた部分がif文です.
+- `elseif`や`else`を用いて条件分岐を行います.
+
+## 文字列と文字
+
+### String と Character
+
+Pythonやその他のプログラミング言語と異なり, Juliaでは文字列 (String) と文字 (Character) が厳密に区別されています.
+
+- 文字列はダブルクォーテーション `"` で囲みます.
+- 文字 (1文字のみ) はシングルクォーテーション `'` で囲みます.
+
+```{julia}
+typeof('a')
+```
+
+```{julia}
+typeof("a")
+```
+
+そのため, 以下のようなコードで直感的でない結果が得られることがあります.
+
+```{julia}
+"abcd"[3] == "c"
+```
+
+```{julia}
+"abcd"[3] == 'c'
+```
+
+### Unicode文字
+
+- JuliaではUnicode文字を変数名として使用することができます (e.g., `α`, `÷`, `σ²`, `x₁`).
+- Unicode文字は`\` + `文字列` + `<tab>`で入力することができます. (e.g., `\alpha` + `<tab>`で `α` が入力できます.)
+- 使用できるUnicode文字の[一覧](https://docs.julialang.org/en/v1/manual/unicode-input/).
+
+そのため, CRRA効用関数とその導関数を以下のようにUnicode文字を用いて簡単に書くことができます.
+
+$$
+\begin{aligned}
+u(c, \sigma) &= \begin{cases}
+\log c & \text{ if } \sigma = 1 \\
+\frac{c^{1 - \sigma}}{1 - \sigma} & \text{ if } \sigma \ne 1
+\end{cases}\\
+u'(c, \sigma) &= c^{-\sigma}
+\end{aligned}
+$$
+
+```{.julia}
+u(c, σ) = σ == 1.0 ? log(c) : c^(1 - σ) / (1 - σ)
+u′(c, σ) = c^(-σ)
+```
+
+- 導関数 `u′`　の上付き文字は `\prime` + `<tab>` で入力できます.
+- 三項演算子 `? :` を用いることで, if-else文を簡潔に書くことができます. つまり上のコードは以下と等価です.
+```julia
+function u(c, σ)
+	if σ == 1.0
+		return log(c)
+	else
+		return c^(1 - σ) / (1 - σ)
+	end
+end
+```
+
+### 文字列の内挿
+
+```{julia}
+age = 26
+years_stay = 6
+f(years, age) = 100years ÷ (age) # ÷ returns the quotient
+
+s = "I came here $years_stay years ago, when I was $(age - years_stay).\nSo I spent $(f(years_stay, age)) % of my life in Madrid."
+println(s)
+```
+
+- `$` + `変数名` で変数を文字列内に埋め込むことができます.
+- `$(式)` で式を文字列内に埋め込むことができます.
+
+## データ構造
+
+### タプル
+
+```{julia}
+animals = ("bird", "cow", "fish")
+animals[1]
+```
+
+```{julia}
+pars = (α=1.0, β=2.0, γ=4.0)
+pars.β
+```
+
+- タプルは`()`で囲まれた要素の集まりです.
+- タプルの要素は`[]`を用いてアクセスできます.
+- 名前付きタプルは`=`を用いて要素に名前をつけることができます.
+- 名前付きタプルの要素は`.`を用いてアクセスできます.
+
+```{julia}
+function tuple_sum(pars)
+    (; α, γ) = pars
+    return α + γ
+end
+
+tuple_sum(pars)
+```
+
+- 名前付きタプルの要素は`(; )`を用いて, 各要素に展開することができます
+
+### ベクトル, 行列 (Array)
+
+```{julia}
+[1, 2, 3]
+```
+
+```{julia}
+[1 2 3]
+```
+
+```{julia}
+[1; 2; 3]
+```
+
+- ベクトルは`[]`で囲まれた`,`区切りの要素の集まりです.
+- 空白区切りの場合は行列 (この場合は横ベクトル)として扱われます.
+- `;` 区切りは行列の中での改行を表します. 結果的にこの場合は縦ベクトルとして扱われます.
+
+```{julia}
+[1 2; 3 4]
+```
+
+```{julia}
+A = [1 2
+    3 4]
+```
+
+- 行列は`;`区切りの行ベクトルを`[]`で囲むことで作成できます.
+- なお`;`の代わりに改行を入れることもできます.
+
+**レンジ**
+
+```{julia}
+0:0.1:1
+```
+
+- `start:step:stop` でレンジを作成できます.
+- `start` から `stop` まで `step` ずつ増加する数列を生成します.
+- ステップが省略された場合はデフォルトで1になります.
+
+```{julia}
+range(0, length=11, stop=1)
+```
+
+- `range(start, length = n, stop = end)` で `n` 個の `start` から `end` までの数列を生成できます.
+
+::: {.callout-note}
+
+## レンジとベクトルの違い
+
+Juliaにおけるレンジはベクトルではなく, イテレータです.
+データとしては, レンジはベクトルではなく, レンジの始点, 終点, ステップの情報を持っているだけです.
+そのため, 生成の際のメモリは節約できる一方, ベクトルの様に要素を参照しようとすると計算コストがかかります.
+
+```{julia}
+r = 0:0.1:1
+typeof(r)
+```
+
+```{julia}
+typeof(collect(r))
+```
+
+`collect()` 関数を用いることで, レンジをベクトルに変換することができます.
+
+:::
+
+## 特殊記法
+
+### 内包表記
+
+```{julia}
+[2^i for i in 1:5]
+```
+
+```{julia}
+[i + j for i in 1:3, j in 1:3]
+```
+
+- 内包表記は`[ ]`の中で`for`ループを用いてベクトルや行列を生成する方法です.
+- 1次元の場合は`for`ループを1つ, 2次元の場合は`for`ループを`,`で区切って2つ用います.
+
+### ドット記法
+
+```{julia}
+f(x) = x^2
+f.([1, 2, 3])
+```
+
+- 定数に対して定義された関数をベクトルや行列に適用する際には, `.`を関数名の後につけることで各要素に適用することができます.
+
+```{julia}
+[1, 2, 3] .* [4, 5, 6]
+```
+
+```{.julia}
+[1, 2, 3] * [4, 5, 6] # Error
+```
+
+```{julia}
+[1, 2, 3]' * [4, 5, 6]
+```
+
+- `.*` は要素ごとの積を計算します.
+- `*` は行列の積を計算します. この例では縦ベクトルと縦ベクトルの積は定義できないため, エラーが発生します.
+- 内積を計算する場合は, `'`を用いて転置を行った後に行列の積を計算します.
+
+## `Plots.jl`の使い方
+
+```{julia}
+using Plots
+```
+
+```{julia}
+#| label: setup-plots
+#| include: false
+default(size=(500, 309), titlefontsize=10, fmt=:svg)
+```
+
+`Plots.jl`は, Juliaで図を描画するためのパッケージです.
+そのバックエンドとして以下の様なパッケージを統一的な文法で扱うことができます.
+
+- `GR`: デフォルト
+- `Plotly`: JavaScriptを利用したインタラクティブなプロット
+- `PyPlot`: Pythonの`matplotlib`を利用
+- `PGFPlotsX`: LaTeXの`pgfplots`を利用
+
+この授業では基本的に`GR`を使用します.
+また, `Plots.jl`以外のパッケージとして, 近年は[Makie](https://docs.makie.org/v0.22/)も人気を集めています.
+
+### 数列のプロット
+
+以下の様なフィボナッチ数列をプロットしてみましょう.
+
+$$
+F_n = \begin{cases}
+1 & n = 1, 2 \\
+F_{n-1} + F_{n-2} & n = 3, 4, \dots
+\end{cases}
+$$
+
+```{julia}
+N = 20
+fibs = zeros(Int, N)
+fibs[1], fibs[2] = 1, 1
+for i = 3:N
+    fibs[i] = fibs[i-1] + fibs[i-2]
+end
+
+scatter(1:N, fibs, title="Fibonacci Sequences", legends=false)
+```
+
+- `scatter`: 散布図を描画します.
+
+### 関数のプロット
+
+$$
+B_n = \begin{cases}
+\frac{1}{n} & n \text{ odd} \\
+1 - \frac{1}{n} & n \text{ even}
+\end{cases}
+$$
+
+```{julia}
+f(n) = isodd(n) ? 1 / n : 1 - 1 / n
+scatter(1:40, f, legends=false)
+```
+
+- 描画関数 (e.g, `scatter`) の第2引数に関数を指定することで, 第一引数の値に対する関数の値をプロットできます
+
+### プロットの重ね合わせ
+
+```{julia}
+using LaTeXStrings
+
+f₁(x) = x^2
+f₂(x) = x
+f₃(x) = log(x)
+
+xs = 0:0.01:1
+plot(xs, f₁, label=L"f_1(x) = x^2", legend=:bottomright)
+plot!(xs, f₂, label=L"f_2(x) = x")
+plot!(xs, f₃, label=L"f_3(x) = \log \,x")
+```
+
+- `plot`: 折れ線グラフを描画します.
+- `!`を付けることで, 既存のプロットに追加描画します.
+- `scatter`を追加する場合は, `scatter!`を使用します.
+- 数式をグラフに表示するためには, `LaTeXStrings`パッケージを使用し, `L"..."`で囲みます.
+
+### レイアウト
+
+```{julia}
+f(x, y) = (x ≠ y) ? (x + y) / (x - y) : one(x)
+xs = range(-1.0, 1.0, length=100)
+ys = copy(xs)
+p1 = contour(xs, ys, f)
+p2 = surface(xs, ys, f)
+plot(p1, p2, layout=(1, 2))
+```
+
+- `contour`: 等高線プロットを描画します.
+- `layout=(1, 2)`: レイアウトを指定します. この場合, 1行2列のプロットを描画します.
+- より複雑なレイアウトは[ドキュメント](https://docs.juliaplots.org/dev/layouts/)を参照してください.
+
+## Julia での表の作り方
+
+```{julia}
+using SummaryTables
+```
+
+レポートや論文を書く際に, Juliaのコードを実行した結果を表として出力したい場合, [`SummaryTables.jl`](https://pumasai.github.io/SummaryTables.jl/stable/)を用いることができます. 最も簡単な方法は `simple_table()` 関数を用いることですが, より複雑な票を作成することも可能です. また, 出力形式としては, HTML, LaTeX, DOCX, Typst などがサポートされています.
+
+```{julia}
+#| label: tbl-simple-table
+#| tbl-cap: "An example of SummaryTables.jl"
+data = (
+    id=1:5,
+    name=["Alice", "Bob", "Charlie", "David", "Eve"],
+    age=[34, 29, 42, 37, 25],
+    score=[88, 92, 75, 80, 95]
+)
+
+simple_table(data)
+```

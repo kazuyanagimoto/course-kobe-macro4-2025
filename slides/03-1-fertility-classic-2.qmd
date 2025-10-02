@@ -1,0 +1,452 @@
+---
+title: Kuznet's Facts for Family Economists
+subtitle: "@greenwood2023"
+description: "@greenwood2023"
+date: 2025-12-08
+image: /static/img/article/greenwood2023/fig6_4.svg
+---
+
+# @greenwood2023
+
+## Kusnet's Facts for Family Economists
+
+{{< v 0.5em >}}
+
+1回目の講義で扱ったように, @greenwood2023 は過去百数十年の間に起こった家族経済学上の重要な変化を以下のようにまとめている.
+
+1. 家事労働時間の減少
+1. 出生率の減少
+1. 結婚の減少
+1. 世帯サイズの縮小
+1. 高学歴者の増加
+1. ブルーカラーからホワイトカラーへの転換
+
+{{< v 0.5em >}}
+
+- これらの現象を説明するモデルとその要因を明らかにすることを目的としている
+- 近年の少子化を念頭においた理論というよりは, 古典的な出生理論を洗練させたものである
+
+## モデル設定
+
+- 静的モデル. 各エージェントは一度だけ意思決定を行う
+- 家計は性のない独身者と有配偶者からなる
+- 独身者は1単位時間を持ち, 家庭内労働 $h$ (household labor), 余暇 $l$ (leisure), 市場労働 $t$ (toiling in the market) に分配する, $h + l + t = 1$.
+- 既婚者は2単位時間を持ち, $h, l, t$ に加え, $k$ 人の子どもに対して, 子育て $b$ (basic childcare) と 教育 $e$ (education) に分配する, $h + l + t + bk + ek = 2$.
+
+**賃金**
+
+$$
+w = s v + (1 - s) u
+$$
+
+- スキルには合計すると1である _brain_ と _brawn_ の2種類がある
+- $s \in [0, 1]$: _brain_ スキルの割合
+- $v$: _brain_ スキルのリターン
+- $u$: _brawn_ スキルのリターン. $v > u$ を仮定
+
+---
+
+**家庭内労働** (Household Production)
+
+$$
+n = \left(\theta d^\sigma + (1 - \theta) \texttt{h}^\sigma\right)^{1/\sigma}
+$$
+
+- $d$: 家庭内生産用耐久財 (household durables). 価格は $p$
+- $\texttt{h}$: 家庭内労働 (household labor)
+
+**子どもの労働**
+
+- 家庭内労働は独身者にとっては, 費やした時間に一致する $\texttt{h} = h$
+- 子供 $k$ 人が家庭内労働に従事する場合, 生産性は $\chi$, すなわち $\texttt{h} = h + \chi k$
+- 時代が進むにつれ, 子どもが家庭内労働に従事する時間は減少し, それは $\chi$ の減少として表現される
+
+**子どものコスト**
+
+- 親は子どもの _brain_ スキル割合 $s$ を決定できる
+- 教育にかかる時間的費用は $e = \gamma s$ である
+
+## 効用関数
+
+**独身者**
+
+$$
+u^S(c, n, l) = \alpha \frac{c^{1-\rho} - 1}{1-\rho} + \beta \frac{n^{1-\nu} - 1}{1 - \nu} +
+(1 - \alpha - \beta) \frac{l^{1-\lambda} - 1}{1 - \lambda}
+$$
+
+**既婚者**
+
+$$
+\begin{aligned}
+u^M(c, n, l, k, s) &=\alpha \frac{(\varepsilon c)^{1-\rho} - 1}{1-\rho} + \beta \frac{(\varepsilon n)^{1-\nu} - 1}{1 - \nu} + \delta \frac{l^{1-\lambda} - 1}{1 - \lambda} \\
+&+ \psi \frac{k^{1-\kappa} - 1}{1 - \kappa} + \xi \frac{(sv + (1-s)u)^{1-\zeta}-1}{1-\zeta}
+\end{aligned}
+$$
+
+- $\varepsilon \in [0.5, 1.0]$: household equivalence scale
+- 子どもの数 $k$ とそのスキルレベル $w = sv + (1-s)u$ によって正の効用を得る
+
+## 家計の意思決定
+
+$$
+\begin{aligned}
+S &= \max_{d, h, l} u^S(c, n(d, h), l) &\text{ s.t. } c + pd = w(1 - h - l) \\
+M &= \max_{d, h, l, k, s} u^M(c, n(d, h), l, k, s) &\text{ s.t. } c + pd = w(2 - h - l - bk - ek)
+\end{aligned}
+$$
+
+**結婚の決定**
+
+- 独身者は人生の初めに他の独身者とマッチし, _joy shock_ $j$ を受け取る
+- 独身者は $M + j \ge S$ の時に結婚する
+- $j$ はガンベル分布 $G(j)$ に従う
+
+$$
+G(j) = \exp\left(-\exp\left(-\frac{j-\texttt{a}}{\texttt{d}}\right)\right)
+$$
+
+よって独身者の割合 $1 - \texttt{m}$ は
+
+$$
+1 - \texttt{m} = \Pr(M + j < S) = \Pr(j < S - M) = G(S - M).
+$$
+
+## Parameters from Data
+
+**価格**
+
+- $w_1880 = 1$ と基準化. 年率1.7%の上昇と推定して, $w_2020 = 11.3$
+    - 1880年から1988年は @williamson1995
+    - 1989年以降はFRED の real compensation を合計労働時間で割って推定
+- $p_{1880} = 100$ と基準化し, 約年率5%の下落 [@greenwood2016] より, $p_{2020} = 0.108$
+- $q_{2020} = 1.81$ はCensus’s Current Population Survey in 2018より
+
+{{< v 0.5em >}}
+
+**家庭内労働**
+
+- $\theta = 0.206, \sigma = 0.282$: @mcgrattan1997
+- $0 < \sigma < 1$: 耐久財と家事労働の代替性
+
+---
+
+**相対リスク回避度**
+
+- $\rho = 1.25$: Literature
+
+{{< v 0.5em >}}
+
+**Household equivalence scale**
+
+- OECD modified equivalence scale: $1 + 0.5$
+- $\varepsilon = 1 / (1 + 0.5) \simeq = 0.667$
+
+{{< v 0.5em >}}
+
+**子育て時間**
+
+- American Time Use Survey (ATUS) and @gershuny2016
+- 子育て時間の平均 (1920, 1965, 2019) $b = 0.030$
+
+---
+
+**教育時間**
+
+$\gamma = e / s$ を元に推定
+
+- ATUS, American Heritage Time Use Study, and @gershuny2016
+- $s_t$ はホワイトカラーの割合, $e_t$ は家庭での教育時間
+- 推定された $\gamma_t$ の平均 (1920, 1965, 2020) $\gamma = 0.026$
+
+{{< v 0.5em >}}
+
+**子どもの家庭内労働**
+
+- 児童労働は児童の労働時間と生産性の積と考える
+- 児童の生産性は @lebergott1964 に基づいて推定
+- 児童の1880年の労働時間は @webbink2012 の途上国の児童の労働時間を用いる
+- 児童の2020年の労働時間は @hofferth2001 を用いる
+
+## Simulated Method of Moments (SMM)
+
+{{< v 0.5em >}}
+
+残りのパラメータは SMM によって推定する. この推定方法は2つのループからなる
+
+{{< v 0.5em >}}
+
+- **外側のループ**: $\alpha, q_{1880}$
+    - 各シミュレーションごとにパラメータを変えながら探索する
+- **内側のループ**: $\Lambda(\alpha, q_{1880}) =(\beta, \nu, \delta, \lambda, \psi, \kappa, \xi, \zeta)$
+    - $\alpha, q_{1880}$ を所与とすると (一階条件から) 決定される
+- 残りのパラメータ: $\texttt{a}, \texttt{d}$
+    - 他のパラメータが決定された後, 決定される
+
+{{< v 1em >}}
+
+推定を二分割することで, 探索しなければならないパラメータの数を減らすことができる.
+
+## 内側のループ
+
+**Step 1**: $\lambda$
+
+$l$ の一階条件から以下の式が導ける.
+
+$$
+\delta l^{-\lambda} = \alpha \varepsilon^{1-\rho}\left(w(2 - b k - \gamma s k - h - l) - pd\right)^{-\rho}w.
+$${#eq-greenwood2023-foc-l}
+
+この式は以下を導き, $\lambda$ が推定される.
+
+$$
+\left(\frac{l_{2020}}{l_{1880}}\right)^{-\lambda} =
+\left(\frac{w_{2020}(2 - b k_{2020} - \gamma s_{2020} k_{2020} - h_{2020} - l_{2020}) - p_{2020}d_{2020}}{w_{1880}(2 - b k_{1880} - \gamma s_{1880} k_{1880} - h_{1880} - l_{1880}) - p_{1880}d_{1880}}\right)^{-\rho}\frac{w_{2020}}{w_{1880}}.
+$$
+
+**Step 2**: $\delta$
+
+(-@eq-greenwood2023-foc-l) において $\lambda$ が既知であるため,
+
+$$
+\delta l_{2020}^{-\lambda} = \alpha \varepsilon^{1-\rho}\left(w_{2020}(2 - b k_{2020} - \gamma s_{2020} k_{2020} - h_{2020} - l_{2020}) - p_{2020}d_{2020}\right)^{-\rho}w_{2020}
+$$
+
+から $\delta$ が推定できる.
+
+---
+
+**Step 3**: $\kappa$
+
+$k$ の一階条件から以下の式が導ける.
+
+$$
+\psi k^{-\kappa} = \delta l^{-\lambda} (b + \gamma s - \chi).
+$${#eq-greenwood2023-foc-k}
+
+よって, 以下の関係から $\kappa$ が推定できる.
+
+$$
+\left(\frac{k_{2020}}{k_{1880}}\right)^{-\kappa} = \left(\frac{l_{2020}}{l_{1880}}\right)^{-\lambda} \frac{b + \gamma s_{2020} - \chi_{2020}}{b + \gamma s_{1880} - \chi_{1880}}.
+$$
+
+**Step 4**: $\psi$
+
+$\kappa$ が既知であるため, (-@eq-greenwood2023-foc-k) から
+
+$$
+\psi k_{2020}^{-\kappa} = \delta l_{2020}^{-\lambda} (b + \gamma s_{2020} - \chi_{2020})
+$$
+
+より $\psi$ が推定できる.
+
+---
+
+**Step 5**: $\zeta$
+
+$s$ の一階条件から以下の式が導ける.
+
+$$
+\xi \left(s v + (1-s) u\right)^{-\zeta} (v - u) = \delta l^{-\lambda} \gamma k.
+$${#eq-greenwood2023-foc-s}
+
+よって, 以下の関係から $\zeta$ が推定できる.
+
+$$
+\left(\frac{s_{2020} v_{2020} + (1 - s_{2020}) u_{2020}}{s_{1880} v_{1880} + (1 - s_{1880} u_{1880})}\right)^{-\zeta} \frac{v_{2020} - u_{2020}}{v_{1880} - u_{1880}} = \left(\frac{l_{2020}}{l_{1880}}\right)^{-\lambda} \frac{k_{2020}}{k_{1880}}.
+$$
+
+**Step 6**: $\xi$
+
+$\zeta$ が既知であるため, (-@eq-greenwood2023-foc-s) から
+$$
+\xi \left(s_{2020} v_{2020} + (1 - s_{2020}) u_{2020}\right)^{-\zeta} (v_{2020} - u_{2020}) = \delta l_{2020}^{-\lambda} \gamma k_{2020}
+$$
+より $\xi$ が推定できる.
+
+---
+
+**Step 7**: $\nu$
+
+$h$ の一階条件から以下の式が導ける.
+
+$$
+\beta \varepsilon^{1-\rho} (1-\theta)\left(\theta d^{\sigma} + (1-\theta)(h + \chi k)^{\sigma}\right)^{\frac{1-\nu-\sigma}{\sigma}} (h + \chi k)^{\sigma - 1} = \delta l^{-\lambda}.
+$${#eq-greenwood2023-foc-h}
+
+よって, 以下の関係から $\nu$ が推定できる.
+
+$$
+\left(\frac{\theta d_{2020}^\sigma + (1 - \theta)(h_{2020} + \chi_{2020} k_{2020})^{\sigma}}{\theta d_{1880}^{\sigma} + (1 - \theta)(h_{1880} + \chi_{1880} k_{1880})^{\sigma}}\right)^{\frac{1-\nu-\sigma}{\sigma}} \left(\frac{h_{2020} + \chi_{2020} k_{2020}}{h_{1880} + \chi_{1880} k_{1880}}\right)^{\sigma - 1} = \left(\frac{l_{2020}}{l_{1880}}\right)^{-\lambda}.
+$$
+
+**Step 8**: $\beta$
+
+$\nu$ が既知であるため, (-@eq-greenwood2023-foc-h) から
+
+$$
+\beta \varepsilon^{1-\rho} (1-\theta)\left(\theta d_{1880}^{\sigma} + (1-\theta)(h_{1880} + \chi_{1880} k_{1880})^{\sigma}\right)^{\frac{1-\nu-\sigma}{\sigma}} (h_{1880} + \chi_{1880} k_{1880})^{\sigma - 1} = \delta l_{1880}^{-\lambda}
+$$
+
+より $\beta$ が推定できる.
+
+## 外側のループ $\alpha, q_{1880}$
+
+:::: {layout-ncol=2}
+
+::: {.column}
+
+{{< v 1em >}}
+
+$$
+\min_{\alpha, q_{1880}} \sum_{i} \left(\frac{\mathcal{D}_i - \mathcal{M}_{i}(\alpha, q_{1880})}{\mathcal{D}_i}\right)
+$$
+
+- $\mathcal{D}$ : 独身者のデータモーメント
+    - 労働時間 (1880, 2020)
+    - 家庭内労働時間 (1880, 2020)
+- $\mathcal{M}(\alpha, q_{1880})$: モデルでのモーメント
+- Fertility, Schooling, Time (married) は内側のループの定義から完全に一致
+- Marriage のモーメントは次のステップ
+
+:::
+
+::: {.column}
+
+![](/static/img/article/greenwood2023/table5_3.svg)
+
+:::
+
+::::
+
+## 残りのパラメータ: $\texttt{a}, \texttt{d}$
+
+他のパラメータが全て推定されると, 独身者の効用 $S$ と既婚者の効用 $M$ が決定される.
+独身者の割合 $\texttt{s}$ は以下の式を満たす.
+
+$$
+\log (-\log \texttt{s}) = - (S - M - \texttt{a})/\texttt{d}
+$${#eq-greenwood2023-gumbel}
+
+したがって, 以下の関係から $\texttt{a}$ が求まる.
+
+$$
+\frac{\log (-\log \texttt{s}_{2020})}{\log (-\log \texttt{s}_{1880})} = \frac{S_{2020} - M_{2020} - \texttt{a}}{S_{1880} - M_{1880} - \texttt{a}}.
+$$
+
+$\texttt{a}$ が既知であるから (-@eq-greenwood2023-gumbel) から $\texttt{d}$ が求まる.
+
+$$
+\texttt{d} = \frac{S_{2020} - M_{2020} - \texttt{a}}{\log (-\log \texttt{s}_{2020})}
+$$
+
+
+
+## Estimated Parameters
+
+{{< v -0.5em >}}
+
+![](/static/img/article/greenwood2023/table5_2.svg){fig-align="center" width=55%}
+
+## Driving Forces of Great Transition
+
+1880年から2020年までの変化の要因について, 以下の3つに着目する.
+
+1. 全体的な技術革新 (neutral technological progress, $\mathbf{z}$)
+1. スキルのいる産業の技術革新 (skill-biased technological progress, $\mathbf{x}$)
+1. 家庭内生産用耐久財の価格低下 (fall in the price of household durables, $p$)
+
+{{< v 0.5em >}}
+
+技術革新をモデル化するために, 以下の最適化を行う代表的な企業 (生産者) を導入する.
+
+$$
+\max_{\mathbf{u}, \mathbf{v}} \mathbf{z}\left((1-\omega)\mathbf{u}^{\iota} + \omega \mathbf{x}\mathbf{v}^{\iota}\right)^{\frac{1}{\iota}}
+- u\mathbf{u} - v\mathbf{v}.
+$$
+
+一階条件から, 大卒プレミアム $q$ は以下のように表される.
+
+$$
+q = \frac{v}{u} = \frac{\omega \mathbf{x}}{1-\omega} \left(\frac{\mathbf{v}}{\mathbf{u}}\right)^{\iota-1} = \frac{\omega \mathbf{x}}{1-\omega} \left(\frac{s}{1-s}\right)^{\iota-1}
+$${#eq-college-premium}
+
+最後の等式は, $\mathbf{t} = m t_m + (1-m) t_s$, $\mathbf{u} = (1 - s)\mathbf{t}$ と $\mathbf{v} = s\mathbf{t}$ を用いている.
+
+## Calibration for Production
+
+![](/static/img/article/greenwood2023/table6_1.svg){fig-align="center" width=70%}
+
+{{< v 0.5em >}}
+
+- CES生産関数のパラメータ $\omega, \iota$ は @acemoglu2011 の値
+- @eq-college-premium から, $\mathbf{x}_{1880}, \mathbf{x}_{2020}$ が求まる
+- 一階条件 $\mathbf{z}\left((1-\omega)\mathbf{u}^{\iota} + \omega\mathbf{x}\mathbf{v}^{\iota}\right)^{\frac{1}{\iota}-1}(1-\omega)\mathbf{u}^{\iota-1}=u$ から, $\mathbf{z}_{1880}, \mathbf{z}_{2020}$ が求まる
+
+
+## Transition
+
+モデルに $\mathbf{z}_t = \mathbf{z}_{1880} e^{\Delta\mathbf{z}(t-1880)}, \mathbf{x}_t = \mathbf{x}_{1880} e^{\Delta\mathbf{x}(t-1880)}, p_t = p_{1880} e^{\Delta p(t-1880)}$ を代入
+
+![](/static/img/article/greenwood2023/fig6_1.svg){fig-align="center" width=85%}
+
+{{< v 0.5em >}}
+
+
+- 1880年から2020年までの変化がうまく再現できている
+- 特に, 結婚率の $\cap$-shape が再現されている
+
+---
+
+### Brain スキル労働 $\mathbf{x}$
+
+![](/static/img/article/greenwood2023/fig6_2.svg){fig-align="center" width=70%}
+
+大卒プレミアムの向上 ($\mathbf{x}$ の上昇) がない場合:
+
+- 出生率は高止まりし, 大卒者の割合は増加しない.
+- 子どもの学歴ではなく人数に投資している (quality-quantity trade-off)
+
+---
+
+### 家庭内生産用耐久財の価格 $p$
+
+![](/static/img/article/greenwood2023/fig6_3.svg){fig-align="center" width=90%}
+
+家庭内生産用耐久財の価格 $p$ の低下が起こらない場合:
+
+- 家庭内労働の時間が減少せず, 労働時間が減少する
+- 婚姻率が上昇する (次ページ)
+
+---
+
+![](/static/img/article/greenwood2023/fig6_4.svg){fig-align="center" width=60%}
+
+- 婚姻率の $\cap$-shape は $p$ の下落によって引き起こされていた
+    - 大卒プレミアムの上昇 $\mathbf{x}$ による子ども (結婚) の価値向上 (1960年以前優位)
+    - 家事のスケールメリットという結婚の優位性の減少 (1960年以降優位)
+
+## まとめ
+
+**Skill-biased technological change**
+
+- 大卒プレミアムの上昇
+    - ⑤ 高学歴者の増加
+    - ⑥ ブルーカラーからホワイトカラーへの転換
+- Quantity-quality trade-off
+    - ② 出生率の減少
+    - ④ 世帯サイズの縮小
+
+**Decline in the price of household durables**
+
+- 家事労働の効率化
+    - ① 家事労働時間の減少
+- 家事のスケールメリットという結婚の優位性の減少
+    - ③ 結婚率の減少
+
+{{< appendix >}}
+
+## 参考文献
+
+:::{refs}
+:::
