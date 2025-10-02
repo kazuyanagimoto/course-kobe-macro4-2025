@@ -20,29 +20,8 @@ image: /static/img/dist_gumbel.svg
 
 Frictionless marriage market model の理解には以下の前提知識が必要である.
 
-- 二部マッチング問題 (bipartite matching problem)
 - 離散選択モデル (discrete choice model)
 - パレート効率性 (Pareto efficiency)
-
-## 二部マッチング問題 (Bipartite Matching Problem)
-
-**二部マッチング問題**
-
-- エージェントが二つのグループに分かれている (男性と女性, 会社と労働者, 学校と生徒)
-- 各エージェントは他のグループのエージェントとマッチングする
-- Non-Transferable Utility (NTU) と Transferable Utility (TU) の2つの場合がある
-
-**Non-Transferable Utility (NTU)**
-
-- $U_{ij}^{i}$, $U_{ij}^{j}$ はそれぞれのエージェントの効用であり, 互いに移転可能ではない
-- 例: 生徒と学校のマッチング. 金銭の授受によって効用の移転が起きるとは考えにくい
-
-**Transferable Utility (TU)**
-
-- $U_{ij}^{i}$, $U_{ij}^{j}$ の間で移転可能な効用を持つ
-- 結婚市場では, 結婚後に (効率的な) の配分ができるため, TU のモデルが適切である
-- 配分に非効率性がある場合は, Imperfectly Transferable Utility (ITU) と呼ばれる
-- 次回は離婚後の配分に非効率性のある ITU のモデルである @reynoso2024 を扱う
 
 ## 離散選択モデル (Discrete Choice Model)
 
@@ -350,7 +329,7 @@ $$
 
 **Frictionless Marriage Market**
 
-- TUな二部マッチング問題と離散選択モデルの組み合わせで結婚市場をモデル化できる
+- パートナーに対する離散選択によって結婚市場をモデル化できる
 - 家庭内交渉力を説明するパレートウェイトが結婚市場の均衡価格の役割を果たす
 
 {{< v 0.5em >}}
