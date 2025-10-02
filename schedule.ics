@@ -4,123 +4,123 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
-UID:ical-9c834e80-de0d-413c-a797-cbbc460ed6c3
+UID:ical-bc78ef6f-fff8-4f85-9cef-dc9ca503ccda
 DTSTART:20251006T042000
 DTEND:20251006T055000
 SUMMARY:Macro IV: 1. Introduction
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/01-1-intro
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/01-1-intro
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-16d3c860-5976-47e5-8f3b-b4866c547f23
+UID:ical-e703cdcc-f45e-4053-b0c8-65070556f08a
 DTSTART:20251015T042000
 DTEND:20251015T055000
 SUMMARY:Macro IV: 2. 数値計算の基礎
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/01-2-numerical-method
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/01-2-numerical-method
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-85c4e717-ef56-4ca5-8064-2f75bc6fe25f
+UID:ical-405fb3df-7b1e-4914-ab7f-01f839dd3a19
 DTSTART:20251020T042000
 DTEND:20251020T055000
 SUMMARY:Macro IV: 3. 動学モデルの基礎
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/01-3-dynamic-model
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/01-3-dynamic-model
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-0354eba5-4bc1-4ab6-93de-3cfbc3723587
+UID:ical-dc0ce12c-1adf-4652-83b8-b27cfc1944f9
 DTSTART:20251027T042000
 DTEND:20251027T055000
 SUMMARY:Macro IV: 4. Search and Matching I
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/02-1-marriage-search-1
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/02-1-marriage-search-1
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-a8a4acf7-3c0e-492b-bcc4-8db4ce25045b
+UID:ical-2486570e-ffac-4fc3-a8e6-d99f5e99d906
 DTSTART:20251106T042000
 DTEND:20251106T055000
 SUMMARY:Macro IV: 5. Search and Matching II
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/02-1-marriage-search-2
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/02-1-marriage-search-2
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-497b4d88-8064-4eca-8dd4-7995ca0a2f0c
+UID:ical-a2d56535-e7aa-482d-a114-aa018c3e9f9a
 DTSTART:20251110T042000
 DTEND:20251110T055000
 SUMMARY:Macro IV: 6. Frictionless Marriage Market I
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/02-2-marriage-frictionless-1
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/02-2-marriage-frictionless-1
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-69f3710f-8acb-4638-ad9d-fdc3201b966c
+UID:ical-331ba185-ea4a-43ca-bd13-f435059aed42
 DTSTART:20251117T042000
 DTEND:20251117T055000
 SUMMARY:Macro IV: 7. Frictionless Marriage Market II
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/02-2-marriage-frictionless-2
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/02-2-marriage-frictionless-2
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-ccdfe20a-40d5-480f-8dfc-930e47c485dc
+UID:ical-e9fa1aa4-54aa-4f8a-92a9-43d80dce328d
 DTSTART:20251201T042000
 DTEND:20251201T055000
 SUMMARY:Macro IV: 8. Old Facts, Old Models
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/03-1-fertility-classic-1
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/03-1-fertility-classic-1
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-6f92866f-86db-4017-9da9-4bacfecec4c4
+UID:ical-26678dff-3fa5-4399-bcda-0a73e2bf0241
 DTSTART:20251208T042000
 DTEND:20251208T055000
 SUMMARY:Macro IV: 9. Kuznet's Facts for Family Economists
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/03-1-fertility-classic-2
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/03-1-fertility-classic-2
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-3283a7fa-bca9-472e-ad6e-2da136fba9a6
+UID:ical-2e3bd2d8-2b77-4c34-932d-39b3ea52a3f8
 DTSTART:20251215T042000
 DTEND:20251215T055000
 SUMMARY:Macro IV: 10. New Theory of Fertility I
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/03-2-fertility-new-1
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/03-2-fertility-new-1
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-0f281f92-0619-45a5-a014-d929b5cd7ee8
+UID:ical-bee73202-d373-46d0-bd9f-bf99db032a90
 DTSTART:20251222T042000
 DTEND:20251222T055000
 SUMMARY:Macro IV: 11. New Theory of Fertility II
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/03-2-fertility-new-2
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/03-2-fertility-new-2
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-df32cf81-9a89-40b2-9684-939716d5c7b6
+UID:ical-4db1c334-ada2-4bda-89ac-409477b9aea9
 DTSTART:20260105T042000
 DTEND:20260105T055000
 SUMMARY:Macro IV: 12. Non-linear Wage
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/04-1-nonlinear-wage
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/04-1-nonlinear-wage
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-1fac272b-a63b-4682-b585-0cf453b1c1ba
+UID:ical-24e05212-7a08-44c5-98b2-a2b5f03f64a2
 DTSTART:20260114T042000
 DTEND:20260114T055000
 SUMMARY:Macro IV: 13. Home Production
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/04-2-home-production
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/04-2-home-production
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-60194770-9981-40b2-8712-13ec24099d54
+UID:ical-8adda406-600a-40e9-892e-3901901bd44f
 DTSTART:20260119T042000
 DTEND:20260119T055000
 SUMMARY:Macro IV: 14. Intra-household Allocation
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/04-3-intra-household
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/04-3-intra-household
 END:VEVENT
 BEGIN:VEVENT
-UID:ical-98ec8d39-8669-4ee5-9ddf-3b7832781c75
+UID:ical-08a05572-cde6-417d-9e21-4d1271f7bd67
 DTSTART:20260126T042000
 DTEND:20260126T055000
 SUMMARY:Macro IV: 15. まとめ
 LOCATION:六甲台本館203
-DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4/lecture/
+DESCRIPTION:https://kazuyanagimoto.com/course-kobe-macro4-2025/lecture/
 END:VEVENT
 END:VCALENDAR

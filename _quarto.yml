@@ -12,6 +12,13 @@ project:
 website:
   title: Family Macroeconomics
   favicon: static/img/logo.drawio.svg
+  twitter-card:
+    image: static/img/sns-card.drawio.png
+    card-style: summary_large_image
+    creator: "@kazuyanagimoto"
+  open-graph:
+    image: static/img/sns-card.drawio.png
+    locale: ja_JP
   page-navigation: true
   navbar:
     left:
