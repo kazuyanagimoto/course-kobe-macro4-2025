@@ -33,67 +33,67 @@ url_ics <- paste0(url_site, "/", "schedule.ics")
 ```{r}
 #| label: build-schedule
 schedule <- c(
-  list.files("slides", pattern = "\\.qmd$", full.names = TRUE),
-  list.files("lecture", pattern = "\\.qmd$", full.names = TRUE)
+    list.files("slides", pattern = "\\.qmd$", full.names = TRUE),
+    list.files("lecture", pattern = "\\.qmd$", full.names = TRUE)
 ) |>
-  purrr::map(\(x) {
-    yaml <- rmarkdown::yaml_front_matter(x)
-    tibble(
-      id = tools::file_path_sans_ext(basename(x)),
-      title = yaml$title,
-      date = yaml$date,
-      type = basename(dirname(x)),
-    )
-  }) |>
-  purrr::list_rbind() |>
-  filter(stringr::str_sub(id, 1, 1) == "0") |>
-  add_row(id = "", title = "まとめ", date = "2026-01-26") |>
-  arrange(date)
+    purrr::map(\(x) {
+        yaml <- rmarkdown::yaml_front_matter(x)
+        tibble(
+            id = tools::file_path_sans_ext(basename(x)),
+            title = yaml$title,
+            date = yaml$date,
+            type = basename(dirname(x)),
+        )
+    }) |>
+    purrr::list_rbind() |>
+    filter(stringr::str_sub(id, 1, 1) == "0") |>
+    add_row(id = "", title = "まとめ", date = "2026-01-26") |>
+    arrange(date)
 
 assignment <- tibble(
-  id = c(
-    "01-3-dynamic-model",
-    "02-2-marriage-frictionless-2",
-    "03-2-fertility-ne-2",
-    "04-3-intra-household"
-  ),
-  date_assignment = c("2025-10-28", "2025-12-02", "2025-01-14", "2025-01-29"),
+    id = c(
+        "01-3-dynamic-model",
+        "02-2-marriage-frictionless-2",
+        "03-2-fertility-ne-2",
+        "04-3-intra-household"
+    ),
+    date_assignment = c("2025-10-28", "2025-12-02", "2025-01-14", "2025-01-29"),
 )
 ```
 
 ```{r}
 #| label: export-ics
 ics <- schedule |>
-  mutate(
-    rnum = row_number(),
-    start_time_jst = lubridate::ymd_hm(
-      paste0(date, " 13:20"),
-      tz = "Asia/Tokyo"
-    ),
-    start_time = lubridate::with_tz(start_time_jst, "UTC"),
-    summary = glue::glue("Macro IV: {rnum}. {title}"),
-  ) |>
-  group_by(rnum) |>
-  tidyr::nest() |>
-  mutate(
-    ical = purrr::map(
-      data,
-      ~ calendar::ic_event(
-        start_time = .$start_time,
-        end_time = 1.5,
-        summary = .$summary,
-        more_properties = TRUE,
-        event_properties = list(
-          LOCATION = "六甲台本館203",
-          DESCRIPTION = glue::glue("{url_site}/lecture/{.$id}")
+    mutate(
+        rnum = row_number(),
+        start_time_jst = lubridate::ymd_hm(
+            paste0(date, " 13:20"),
+            tz = "Asia/Tokyo"
+        ),
+        start_time = lubridate::with_tz(start_time_jst, "UTC"),
+        summary = glue::glue("Macro IV: {rnum}. {title}"),
+    ) |>
+    group_by(rnum) |>
+    tidyr::nest() |>
+    mutate(
+        ical = purrr::map(
+            data,
+            ~ calendar::ic_event(
+                start_time = .$start_time,
+                end_time = 1.5,
+                summary = .$summary,
+                more_properties = TRUE,
+                event_properties = list(
+                    LOCATION = "六甲台本館203",
+                    DESCRIPTION = glue::glue("{url_site}/lecture/{.$id}")
+                )
+            )
         )
-      )
-    )
-  ) |>
-  ungroup() |>
-  select(-c(rnum, data)) |>
-  tidyr::unnest(ical) |>
-  calendar::ical()
+    ) |>
+    ungroup() |>
+    select(-c(rnum, data)) |>
+    tidyr::unnest(ical) |>
+    calendar::ical()
 
 calendar::ic_write(ics, here::here("schedule.ics"))
 ```
@@ -102,48 +102,48 @@ calendar::ic_write(ics, here::here("schedule.ics"))
 ```{r}
 #| label: schedule
 schedule |>
-  left_join(assignment, by = "id") |>
-  mutate(
-    fa_material = ifelse(
-      type == "slides",
-      'filetype-pdf',
-      'file-code'
-    ),
-    file_material = ifelse(
-      type == "slides",
-      glue::glue("/slides/{id}.pdf"),
-      glue::glue("/lecture/{id}.html")
-    ),
-    material = ifelse(
-      id != "",
-      glue::glue(
-        '<a href="{file_material}"><i class="bi bi-{fa_material}"></i></a>'
-      ),
-      ""
+    left_join(assignment, by = "id") |>
+    mutate(
+        fa_material = ifelse(
+            type == "slides",
+            'filetype-pdf',
+            'file-code'
+        ),
+        file_material = ifelse(
+            type == "slides",
+            glue::glue("/slides/{id}.pdf"),
+            glue::glue("/lecture/{id}.html")
+        ),
+        material = ifelse(
+            id != "",
+            glue::glue(
+                '<a href="{file_material}"><i class="bi bi-{fa_material}"></i></a>'
+            ),
+            ""
+        )
+    ) |>
+    select(date, title, material, date_assignment) |>
+    setNames(c("", "タイトル", "教材", "課題提出")) |>
+    tt(width = c(0.2, 0.5, 0.1, 0.2)) |>
+    style_tt(align = "llcl") |>
+    format_tt(j = c(2), date = "%Y年%m月%d日") |>
+    format_tt(replace = "") |>
+    group_tt(
+        i = lst(
+            "基礎編" = 1,
+            "結婚の経済学" = 4,
+            "出生の経済学" = 8,
+            "ジェンダー格差" = 12,
+            "まとめ" = 15
+        )
+    ) |>
+    style_tt(
+        i = c(1, 5, 10, 15, 19),
+        bold = TRUE,
+        line = "b",
+        line_color = "#cccccc",
+        fontsize = 1.25
     )
-  ) |>
-  select(date, title, material, date_assignment) |>
-  setNames(c("", "タイトル", "教材", "課題提出")) |>
-  tt(width = c(0.2, 0.5, 0.1, 0.2)) |>
-  style_tt(align = "llcl") |>
-  format_tt(j = c(2), date = "%Y年%m月%d日") |>
-  format_tt(replace = "") |>
-  group_tt(
-    i = lst(
-      "基礎編" = 1,
-      "結婚の経済学" = 4,
-      "出生の経済学" = 8,
-      "ジェンダー格差" = 12,
-      "まとめ" = 15
-    )
-  ) |>
-  style_tt(
-    i = c(1, 5, 10, 15, 19),
-    bold = TRUE,
-    line = "b",
-    line_color = "#cccccc",
-    fontsize = 1.25
-  )
 ```
 
 
@@ -169,7 +169,7 @@ schedule |>
 
 **提出方法**
 
-- Google Classroom上でPDFレポートとコードをアップロード
+- Beef+上でPDFレポートとコードをアップロード
 - TAのPC上で動作確認を行う. 再現できない場合は, TAが環境について質問することがある
 
 **コードについて**

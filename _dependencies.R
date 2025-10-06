@@ -1,1 +1,2 @@
 library(svglite)
+library(quarto)
