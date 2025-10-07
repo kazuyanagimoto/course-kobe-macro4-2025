@@ -17,6 +17,9 @@ using NonlinearSolve
 using FastGaussQuadrature
 using Distributions
 using SummaryTables
+using BenchmarkTools
+using JuMP
+import Ipopt
 
 import Random
 Random.seed!(1234)
@@ -159,7 +162,7 @@ l = find_zero(foc, (ϵ, 1 - ϵ))
 
 $$
 \max_{c_m, c_f, l_m, l_f} u(c_m, l_m) + u(c_f, l_f)
-$$
+$${#eq-couple-problem}
 
 subject to
 
@@ -235,7 +238,12 @@ function solve_bargaining(; w_m=1.0, w_f=0.5, γ_c=1.5, α_l=1.2, γ_l=1.5)
         l_m = 1 / (1 + exp(x))
     end
 
-    return l_m, l_f
+    c = w_m * (1 - l_m) + w_f * (1 - l_f)
+    c_m = 0.5 * c
+    c_f = 0.5 * c
+    U = (c_m^(1 - γ_c) / (1 - γ_c)) + α_l * (l_m^(1 - γ_l) / (1 - γ_l)) +
+        (c_f^(1 - γ_c) / (1 - γ_c)) + α_l * (l_f^(1 - γ_l) / (1 - γ_l))
+    return (c_m=c_m, c_f=c_f, l_m=l_m, l_f=l_f, U=U)
 end
 ```
 
@@ -243,15 +251,15 @@ end
 #| code-fold: true
 #| label: fig-sol-bargaining
 #| fig-cap: "**Solution of bargaining problem.** $w_m = 1.0, \\alpha_l = 1.2, \\gamma_c = \\gamma_l = 1.5$."
-plot(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f)[1], label=L"l_m", xlabel=L"w_f")
-plot!(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f)[2], label=L"l_f")
+plot(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f).l_m, label=L"l_m", xlabel=L"w_f")
+plot!(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f).l_f, label=L"l_f")
 ```
 
 ### 多変数の非線形方程式
 
 多変数の非線形方程式では Bracketing method は使えず, ニュートン法のような Non-bracketing method を用いる必要があります. そのため内点解と微分可能な関数を仮定しており, 端点解やスムースでない関数が想定される場合は使えません. そのような場合は, 原始的なグリッドサーチを用いるか, 後述するのように非線形最適化問題として解く必要があります.
 
-なお, 多くの標準的な効用関数 (CRRA, CESなど) の場合, 一階条件は一変数の非線形方程式に帰着できます. 今回は学習のために, @eq-max-utility を3変数 ($c$, $l$, $\lambda$) の非線形方程式として解いてみましょう.[NonlinearSolve.jl](https://docs.sciml.ai/NonlinearSolve/) を用いると便利です.
+なお, 多くの標準的な効用関数 (CRRA, CESなど) の場合, 一階条件は一変数の非線形方程式に帰着できます. 今回は学習のために, @eq-max-utility を3変数 ($c$, $l$, $\lambda$) の非線形方程式として解いてみましょう. [NonlinearSolve.jl](https://docs.sciml.ai/NonlinearSolve/) を用いると便利です.
 
 $$
 \begin{aligned}
@@ -279,6 +287,73 @@ solve_nonlinear_system()
 ```
 
 工夫として負の指数を避けるように式変形しています. これは最適化の際に, 負の数の負の数乗によってエラーが起きることを避けるためです.
+
+### Mathematical Programming
+
+より強力な方法として, 解きたい最適化問題を直接ソルバーにかける方法があります. Juliaの場合は [JuMP.jl](https://jump.dev/JuMP.jl/stable/) が有名です. ここでは, @eq-couple-problem を JuMP を用いて解いてみましょう.a
+
+```{julia}
+#| label: solve-jump
+#| output: false
+function solve_jump(; w_m=1.0, w_f=0.5, γ_c=1.5, α_l=1.2, γ_l=1.5)
+
+    model = Model(Ipopt.Optimizer)
+    set_silent(model)
+
+    @variables(model, begin
+        0 <= c_m
+        0 <= c_f
+        0 <= l_m <= 1
+        0 <= l_f <= 1
+    end)
+
+    @objective(
+        model,
+        Max,
+        (c_m^(1 - γ_c) / (1 - γ_c)) + α_l * (l_m^(1 - γ_l) / (1 - γ_l)) +
+        (c_f^(1 - γ_c) / (1 - γ_c)) + α_l * (l_f^(1 - γ_l) / (1 - γ_l))
+    )
+
+    @constraint(model, c_m + c_f == w_m * (1 - l_m) + w_f * (1 - l_f))
+
+    optimize!(model)
+
+    return (
+        c_m=value(c_m),
+        c_f=value(c_f),
+        l_m=value(l_m),
+        l_f=value(l_f),
+        U=objective_value(model)
+    )
+end
+```
+
+@fig-sol-bargaining と同じ結果が得られました.
+
+```{julia}
+#| code-fold: true
+#| label: fig-sol-jump
+#| fig-cap: "**Solution of bargaining problem by JuMP.** $w_m = 1.0, \\alpha_l = 1.2, \\gamma_c = \\gamma_l = 1.5$."
+plot(0.1:0.01:0.9, w_f -> solve_jump(w_f=w_f).l_m, label=L"l_m", xlabel=L"w_f")
+plot!(0.1:0.01:0.9, w_f -> solve_jump(w_f=w_f).l_f, label=L"l_f")
+```
+
+とても便利に思えますが, いくつか注意点があります.
+
+1. 計算の正しさが保証されない. アルゴリズムの中身がブラックボックスであり, 研究者自身が解の正しさを保証できない. 端点解を見逃す可能性や収束しない可能性がある.
+1. 計算が遅い. 一階条件を直接解く場合と比べると, 問題の複雑さが増すため, 計算が遅くなる. より大規模なモデルを解きたい場合には, 致命的な問題となる可能性がある.
+
+```{julia}
+#| label: benchmark-foc
+@benchmark solve_bargaining(w_f=0.1)
+```
+
+```{julia}
+#| label: benchmark-jump
+@benchmark solve_jump(w_f=0.1)
+```
+
+JuMPを用いた方法がかなり遅いことが分かります.^[実際には [Parameter](https://jump.dev/JuMP.jl/stable/manual/variables/#variables_parameters) を導入するなどして, 計算を早くすることは可能ですが, それでも一階条件を直接解く方法よりは遅くなります.] そのため, 私自身は検算目的で使う場合がほとんどです.
 
 ## 数値積分
 
@@ -323,6 +398,8 @@ sol_tr1000 = trapezoid_rule(x -> sqrt(1 - x^2), 0.0, 1.0, 1000)
 
 π / 4, sol_tr100, sol_tr1000
 ```
+
+100個の評価点で少数第三位まで, 1000個の評価点で少数第四位までの精度が得られていることがわかります.
 
 ### ガウス求積 (Gaussian Quadrature)
 
@@ -428,11 +505,13 @@ function mean_hours(; γ_c=1.5, α_l=1.2, γ_l=1.5, μ=0.0, σ=0.5, n=10)
     x, w = gausshermite(n)
     return sum(w .* hours_worked.(exp.(sqrt(2) * σ * x .+ μ), γ_c=γ_c, α_l=α_l, γ_l=γ_l) / sqrt(π))
 end
+
+mean_hours()
 ```
 
 ### モンテカルロ法
 
-期待値を求める積分の場合, モンテカルロ法による近似も有効です. 速度は遅いですが, 実装が簡単であり, ガウス求積などたの方法による積分の検算などにも利用できます.
+期待値を求める積分の場合, モンテカルロ法による近似も有効です. 速度は遅いですが, 実装が簡単であり, ガウス求積などの方法による積分の検算などにも利用できます.
 
 ```{julia}
 #| label: compute-monte-carlo
