@@ -1,0 +1,183 @@
+---
+title: 数値計算の補足
+date: last-modified
+engine: julia
+format:
+  html:
+    code-tools: true
+---
+
+::: {.callout-warning}
+
+このページは数値計算に関する補足を雑多にまとめたものです. 書きかけの内容を多く含みます.
+
+:::
+
+
+```{julia}
+#| label: setup
+#| output: false
+#| code-fold: true
+using Plots
+default(size=(500, 309), titlefontsize=10, fmt=:svg)
+```
+
+## 計算量
+
+アルゴリズムの効率性を評価する尺度として、計算時間とメモリ使用量があります. ここでいう計算時間とは, アルゴリズムが終了するまでにかかるステップ数 (**時間計算量**, time complexity) のことをいい, 実際のPC上での実行時間とは異なります. より高いスペックのPCを使えば, 同じアルゴリズムでも実行時間は短くなる一方で, ステップ数の次元が異なるアルゴリズムはマシンの性能に関わらず効率的と言えます.また, メモリ使用量とはアルゴリズムが終了するまでに必要なメモリの量 (**領域計算量**, space complexity) のことをいいます.
+
+### 時間計算量
+
+時間計算量は, 入力の大きさ $n$ に対するステップ数 $T(n)$ の関数として表されます. 例えば, 配列の要素数が $n$ のときに, すべての要素を1回ずつ見るアルゴリズムは, $T(n) = n$ となります. また, 2重ループで配列のすべての組み合わせを調べるアルゴリズムは, $T(n) = n^2$ となります. このように, アルゴリズムの時間計算量は, 入力の大きさに対するステップ数の増加率によって特徴づけられます.
+
+時間計算量を評価する際, 重要なのは支配的な項の次元数になります. 例えば, $T(n) = 3n^2 + 2n + 1$ の場合, $n$ が大きくなると $3n^2$ の項が支配的になるため, $n^2$ に着目すれば十分です. この考え方に従ったとき, 計算量を $O(n^2)$ と表記します. より厳密に表現すると以下のようになります.
+
+::: {.callout-note}
+
+## $O$-記法
+
+$f(n)$ が $O(g(n))$ とは, 任意の $n \ge 0$ に対して, ある定数 $C > 0$ が存在して, 以下の不等式が成り立つことをいう.
+
+$$
+|f(n)| \le C |g(n)|.
+$$
+
+:::
+
+定量モデルで気にする必要があるのは, ほとんどの場合, グリッド数によるオーダーです. 例えば, $V(k, z)$ のような2次元の価値関数をグリッド上で計算する場合, $k$ のグリッド数 $n_k$ と $z$ のグリッド数 $n_z$ に対して, 計算量は $n_k n_z$ の関数となります.
+
+### 領域計算量
+
+領域計算量は, アルゴリズムが終了するまでに必要なメモリの量を, 入力の大きさ $n$ に対する関数として表します. 例えば, 配列の要素数が $n$ のときに, すべての要素を保存するアルゴリズムは, 領域計算量が $O(n)$ となります. また, 2次元配列を保存するアルゴリズムは, 領域計算量が $O(n^2)$ となります.
+
+**メモリのヒエラルキー**
+
+なぜメモリの使用量が重要なのでしょうか. 近年のPCは何百GBもの容量があるし, いくら使おうと問題ではないのではないか, と思うかもしれません. しかし, 実際には, メモリのヒエラルキー (memory hierarchy) によって, メモリの速度と容量が大きく異なります.
+
+一般に, 高速なメモリは高価であるため搭載量が少なく, 低速なメモリは安価であるため搭載量が多いです. それらを合わせると @fig-memory-hierarchy ようなピラミッド型のヒエラルキーが形成されます.
+
+![Memory Hierarchy.](/static/img/lecture/memory_hierarchy.drawio.svg){#fig-memory-hierarchy fig-align="center"}
+
+- レジスタ (Registers): CPU内部にある最も高速なメモリ
+- キャッシュ (Cache): (近年では) CPU内部にある高速なメモリ. L1, L2, L3 などのレベルがある
+- 主記憶 (Main Memory): RAM (Random Access Memory)
+- 補助記憶 (Auxiliary Storage): SSD (Solid State Drive) やHDD (Hard Disk Drive)
+
+### 計算量の実践
+
+## 微分
+
+数値計算の文脈において微分は主に3種類あります.
+
+- 数式微分 (Symbolic Differentiation)
+- 数値微分 (Numerical Differentiation)
+- 自動微分 (Automatic Differentiation)
+
+数式微分 (手計算による解析的な微分) が可能な場合は, これが最も高速で効率的ですが, 複雑な関数に対しては, 数値微分や自動微分などで計算する必要があります. 以下では, 次のラグランジアンを例に, それぞれの微分方法を説明します.
+
+$$
+\mathcal{L} = \phi \log \left(w(1-l)\right)  + (1-\phi) \frac{l^{1-\gamma}}{1-\gamma}
+$$
+
+
+### 数式微分 (Symbolic Differentiation)
+
+いわゆる手計算による微分です. 一階条件を求めると,
+
+$$
+\frac{\partial \mathcal{L}}{\partial l} = -\frac{\phi}{1-l} + (1-\phi) l^{-\gamma} = 0.
+$$
+
+`Symbolics.jl` パッケージを使うと, Julia上で数式微分を行うこともできます.
+
+```{julia}
+#| label: symbolic-diff
+#| output: asis
+using Symbolics
+using Latexify
+
+@variables w l ϕ γ
+L = ϕ * log(w * (1 - l)) + (1 - ϕ) * l^(1 - γ) / (1 - γ)
+∂l = Differential(l)
+∂L∂l = expand_derivatives(∂l(L))
+println(latexify(∂L∂l))
+```
+
+
+
+### 数値微分 (Numerical Differentiation)
+
+$$
+f'(x) = \lim_{\Delta \to 0} \frac{f(x+\Delta) - f(x)}{\Delta}.
+$$
+
+数値微分は上記の微分の定義を数値的に近似する方法です. 定義通りに行うと, 非常に小さい $d$ (例えば $10^{-9}$ など) を使って, 以下のように近似できます.
+
+$$
+f'(x) \approx \frac{f(x+d) - f(x)}{d}.
+$$
+
+実用上は, 中心差分 (central difference) を使うことが多いです.
+
+$$
+f'(x) \approx \frac{f(x+\frac{1}{2}d) - f(x-\frac{1}{2}d)}{d}.
+$$
+
+Julia では, `FiniteDiff.jl` パッケージを使うと数値微分ができます.
+
+```{julia}
+#| label: numerical-diff
+#| output: false
+using FiniteDiff
+f(l; w=1., ϕ=0.5, γ=1.5) = ϕ * log(w * (1 - l)) + (1 - ϕ) * l^(1 - γ) / (1 - γ)
+f′_analytical(l; w=1., ϕ=0.5, γ=1.5) = -ϕ / (1 - l) + (1 - ϕ) * l^(-γ)
+f′_numerical(l; Δ=1e-9) = (f(l + 0.5 * Δ) - f(l - 0.5 * Δ)) / Δ
+f′_finitediff(l) = FiniteDiff.finite_difference_derivative(l -> f(l), l)
+```
+
+```{julia}
+#| label: fig-comp-numerical-diff
+#| fig-cap: "Comparison of analytical and numerical derivatives."
+#| code-fold: true
+plot(0.2:0.01:0.9, f′_analytical, label="Analytical")
+plot!(0.2:0.01:0.9, f′_numerical, label="Numerical", linestyle=:dash)
+plot!(0.2:0.01:0.9, f′_finitediff, label="FiniteDiff.jl", linestyle=:dot)
+```
+
+### 自動微分 (Automatic Differentiation)
+
+数値微分はとてもシンプルな実装ですが, $d$ の選び方によっては精度が悪くなる可能性があります. より高い精度を求める場合は, 自動微分を用いることができます. 自動微分は, 関数を基本的な演算 (多項式, 三角関数, 対数関数など) の組み合わせとして分解し, 各基本演算の微分を連鎖律に基づいて計算する方法です. これは, 数式微分を数値的に実行するようなイメージです.
+
+**順伝播と逆伝播**
+
+$$
+\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}
+$$
+
+- 順伝播 (forward mode): 入力から出力に向かって微分を計算する方法.
+    - $\frac{du}{dx}$ を計算し, それを用いて $\frac{dy}{du}$ を計算する.
+- 逆伝播 (reverse mode): 出力から入力に向かって微分を計算する方法.
+    - $\frac{dy}{du}$ を計算し, それを用いて $\frac{du}{dx}$ を計算する.
+
+一般に $f: \mathbb{R}^m \to \mathbb{R}^n$ に対して, $m > n$ の場合は逆伝播が効率的であり, $m < n$ の場合は順伝播が効率的です. 例えば, ニューラルネットワークでは, 多数のパラメータ (重み) を持つモデルに対して, 単一の損失関数を最小化するために逆伝播がよく使われます.
+
+順伝播の効率的な実装は双対数 (dual numbers) を用いて行えることが知られています. 一方, 逆伝播の効率的な実装は難しく, 様々な手法が提案されている状況です. 詳しくは, @perla の[9.2節](https://julia.quantecon.org/more_julia/optimization_solver_packages.html) を参照してください.
+
+Julia では, `ForwardDiff.jl` パッケージを使うと順伝播の自動微分ができます.
+
+```{julia}
+#| label: automatic-diff
+#| output: false
+using ForwardDiff
+f′_forwarddiff(l) = ForwardDiff.derivative(l -> f(l), l)
+```
+
+```{julia}
+#| label: fig-comp-automatic-diff
+#| fig-cap: "Comparison of analytical and automatic derivatives."
+#| code-fold: true
+plot(0.2:0.01:0.9, f′_analytical, label="Analytical")
+plot!(0.2:0.01:0.9, f′_forwarddiff, label="ForwardDiff.jl", linestyle=:dash)
+```
+
+## 並列計算

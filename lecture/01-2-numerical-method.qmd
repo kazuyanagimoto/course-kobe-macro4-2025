@@ -43,7 +43,7 @@ $${#eq-max-utility}
 この問題は以下の一階条件の解を求めることで解くことができます.
 
 $$
-w^{1-\gamma_c} (1-l)^{-\gamma_c} - \alpha_l l^{\gamma_l} = 0.
+w^{1-\gamma_c} (1-l)^{-\gamma_c} - \alpha_l l^{-\gamma_l} = 0.
 $$
 
 ```{julia}
