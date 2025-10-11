@@ -1,6 +1,6 @@
 ---
 title: 数値計算の補足
-date: last-modified
+date: 2025-10-11
 engine: julia
 format:
   html:
@@ -59,11 +59,104 @@ $$
 ![Memory Hierarchy.](/static/img/lecture/memory_hierarchy.drawio.svg){#fig-memory-hierarchy fig-align="center"}
 
 - レジスタ (Registers): CPU内部にある最も高速なメモリ
-- キャッシュ (Cache): (近年では) CPU内部にある高速なメモリ. L1, L2, L3 などのレベルがある
+- キャッシュ (Cache): (近年では) CPU内部にある高速なメモリ. L1, L2, L3 などのレベルがある. ここまでCPU内部にある.
 - 主記憶 (Main Memory): RAM (Random Access Memory)
 - 補助記憶 (Auxiliary Storage): SSD (Solid State Drive) やHDD (Hard Disk Drive)
 
+たとえば, AMDの最新世代のCPUである [Ryzen 5 9600](https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-5-9600.html) の場合, L1キャッシュは480KB, L2キャッシュは6MB, L3キャッシュは32MBです. レジスタはサイズで表現することはあまりありませんが, ざっくり数百B程度と考えてください. 一方で, 一般にメモリと呼ばれる RAM は8GBから64GB 程度が一般的です. さらに, 一般にストレージとよばれるSSDやHDDは数百GBから数TBの容量があります.
+
 ### 計算量の実践
+
+実際にモデルを使って, 計算量を測定してみましょう. 例えば, 以下のような単純なライフサイクルモデルを考えます.
+
+**Model**
+
+$$
+\max_{\{c_t, a_{t+1}\}_{t=0}^{T-1}} \sum_{t=0}^{T-1} \beta^t u(c_t) \\
+\quad\text{s.t. } c_t + a_{t+1} = (1+r) a_t + w, \quad a_0 \text{ given}, \quad a_T \ge 0.
+$$
+
+これは後方帰納法で解くことができます. コードで表すと次の `solve!` 関数のようになります.
+
+```{julia}
+#| label: model-life-cycle
+#| output: false
+module My
+
+@kwdef struct Model{TF<:AbstractFloat,TI<:Integer}
+
+    # Utility function
+    γ::TF = 2.0
+    β::TF = 0.96
+    T::Int = 10
+
+    # Prices
+    r::TF = 0.07
+    w::TF = 5.0
+
+    # Grid for assets
+    n_a::TI = 30
+    a_min::TF = 0.1
+    a_max::TF = 4.0
+    a_grid::Vector{TF} = collect(range(start=a_min, stop=a_max, length=n_a))
+
+    # Value function
+    V::Matrix{TF} = zeros(n_a, T)
+end
+
+u(c, m::Model) = isone(m.γ) ? log(c) : c^(1 - m.γ) / (1 - m.γ)
+
+function solve!(m::Model)
+    (; T, n_a, r, w, β, a_grid) = m
+
+    V = zeros(n_a, T)
+    for t = T:-1:1, i_a = 1:n_a
+
+        utility = -Inf
+        for i_a′ = 1:n_a
+            V′ = (t == T) ? 0.0 : V[i_a′, t+1]
+            c = (1 + r) * a_grid[i_a] + w - a_grid[i_a′]
+
+            if c > 0
+                utility = max(u(c, m) + β * V′, utility)
+            end
+
+        end
+
+        V[i_a, t] = utility
+    end
+
+    m.V .= V
+
+    return nothing
+end
+
+end # module My
+```
+
+時間計算量の数え方として, 四則演算, 比較 (`>`, `max` など), 代入, 配列へのアクセスは $O(1)$ とします. すると, 計算回数の主要部は for-loop つまり, $O(n_a^2 T)$ です. メモリ使用量は, 価値関数 $V$ の保存に使用している部分が支配的なので $O(n_a T)$ です. では, $T = 10$ で固定して, $n_a$ を変化させたときの計算時間とメモリ使用量を測定してみましょう.
+
+**BenchmarkTools.jl**
+
+Juliaでは, `BenchmarkTools.jl` パッケージを使うと実際の計算時間とメモリ使用量を測定できます.^[`@time` マクロでも簡易的に測定できますが, 関数の宣言によるコンパイル時間なども含んでしまうため, 関数の実行速度を正確に測定するには `BenchmarkTools.jl` パッケージを使うのが望ましいです.]
+
+```{julia}
+using BenchmarkTools
+
+@benchmark My.solve!(m) setup = (m = My.Model(n_a=100))
+```
+
+`@benchmark` マクロは上記のように関数の実行時間に合わせて適切な試行回数を自動で決定し, 実行時間の分布を表示してくれます. 基本的には中央値 (median) を見るのが良いでしょう. 
+
+メモリ使用量も8.08KiBと表示されています. 今回の配列 `V` は `Float64` 型の2次元配列で, $n_a$ 行 $T$ 列なので, メモリ使用量は $8 n_a T$ バイトになります (64bit = 8バイト) . 例えば, $n_a = 100$ のときは $8 \times 100 \times 10 = 8000$ バイトで, 8.08KiB (1KiB = 1024バイト) とほぼ一致しています.
+
+次に $n_a = 1000$ としたときの計算時間を測定してみましょう.
+
+```{julia}
+@benchmark My.solve!(m) setup = (m = My.Model(n_a=1000))
+```
+
+おおむね計算時間が100倍, メモリ使用量が10倍になっていることがわかります. これは, 計算時間が $O(n_a^2 T)$, メモリ使用量が $O(n_a T)$ であることと一致しています.
 
 ## 微分
 
@@ -181,3 +274,7 @@ plot!(0.2:0.01:0.9, f′_forwarddiff, label="ForwardDiff.jl", linestyle=:dash)
 ```
 
 ## 並列計算
+
+
+::: {#refs}
+:::
