@@ -17,6 +17,9 @@ using NonlinearSolve
 using FastGaussQuadrature
 using Distributions
 using SummaryTables
+using BenchmarkTools
+using JuMP
+import Ipopt
 
 import Random
 Random.seed!(1234)
@@ -40,7 +43,7 @@ $${#eq-max-utility}
 この問題は以下の一階条件の解を求めることで解くことができます.
 
 $$
-w^{1-\gamma_c} (1-l)^{-\gamma_c} - \alpha_l l^{\gamma_l} = 0.
+w^{1-\gamma_c} (1-l)^{-\gamma_c} - \alpha_l l^{-\gamma_l} = 0.
 $$
 
 ```{julia}
@@ -102,7 +105,7 @@ l = find_zero(foc, 0.5)
 
 **定義域の変換**
 
-Non-bracketing method では, $x_{n+1}$ の値を更新する際に, 必ずしも $x_{n+1}$ が定義域内にあることが保証されません. 例えば, 今回の例では 余暇時間であるため, $l \in (0, 1)$ ですが, 初期値や関数形によっては, $l < 0$ や $l > 1$ となる可能性があります.
+Non-bracketing method では, $x_{n+1}$ の値を更新する際に, 必ずしも $x_{n+1}$ が定義域内にあることが保証されません. 例えば, 今回の例では 余暇時間ですので, $l \in (0, 1)$ ですが, 初期値や関数形によっては, $l < 0$ や $l > 1$ となる可能性があります.
 
 この場合, 端点解が存在するかどうかを確認する必要があります. 端点解が想定される場合は, 次節で説明するように Bracketing method を利用することが適しています. 今回の例では, 端点解が存在しないため ($l = 0, 1$ のどちらにおいても効用が負の無限大に発散するため), Non-bracketing method での解の収束が保証されています. 以下の様な定義域の変換を用いることで, 解の収束を保証することができます.
 
@@ -145,7 +148,7 @@ Bracketing method は, 解が存在する区間 $[a, b]$ を選び, その区間
 
 ![Visualization of Bisection Method](/static/cetz/bisection_method.svg){#fig-bisection-method width=80%}
 
-例えば, 今回の例では $l \in (0, 1)$ であるため, $l = 0$ と $l = 1$ で効用が発散することから, 解が存在する区間は $(0, 1)$ です. なお, 端点でFOCが定義されてない場合も多いので, 端点より微小に内側の区間を選ぶことが多いです.
+例えば, 今回の例では $l \in (0, 1)$ ですので, $l = 0$ と $l = 1$ で効用が発散することから, 解が存在する区間は $(0, 1)$ です. なお, 端点でFOCが定義されてない場合も多いので, 端点より微小に内側の区間を選ぶことが多いです.
 
 ```{julia}
 #| label: find-zero-bracketing
@@ -159,7 +162,7 @@ l = find_zero(foc, (ϵ, 1 - ϵ))
 
 $$
 \max_{c_m, c_f, l_m, l_f} u(c_m, l_m) + u(c_f, l_f)
-$$
+$${#eq-couple-problem}
 
 subject to
 
@@ -235,7 +238,12 @@ function solve_bargaining(; w_m=1.0, w_f=0.5, γ_c=1.5, α_l=1.2, γ_l=1.5)
         l_m = 1 / (1 + exp(x))
     end
 
-    return l_m, l_f
+    c = w_m * (1 - l_m) + w_f * (1 - l_f)
+    c_m = 0.5 * c
+    c_f = 0.5 * c
+    U = (c_m^(1 - γ_c) / (1 - γ_c)) + α_l * (l_m^(1 - γ_l) / (1 - γ_l)) +
+        (c_f^(1 - γ_c) / (1 - γ_c)) + α_l * (l_f^(1 - γ_l) / (1 - γ_l))
+    return (c_m=c_m, c_f=c_f, l_m=l_m, l_f=l_f, U=U)
 end
 ```
 
@@ -243,15 +251,15 @@ end
 #| code-fold: true
 #| label: fig-sol-bargaining
 #| fig-cap: "**Solution of bargaining problem.** $w_m = 1.0, \\alpha_l = 1.2, \\gamma_c = \\gamma_l = 1.5$."
-plot(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f)[1], label=L"l_m", xlabel=L"w_f")
-plot!(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f)[2], label=L"l_f")
+plot(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f).l_m, label=L"l_m", xlabel=L"w_f")
+plot!(0.1:0.01:0.9, w_f -> solve_bargaining(w_f=w_f).l_f, label=L"l_f")
 ```
 
 ### 多変数の非線形方程式
 
 多変数の非線形方程式では Bracketing method は使えず, ニュートン法のような Non-bracketing method を用いる必要があります. そのため内点解と微分可能な関数を仮定しており, 端点解やスムースでない関数が想定される場合は使えません. そのような場合は, 原始的なグリッドサーチを用いるか, 後述するのように非線形最適化問題として解く必要があります.
 
-なお, 多くの標準的な効用関数 (CRRA, CESなど) の場合, 一階条件は一変数の非線形方程式に帰着できます. 今回は学習のために, @eq-max-utility を3変数 ($c$, $l$, $\lambda$) の非線形方程式として解いてみましょう.[NonlinearSolve.jl](https://docs.sciml.ai/NonlinearSolve/) を用いると便利です.
+なお, 多くの標準的な効用関数 (CRRA, CESなど) の場合, 一階条件は一変数の非線形方程式に帰着できます. 今回は学習のために, @eq-max-utility を3変数 ($c$, $l$, $\lambda$) の非線形方程式として解いてみましょう. [NonlinearSolve.jl](https://docs.sciml.ai/NonlinearSolve/) を用いると便利です.
 
 $$
 \begin{aligned}
@@ -279,6 +287,74 @@ solve_nonlinear_system()
 ```
 
 工夫として負の指数を避けるように式変形しています. これは最適化の際に, 負の数の負の数乗によってエラーが起きることを避けるためです.
+
+### Mathematical Programming
+
+より強力な方法として, 解きたい最適化問題を直接ソルバーにかける方法があります. Juliaの場合は [JuMP.jl](https://jump.dev/JuMP.jl/stable/) が有名です. ここでは, @eq-couple-problem を JuMP を用いて解いてみましょう.a
+
+```{julia}
+#| label: solve-jump
+#| output: false
+function solve_jump(; w_m=1.0, w_f=0.5, γ_c=1.5, α_l=1.2, γ_l=1.5)
+
+    model = Model(Ipopt.Optimizer)
+    set_silent(model)
+    set_attribute(model, "print_level", 0)
+
+    @variables(model, begin
+        0 <= c_m
+        0 <= c_f
+        0 <= l_m <= 1
+        0 <= l_f <= 1
+    end)
+
+    @objective(
+        model,
+        Max,
+        (c_m^(1 - γ_c) / (1 - γ_c)) + α_l * (l_m^(1 - γ_l) / (1 - γ_l)) +
+        (c_f^(1 - γ_c) / (1 - γ_c)) + α_l * (l_f^(1 - γ_l) / (1 - γ_l))
+    )
+
+    @constraint(model, c_m + c_f == w_m * (1 - l_m) + w_f * (1 - l_f))
+
+    optimize!(model)
+
+    return (
+        c_m=value(c_m),
+        c_f=value(c_f),
+        l_m=value(l_m),
+        l_f=value(l_f),
+        U=objective_value(model)
+    )
+end
+```
+
+@fig-sol-bargaining と同じ結果が得られました.
+
+```{julia}
+#| code-fold: true
+#| label: fig-sol-jump
+#| fig-cap: "**Solution of bargaining problem by JuMP.** $w_m = 1.0, \\alpha_l = 1.2, \\gamma_c = \\gamma_l = 1.5$."
+plot(0.1:0.01:0.9, w_f -> solve_jump(w_f=w_f).l_m, label=L"l_m", xlabel=L"w_f")
+plot!(0.1:0.01:0.9, w_f -> solve_jump(w_f=w_f).l_f, label=L"l_f")
+```
+
+とても便利に思えますが, いくつか注意点があります.
+
+1. 計算の正しさが保証されない. アルゴリズムの中身がブラックボックスであり, 研究者自身が解の正しさを保証できない. 端点解を見逃す可能性や収束しない可能性がある.
+1. 計算が遅い. 一階条件を直接解く場合と比べると, 問題の複雑さが増すため, 計算が遅くなる. より大規模なモデルを解きたい場合には, 致命的な問題となる可能性がある.
+
+```{julia}
+#| label: benchmark-foc
+@benchmark solve_bargaining(w_f=0.1)
+```
+
+```{julia}
+#| label: benchmark-jump
+@benchmark solve_jump(w_f=0.1)
+```
+
+JuMPを用いた方法がかなり遅いことが分かります.^[実際には [Parameter](https://jump.dev/JuMP.jl/stable/manual/variables/#variables_parameters) を導入するなどして, 計算を早くすることは可能ですが, それでも一階条件を直接解く方法よりは遅くなります.] そのため, 私自身は検算目的で使う場合がほとんどです.
 
 ## 数値積分
 
@@ -324,6 +400,8 @@ sol_tr1000 = trapezoid_rule(x -> sqrt(1 - x^2), 0.0, 1.0, 1000)
 π / 4, sol_tr100, sol_tr1000
 ```
 
+100個の評価点で少数第三位まで, 1000個の評価点で少数第四位までの精度が得られていることがわかります.
+
 ### ガウス求積 (Gaussian Quadrature)
 
 ::: {.callout-note}
@@ -346,13 +424,13 @@ $$
 
 ## 定義域の変換 (ガウス求積)
 
-`FastGaussQuadrature.jl` 等のパッケージを利用する際には, 定義域を $[-1, 1]$ に変換する必要があります. $x = \frac{b-a}{2} z + \frac{a+b}{2}$ と変換すると
+`FastGaussQuadrature.jl` 等のパッケージを利用する際には, 定義域を $[-1, 1]$ に変換する必要がある. $x = \frac{b-a}{2} z + \frac{a+b}{2}$ と変換すると
 
 $$
 \int_{a}^b f(x) \,dx = \frac{b - a}{2} \int_{-1}^1 f\left(\frac{b - a}{2} z + \frac{a + b}{2}\right) \,dz
 $$
 
-を得られます.
+を得られる.
 
 :::
 
@@ -374,7 +452,7 @@ sol_gl100 = gaussian_quadrature(x -> sqrt(1 - x^2), 0.0, 1.0, 100)
 
 #### ガウスエルミート求積
 
-ガウス求積は上にあげたガウス・ルジャンドル求積の他にも, ガウス・エルミート求積などの類似系があります.
+ガウス求積は上に挙げたガウス・ルジャンドル求積の他にも, ガウス・エルミート求積などの類似系があります.
 
 ::: {.callout-note}
 
@@ -428,11 +506,13 @@ function mean_hours(; γ_c=1.5, α_l=1.2, γ_l=1.5, μ=0.0, σ=0.5, n=10)
     x, w = gausshermite(n)
     return sum(w .* hours_worked.(exp.(sqrt(2) * σ * x .+ μ), γ_c=γ_c, α_l=α_l, γ_l=γ_l) / sqrt(π))
 end
+
+mean_hours()
 ```
 
 ### モンテカルロ法
 
-期待値を求める積分の場合, モンテカルロ法による近似も有効です. 速度は遅いですが, 実装が簡単であり, ガウス求積などたの方法による積分の検算などにも利用できます.
+期待値を求める積分の場合, モンテカルロ法による近似も有効です. 速度は遅いですが, 実装が簡単であり, ガウス求積などの方法による積分の検算などにも利用できます.
 
 ```{julia}
 #| label: compute-monte-carlo
@@ -522,10 +602,15 @@ $$
 Rosenbrock 関数は, 凸性がないため, 最適化アルゴリズムの性能を比較するために用いられることが多いです. また, 解として $f(1, \dots, 1) = 0$ が知られています. 2変数の場合, 以下のような形になります.
 
 ```{julia}
+#| label: define-rosenbrock
+#| output: false
+rosenbrock(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
+```
+
+```{julia}
 #| label: fig-rosenbrock
 #| fig-cap: "**Rosenbrock function**. Z-axis is log plus one of Rosenbrock function."
-
-rosenbrock(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
+#| code-fold: true
 x_grid = -2:0.01:2
 y_grid = -1:0.01:3
 
@@ -577,7 +662,7 @@ sol = solve(prob, NLopt.GN_DIRECT(), maxiters=10000)
 
 2の方法は, モデルごとに設定した関数形の一階条件などから導かれる式にデータを代入することでパラメータを推定する方法です. モデルごとに工夫がなされているため, 今後の授業でモデルを学ぶ際に紹介します. また1の方法で用いられるパラメータも先行研究において, 2の方法で推定された値を用いていることが多いです.
 
-この節では, 3の方法であるSMMの概略を紹介します. 今後の授業で扱うモデルでももほとんど共通の方法が用いられています.
+この節では, 3の方法であるSMMの概略を紹介します. 今後の授業で扱うモデルでもほとんど共通の方法が用いられています.
 
 ::: {.callout-note}
 
@@ -628,7 +713,7 @@ $$
 ```{julia}
 #| label: fig-dist-earn
 #| fig-cap: "**Distribution of earnings.** Data from JPSED.stat. 20-29 aged men in 2023."
-
+#| code-fold: true
 mean_leisure_data = 1 - 33.4 / (16 * 7)
 earn = [25, 75, 150, 250, 350, 450, 550, 650, 750, 850, 950, 1100, 1200]
 density = [13.7, 12.2, 12.3, 14.8, 20.2, 16.3, 7.0, 2.0, 0.6, 0.4, 0.1, 0.3, 0.2] / 100
@@ -688,6 +773,7 @@ sol = solve(prob, NelderMead()) # Optim.jl
 ```{julia}
 #| label: fig-smm-contour
 #| fig-cap: "**Contour plot of loss function.**"
+#| code-fold: true
 contour(0.01:0.01:5, 0.01:0.01:1, loss)
 scatter!([α], [σ], label="Solution", markersize=5)
 ```
@@ -717,6 +803,7 @@ simple_table(data)
 ```{julia}
 #| label: fig-untarget-hours
 #| fig-cap: "**Distribution of hours worked.**"
+#| code-fold: true
 lbl_hours = ["0-19", "20-34", "35-44", "45-59", "60+"]
 dens_hours_data = [22.4, 12.1, 44.7, 17.9, 3.8] / 100
 hours_model = [(w / (w + α)) * 16 * 7 for w in rand(LogNormal(0, σ), 10^6)]

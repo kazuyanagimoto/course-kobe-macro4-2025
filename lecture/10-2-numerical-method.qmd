@@ -1,0 +1,341 @@
+---
+title: 数値計算の補足
+date: 2025-10-11
+engine: julia
+julia:
+  exeflags: ["--threads=auto"]
+format:
+  html:
+    code-tools: true
+---
+
+::: {.callout-warning}
+
+このページは数値計算に関する補足を雑多にまとめたものです. 書きかけの内容を多く含みます.
+
+:::
+
+
+```{julia}
+#| label: setup
+#| output: false
+#| code-fold: true
+using Plots
+default(size=(500, 309), titlefontsize=10, fmt=:svg)
+```
+
+## 計算量
+
+アルゴリズムの効率性を評価する尺度として、計算時間とメモリ使用量があります. ここでいう計算時間とは, アルゴリズムが終了するまでにかかるステップ数 (**時間計算量**, time complexity) のことをいい, 実際のPC上での実行時間とは異なります. より高いスペックのPCを使えば, 同じアルゴリズムでも実行時間は短くなる一方で, ステップ数の次元が異なるアルゴリズムはマシンの性能に関わらず効率的と言えます.また, メモリ使用量とはアルゴリズムが終了するまでに必要なメモリの量 (**領域計算量**, space complexity) のことをいいます.
+
+### 時間計算量
+
+時間計算量は, 入力の大きさ $n$ に対するステップ数 $T(n)$ の関数として表されます. 例えば, 配列の要素数が $n$ のときに, すべての要素を1回ずつ見るアルゴリズムは, $T(n) = n$ となります. また, 2重ループで配列のすべての組み合わせを調べるアルゴリズムは, $T(n) = n^2$ となります. このように, アルゴリズムの時間計算量は, 入力の大きさに対するステップ数の増加率によって特徴づけられます.
+
+時間計算量を評価する際, 重要なのは支配的な項の次元数になります. 例えば, $T(n) = 3n^2 + 2n + 1$ の場合, $n$ が大きくなると $3n^2$ の項が支配的になるため, $n^2$ に着目すれば十分です. この考え方に従ったとき, 計算量を $O(n^2)$ と表記します. より厳密に表現すると以下のようになります.
+
+::: {.callout-note}
+
+## $O$-記法
+
+$f(n)$ が $O(g(n))$ とは, 任意の $n \ge 0$ に対して, ある定数 $C > 0$ が存在して, 以下の不等式が成り立つことをいう.
+
+$$
+|f(n)| \le C |g(n)|.
+$$
+
+:::
+
+定量モデルで気にする必要があるのは, ほとんどの場合, グリッド数によるオーダーです. 例えば, $V(k, z)$ のような2次元の価値関数をグリッド上で計算する場合, $k$ のグリッド数 $n_k$ と $z$ のグリッド数 $n_z$ に対して, 計算量は $n_k n_z$ の関数となります.
+
+### 領域計算量
+
+領域計算量は, アルゴリズムが終了するまでに必要なメモリの量を, 入力の大きさ $n$ に対する関数として表します. 例えば, 配列の要素数が $n$ のときに, すべての要素を保存するアルゴリズムは, 領域計算量が $O(n)$ となります. また, 2次元配列を保存するアルゴリズムは, 領域計算量が $O(n^2)$ となります.
+
+**メモリのヒエラルキー**
+
+なぜメモリの使用量が重要なのでしょうか. 近年のPCは何百GBもの容量があるし, いくら使おうと問題ではないのではないか, と思うかもしれません. しかし, 実際には, メモリのヒエラルキー (memory hierarchy) によって, メモリの速度と容量が大きく異なります.
+
+一般に, 高速なメモリは高価であるため搭載量が少なく, 低速なメモリは安価であるため搭載量が多いです. それらを合わせると @fig-memory-hierarchy ようなピラミッド型のヒエラルキーが形成されます.
+
+![Memory Hierarchy.](/static/img/lecture/memory_hierarchy.drawio.svg){#fig-memory-hierarchy fig-align="center"}
+
+- レジスタ (Registers): CPU内部にある最も高速なメモリ
+- キャッシュ (Cache): (近年では) CPU内部にある高速なメモリ. L1, L2, L3 などのレベルがある. ここまでCPU内部にある.
+- 主記憶 (Main Memory): RAM (Random Access Memory)
+- 補助記憶 (Auxiliary Storage): SSD (Solid State Drive) やHDD (Hard Disk Drive)
+
+たとえば, AMDの最新世代のCPUである [Ryzen 5 9600](https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-5-9600.html) の場合, L1キャッシュは480KB, L2キャッシュは6MB, L3キャッシュは32MBです. レジスタはサイズで表現することはあまりありませんが, ざっくり数百B程度と考えてください. 一方で, 一般にメモリと呼ばれる RAM は8GBから64GB 程度が一般的です. さらに, 一般にストレージとよばれるSSDやHDDは数百GBから数TBの容量があります.
+
+### 計算量の実践
+
+実際にモデルを使って, 計算量を測定してみましょう. 例えば, 以下のような単純なライフサイクルモデルを考えます.
+
+**Model**
+
+$$
+\max_{\{c_t, a_{t+1}\}_{t=0}^{T-1}} \sum_{t=0}^{T-1} \beta^t u(c_t) \\
+\quad\text{s.t. } c_t + a_{t+1} = (1+r) a_t + w, \quad a_0 \text{ given}, \quad a_T \ge 0.
+$$
+
+これは後方帰納法で解くことができます. コードで表すと次の `solve!` 関数のようになります.
+
+```{julia}
+#| label: model-life-cycle
+#| output: false
+module My
+
+@kwdef struct Model{TF<:AbstractFloat,TI<:Integer}
+
+    # Utility function
+    γ::TF = 2.0
+    β::TF = 0.96
+    T::Int = 10
+
+    # Prices
+    r::TF = 0.07
+    w::TF = 5.0
+
+    # Grid for assets
+    n_a::TI = 30
+    a_min::TF = 0.1
+    a_max::TF = 4.0
+    a_grid::Vector{TF} = collect(range(start=a_min, stop=a_max, length=n_a))
+
+    # Value function
+    V::Matrix{TF} = zeros(n_a, T)
+end
+
+u(c, m::Model) = isone(m.γ) ? log(c) : c^(1 - m.γ) / (1 - m.γ)
+
+function solve!(m::Model)
+    (; T, n_a, r, w, β, a_grid) = m
+
+    V = zeros(n_a, T)
+    for t = T:-1:1, i_a = 1:n_a
+
+        utility = -Inf
+        for i_a′ = 1:n_a
+            V′ = (t == T) ? 0.0 : V[i_a′, t+1]
+            c = (1 + r) * a_grid[i_a] + w - a_grid[i_a′]
+
+            if c > 0
+                utility = max(u(c, m) + β * V′, utility)
+            end
+
+        end
+
+        V[i_a, t] = utility
+    end
+
+    m.V .= V
+
+    return nothing
+end
+
+end # module My
+```
+
+時間計算量の数え方として, 四則演算, 比較 (`>`, `max` など), 代入, 配列へのアクセスは $O(1)$ とします. すると, 計算回数の主要部は for-loop つまり, $O(n_a^2 T)$ です. メモリ使用量は, 価値関数 $V$ の保存に使用している部分が支配的なので $O(n_a T)$ です. では, $T = 10$ で固定して, $n_a$ を変化させたときの計算時間とメモリ使用量を測定してみましょう.
+
+**BenchmarkTools.jl**
+
+Juliaでは, `BenchmarkTools.jl` パッケージを使うと実際の計算時間とメモリ使用量を測定できます.^[`@time` マクロでも簡易的に測定できますが, 関数の宣言によるコンパイル時間なども含んでしまうため, 関数の実行速度を正確に測定するには `BenchmarkTools.jl` パッケージを使うのが望ましいです.]
+
+```{julia}
+using BenchmarkTools
+
+@benchmark My.solve!(m) setup = (m = My.Model(n_a=100))
+```
+
+`@benchmark` マクロは上記のように関数の実行時間に合わせて適切な試行回数を自動で決定し, 実行時間の分布を表示してくれます. 基本的には中央値 (median) を見るのが良いでしょう. 
+
+メモリ使用量も8.08KiBと表示されています. 今回の配列 `V` は `Float64` 型の2次元配列で, $n_a$ 行 $T$ 列なので, メモリ使用量は $8 n_a T$ バイトになります (64bit = 8バイト) . 例えば, $n_a = 100$ のときは $8 \times 100 \times 10 = 8000$ バイトで, 8.08KiB (1KiB = 1024バイト) とほぼ一致しています.
+
+次に $n_a = 1000$ としたときの計算時間を測定してみましょう.
+
+```{julia}
+@benchmark My.solve!(m) setup = (m = My.Model(n_a=1000))
+```
+
+おおむね計算時間が100倍, メモリ使用量が10倍になっていることがわかります. これは, 計算時間が $O(n_a^2 T)$, メモリ使用量が $O(n_a T)$ であることと一致しています.
+
+## 微分
+
+数値計算の文脈において微分は主に3種類あります.
+
+- 数式微分 (Symbolic Differentiation)
+- 数値微分 (Numerical Differentiation)
+- 自動微分 (Automatic Differentiation)
+
+数式微分 (手計算による解析的な微分) が可能な場合は, これが最も高速で効率的ですが, 複雑な関数に対しては, 数値微分や自動微分などで計算する必要があります. 以下では, 次のラグランジアンを例に, それぞれの微分方法を説明します.
+
+$$
+\mathcal{L} = \phi \log \left(w(1-l)\right)  + (1-\phi) \frac{l^{1-\gamma}}{1-\gamma}
+$$
+
+
+### 数式微分 (Symbolic Differentiation)
+
+いわゆる手計算による微分です. 一階条件を求めると,
+
+$$
+\frac{\partial \mathcal{L}}{\partial l} = -\frac{\phi}{1-l} + (1-\phi) l^{-\gamma} = 0.
+$$
+
+`Symbolics.jl` パッケージを使うと, Julia上で数式微分を行うこともできます.
+
+```{julia}
+#| label: symbolic-diff
+#| output: asis
+using Symbolics
+using Latexify
+
+@variables w l ϕ γ
+L = ϕ * log(w * (1 - l)) + (1 - ϕ) * l^(1 - γ) / (1 - γ)
+∂l = Differential(l)
+∂L∂l = expand_derivatives(∂l(L))
+println(latexify(∂L∂l))
+```
+
+
+
+### 数値微分 (Numerical Differentiation)
+
+$$
+f'(x) = \lim_{\Delta \to 0} \frac{f(x+\Delta) - f(x)}{\Delta}.
+$$
+
+数値微分は上記の微分の定義を数値的に近似する方法です. 定義通りに行うと, 非常に小さい $d$ (例えば $10^{-9}$ など) を使って, 以下のように近似できます.
+
+$$
+f'(x) \approx \frac{f(x+d) - f(x)}{d}.
+$$
+
+実用上は, 中心差分 (central difference) を使うことが多いです.
+
+$$
+f'(x) \approx \frac{f(x+\frac{1}{2}d) - f(x-\frac{1}{2}d)}{d}.
+$$
+
+Julia では, `FiniteDiff.jl` パッケージを使うと数値微分ができます.
+
+```{julia}
+#| label: numerical-diff
+#| output: false
+using FiniteDiff
+f(l; w=1., ϕ=0.5, γ=1.5) = ϕ * log(w * (1 - l)) + (1 - ϕ) * l^(1 - γ) / (1 - γ)
+f′_analytical(l; w=1., ϕ=0.5, γ=1.5) = -ϕ / (1 - l) + (1 - ϕ) * l^(-γ)
+f′_numerical(l; Δ=1e-9) = (f(l + 0.5 * Δ) - f(l - 0.5 * Δ)) / Δ
+f′_finitediff(l) = FiniteDiff.finite_difference_derivative(l -> f(l), l)
+```
+
+```{julia}
+#| label: fig-comp-numerical-diff
+#| fig-cap: "Comparison of analytical and numerical derivatives."
+#| code-fold: true
+plot(0.2:0.01:0.9, f′_analytical, label="Analytical")
+plot!(0.2:0.01:0.9, f′_numerical, label="Numerical", linestyle=:dash)
+plot!(0.2:0.01:0.9, f′_finitediff, label="FiniteDiff.jl", linestyle=:dot)
+```
+
+### 自動微分 (Automatic Differentiation)
+
+数値微分はとてもシンプルな実装ですが, $d$ の選び方によっては精度が悪くなる可能性があります. より高い精度を求める場合は, 自動微分を用いることができます. 自動微分は, 関数を基本的な演算 (多項式, 三角関数, 対数関数など) の組み合わせとして分解し, 各基本演算の微分を連鎖律に基づいて計算する方法です. これは, 数式微分を数値的に実行するようなイメージです.
+
+**順伝播と逆伝播**
+
+$$
+\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}
+$$
+
+- 順伝播 (forward mode): 入力から出力に向かって微分を計算する方法.
+    - $\frac{du}{dx}$ を計算し, それを用いて $\frac{dy}{du}$ を計算する.
+- 逆伝播 (reverse mode): 出力から入力に向かって微分を計算する方法.
+    - $\frac{dy}{du}$ を計算し, それを用いて $\frac{du}{dx}$ を計算する.
+
+一般に $f: \mathbb{R}^m \to \mathbb{R}^n$ に対して, $m > n$ の場合は逆伝播が効率的であり, $m < n$ の場合は順伝播が効率的です. 例えば, ニューラルネットワークでは, 多数のパラメータ (重み) を持つモデルに対して, 単一の損失関数を最小化するために逆伝播がよく使われます.
+
+順伝播の効率的な実装は双対数 (dual numbers) を用いて行えることが知られています. 一方, 逆伝播の効率的な実装は難しく, 様々な手法が提案されている状況です. 詳しくは, @perla の[9.2節](https://julia.quantecon.org/more_julia/optimization_solver_packages.html) を参照してください.
+
+Julia では, `ForwardDiff.jl` パッケージを使うと順伝播の自動微分ができます.
+
+```{julia}
+#| label: automatic-diff
+#| output: false
+using ForwardDiff
+f′_forwarddiff(l) = ForwardDiff.derivative(l -> f(l), l)
+```
+
+```{julia}
+#| label: fig-comp-automatic-diff
+#| fig-cap: "Comparison of analytical and automatic derivatives."
+#| code-fold: true
+plot(0.2:0.01:0.9, f′_analytical, label="Analytical")
+plot!(0.2:0.01:0.9, f′_forwarddiff, label="ForwardDiff.jl", linestyle=:dash)
+```
+
+## 並列計算
+
+現代のPCは複数のコアを持つマルチコアCPUを搭載しています. パッケージのバックグラウンドで並列計算が用いられていることもありますが, 基本的にはユーザーが明示的に並列計算を指示する必要があります.
+
+まずは, 自分のPCが何コア持っているかを確認してみましょう.
+
+```{julia}
+#| label: check-cores
+Threads.nthreads()
+```
+
+ここで, スレッド数が1となっている場合は, Juliaを起動する前に環境変数 `JULIA_NUM_THREADS` を設定する必要があります. 
+
+- Quarto: `julia.exeflags: ["--threads=auto"]` をYAMLヘッダーに追加
+- VSCode: `settings.json` に `"julia.numThreads": "auto"` を追加
+- ターミナル: `export JULIA_NUM_THREADS=auto` を実行
+
+`auto` と設定した場合, 利用可能なコア数に応じて自動的にスレッド数が設定されます. 現代のPCであれば, ほとんどの場合, 利用可能なコア数が2以上になるはずです.
+
+```{julia}
+#| label: define-solve-multi
+#| output: false
+function solve_multi!(m::My.Model)
+    (; T, n_a, r, w, β, a_grid) = m
+
+    V = zeros(n_a, T)
+    for t = T:-1:1
+        Threads.@threads for i_a = 1:n_a
+            utility = -Inf
+            for i_a′ = 1:n_a
+                V′ = (t == T) ? 0.0 : V[i_a′, t+1]
+                c = (1 + r) * a_grid[i_a] + w - a_grid[i_a′]
+
+                if c > 0
+                    utility = max(My.u(c, m) + β * V′, utility)
+                end
+
+            end
+
+            V[i_a, t] = utility
+        end
+    end
+
+    m.V .= V
+
+    return nothing
+end
+```
+
+```{julia}
+#| label: benchmark-single
+@benchmark My.solve!(m) setup = (m = My.Model(n_a=1000))
+```
+
+```{julia}
+#| label: benchmark-multi
+@benchmark solve_multi!(m) setup = (m = My.Model(n_a=1000))
+```
+
+並列化した場合, 1コアで実行した場合と比べて, おおむねスレッド数に応じて計算時間が短縮されていることがわかります. ただし, ここまで理論値に近い速度向上が得られることは稀で, 実際には理論値の数%から数十%程度の速度向上にとどまることが多いです.
+
+**並列化できない計算**
+
+並列計算の大前提は, 各スレッドが独立して計算できることです. 今回は後方帰納法で解くため, 時刻 $t$ の価値関数を計算する際に, 時刻 $t+1$ の価値関数が必要になり, 時刻方向に並列化することはできません.
