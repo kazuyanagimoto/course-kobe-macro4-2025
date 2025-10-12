@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="柳本和春">
+<meta name="dcterms.date" content="2025-10-11">
+
+<title>数値計算の補足 – Family Macroeconomics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../static/img/logo.drawio.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-97a40c62e19e4075d0244a51f1d8446a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-54143cb5d94e105c689c19adf0c6944c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-97a40c62e19e4075d0244a51f1d8446a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-29a9cb4b6e38590d1988549b314d426b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2481093b93c3456eab0eea680925ecdf.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-29a9cb4b6e38590d1988549b314d426b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="数値計算の補足 – Family Macroeconomics">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://kazuyanagimoto.github.io/course-kobe-macro4-2025/lecture/static/img/sns-card.drawio.png">
+<meta property="og:site_name" content="Family Macroeconomics">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:title" content="数値計算の補足 – Family Macroeconomics">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://kazuyanagimoto.github.io/course-kobe-macro4-2025/lecture/static/img/sns-card.drawio.png">
+<meta name="twitter:creator" content="@kazuyanagimoto">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Family Macroeconomics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../lecture.html"> 
+<span class="menu-text">Materials</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kazuyanagimoto/course-kobe-macro4-2025"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#計算量" id="toc-計算量" class="nav-link active" data-scroll-target="#計算量">計算量</a>
+  <ul class="collapse">
+  <li><a href="#時間計算量" id="toc-時間計算量" class="nav-link" data-scroll-target="#時間計算量">時間計算量</a></li>
+  <li><a href="#領域計算量" id="toc-領域計算量" class="nav-link" data-scroll-target="#領域計算量">領域計算量</a></li>
+  <li><a href="#計算量の実践" id="toc-計算量の実践" class="nav-link" data-scroll-target="#計算量の実践">計算量の実践</a></li>
+  </ul></li>
+  <li><a href="#微分" id="toc-微分" class="nav-link" data-scroll-target="#微分">微分</a>
+  <ul class="collapse">
+  <li><a href="#数式微分-symbolic-differentiation" id="toc-数式微分-symbolic-differentiation" class="nav-link" data-scroll-target="#数式微分-symbolic-differentiation">数式微分 (Symbolic Differentiation)</a></li>
+  <li><a href="#数値微分-numerical-differentiation" id="toc-数値微分-numerical-differentiation" class="nav-link" data-scroll-target="#数値微分-numerical-differentiation">数値微分 (Numerical Differentiation)</a></li>
+  <li><a href="#自動微分-automatic-differentiation" id="toc-自動微分-automatic-differentiation" class="nav-link" data-scroll-target="#自動微分-automatic-differentiation">自動微分 (Automatic Differentiation)</a></li>
+  </ul></li>
+  <li><a href="#並列計算" id="toc-並列計算" class="nav-link" data-scroll-target="#並列計算">並列計算</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">数値計算の補足</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">柳本和春 <a href="mailto:yanagimoto@econ.kobe-u.ac.jp" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0009-0007-1967-8304" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            神戸大学
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>このページは数値計算に関する補足を雑多にまとめたものです. 書きかけの内容を多く含みます.</p>
+</div>
+</div>
+<div id="setup" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span>(size<span class="op">=</span>(<span class="fl">500</span>, <span class="fl">309</span>), titlefontsize<span class="op">=</span><span class="fl">10</span>, fmt<span class="op">=:</span>svg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="計算量" class="level2">
+<h2 class="anchored" data-anchor-id="計算量">計算量</h2>
+<p>アルゴリズムの効率性を評価する尺度として、計算時間とメモリ使用量があります. ここでいう計算時間とは, アルゴリズムが終了するまでにかかるステップ数 (<strong>時間計算量</strong>, time complexity) のことをいい, 実際のPC上での実行時間とは異なります. より高いスペックのPCを使えば, 同じアルゴリズムでも実行時間は短くなる一方で, ステップ数の次元が異なるアルゴリズムはマシンの性能に関わらず効率的と言えます.また, メモリ使用量とはアルゴリズムが終了するまでに必要なメモリの量 (<strong>領域計算量</strong>, space complexity) のことをいいます.</p>
+<section id="時間計算量" class="level3">
+<h3 class="anchored" data-anchor-id="時間計算量">時間計算量</h3>
+<p>時間計算量は, 入力の大きさ <span class="math inline">\(n\)</span> に対するステップ数 <span class="math inline">\(T(n)\)</span> の関数として表されます. 例えば, 配列の要素数が <span class="math inline">\(n\)</span> のときに, すべての要素を1回ずつ見るアルゴリズムは, <span class="math inline">\(T(n) = n\)</span> となります. また, 2重ループで配列のすべての組み合わせを調べるアルゴリズムは, <span class="math inline">\(T(n) = n^2\)</span> となります. このように, アルゴリズムの時間計算量は, 入力の大きさに対するステップ数の増加率によって特徴づけられます.</p>
+<p>時間計算量を評価する際, 重要なのは支配的な項の次元数になります. 例えば, <span class="math inline">\(T(n) = 3n^2 + 2n + 1\)</span> の場合, <span class="math inline">\(n\)</span> が大きくなると <span class="math inline">\(3n^2\)</span> の項が支配的になるため, <span class="math inline">\(n^2\)</span> に着目すれば十分です. この考え方に従ったとき, 計算量を <span class="math inline">\(O(n^2)\)</span> と表記します. より厳密に表現すると以下のようになります.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><span class="math inline">\(O\)</span>-記法
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(f(n)\)</span> が <span class="math inline">\(O(g(n))\)</span> とは, 任意の <span class="math inline">\(n \ge 0\)</span> に対して, ある定数 <span class="math inline">\(C &gt; 0\)</span> が存在して, 以下の不等式が成り立つことをいう.</p>
+<p><span class="math display">\[
+|f(n)| \le C |g(n)|.
+\]</span></p>
+</div>
+</div>
+<p>定量モデルで気にする必要があるのは, ほとんどの場合, グリッド数によるオーダーです. 例えば, <span class="math inline">\(V(k, z)\)</span> のような2次元の価値関数をグリッド上で計算する場合, <span class="math inline">\(k\)</span> のグリッド数 <span class="math inline">\(n_k\)</span> と <span class="math inline">\(z\)</span> のグリッド数 <span class="math inline">\(n_z\)</span> に対して, 計算量は <span class="math inline">\(n_k n_z\)</span> の関数となります.</p>
+</section>
+<section id="領域計算量" class="level3">
+<h3 class="anchored" data-anchor-id="領域計算量">領域計算量</h3>
+<p>領域計算量は, アルゴリズムが終了するまでに必要なメモリの量を, 入力の大きさ <span class="math inline">\(n\)</span> に対する関数として表します. 例えば, 配列の要素数が <span class="math inline">\(n\)</span> のときに, すべての要素を保存するアルゴリズムは, 領域計算量が <span class="math inline">\(O(n)\)</span> となります. また, 2次元配列を保存するアルゴリズムは, 領域計算量が <span class="math inline">\(O(n^2)\)</span> となります.</p>
+<p><strong>メモリのヒエラルキー</strong></p>
+<p>なぜメモリの使用量が重要なのでしょうか. 近年のPCは何百GBもの容量があるし, いくら使おうと問題ではないのではないか, と思うかもしれません. しかし, 実際には, メモリのヒエラルキー (memory hierarchy) によって, メモリの速度と容量が大きく異なります.</p>
+<p>一般に, 高速なメモリは高価であるため搭載量が少なく, 低速なメモリは安価であるため搭載量が多いです. それらを合わせると <a href="#fig-memory-hierarchy" class="quarto-xref">図&nbsp;1</a> ようなピラミッド型のヒエラルキーが形成されます.</p>
+<div id="fig-memory-hierarchy" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-memory-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../static/img/lecture/memory_hierarchy.drawio.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Memory Hierarchy.
+</figcaption>
+</figure>
+</div>
+<ul>
+<li>レジスタ (Registers): CPU内部にある最も高速なメモリ</li>
+<li>キャッシュ (Cache): (近年では) CPU内部にある高速なメモリ. L1, L2, L3 などのレベルがある. ここまでCPU内部にある.</li>
+<li>主記憶 (Main Memory): RAM (Random Access Memory)</li>
+<li>補助記憶 (Auxiliary Storage): SSD (Solid State Drive) やHDD (Hard Disk Drive)</li>
+</ul>
+<p>たとえば, AMDの最新世代のCPUである <a href="https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-5-9600.html">Ryzen 5 9600</a> の場合, L1キャッシュは480KB, L2キャッシュは6MB, L3キャッシュは32MBです. レジスタはサイズで表現することはあまりありませんが, ざっくり数百B程度と考えてください. 一方で, 一般にメモリと呼ばれる RAM は8GBから64GB 程度が一般的です. さらに, 一般にストレージとよばれるSSDやHDDは数百GBから数TBの容量があります.</p>
+</section>
+<section id="計算量の実践" class="level3">
+<h3 class="anchored" data-anchor-id="計算量の実践">計算量の実践</h3>
+<p>実際にモデルを使って, 計算量を測定してみましょう. 例えば, 以下のような単純なライフサイクルモデルを考えます.</p>
+<p><strong>Model</strong></p>
+<p><span class="math display">\[
+\max_{\{c_t, a_{t+1}\}_{t=0}^{T-1}} \sum_{t=0}^{T-1} \beta^t u(c_t) \\
+\quad\text{s.t. } c_t + a_{t+1} = (1+r) a_t + w, \quad a_0 \text{ given}, \quad a_T \ge 0.
+\]</span></p>
+<p>これは後方帰納法で解くことができます. コードで表すと次の <code>solve!</code> 関数のようになります.</p>
+<div id="model-life-cycle" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> My</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@kwdef</span> <span class="kw">struct</span> Model{TF<span class="op">&lt;:</span><span class="dt">AbstractFloat</span>,TI<span class="op">&lt;:</span><span class="dt">Integer</span>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Utility function</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    γ<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    β<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">0.96</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    T<span class="op">::</span><span class="dt">Int </span><span class="op">=</span> <span class="fl">10</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Prices</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    r<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">0.07</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    w<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">5.0</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Grid for assets</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    n_a<span class="op">::</span><span class="dt">TI </span><span class="op">=</span> <span class="fl">30</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    a_min<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    a_max<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">4.0</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    a_grid<span class="op">::</span><span class="dt">Vector{TF} </span><span class="op">=</span> <span class="fu">collect</span>(<span class="fu">range</span>(start<span class="op">=</span>a_min, stop<span class="op">=</span>a_max, length<span class="op">=</span>n_a))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Value function</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    V<span class="op">::</span><span class="dt">Matrix{TF} </span><span class="op">=</span> <span class="fu">zeros</span>(n_a, T)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">u</span>(c, m<span class="op">::</span><span class="dt">Model</span>) <span class="op">=</span> <span class="fu">isone</span>(m.γ) ? <span class="fu">log</span>(c) <span class="op">:</span> c<span class="op">^</span>(<span class="fl">1</span> <span class="op">-</span> m.γ) <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> m.γ)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve!</span>(m<span class="op">::</span><span class="dt">Model</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    (; T, n_a, r, w, β, a_grid) <span class="op">=</span> m</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fu">zeros</span>(n_a, T)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="op">=</span> T<span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span>, i_a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        utility <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i_a′ <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>            V′ <span class="op">=</span> (t <span class="op">==</span> T) ? <span class="fl">0.0</span> <span class="op">:</span> V[i_a′, t<span class="op">+</span><span class="fl">1</span>]</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>            c <span class="op">=</span> (<span class="fl">1</span> <span class="op">+</span> r) <span class="op">*</span> a_grid[i_a] <span class="op">+</span> w <span class="op">-</span> a_grid[i_a′]</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> c <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                utility <span class="op">=</span> <span class="fu">max</span>(<span class="fu">u</span>(c, m) <span class="op">+</span> β <span class="op">*</span> V′, utility)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        V[i_a, t] <span class="op">=</span> utility</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    m.V <span class="op">.=</span> V</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="cn">nothing</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> <span class="co"># module My</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>時間計算量の数え方として, 四則演算, 比較 (<code>&gt;</code>, <code>max</code> など), 代入, 配列へのアクセスは <span class="math inline">\(O(1)\)</span> とします. すると, 計算回数の主要部は for-loop つまり, <span class="math inline">\(O(n_a^2 T)\)</span> です. メモリ使用量は, 価値関数 <span class="math inline">\(V\)</span> の保存に使用している部分が支配的なので <span class="math inline">\(O(n_a T)\)</span> です. では, <span class="math inline">\(T = 10\)</span> で固定して, <span class="math inline">\(n_a\)</span> を変化させたときの計算時間とメモリ使用量を測定してみましょう.</p>
+<p><strong>BenchmarkTools.jl</strong></p>
+<p>Juliaでは, <code>BenchmarkTools.jl</code> パッケージを使うと実際の計算時間とメモリ使用量を測定できます.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div id="6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> My.<span class="fu">solve!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="ansi-escaped-output">
+<pre>BenchmarkTools.Trial: 10000 samples with 1 evaluation per sample.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">400.042 μs</span> … <span class="ansi-magenta-fg">984.583 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">429.541 μs               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">431.324 μs</span> ± <span class="ansi-green-fg">  8.434 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+
+                                     ▃█<span class="ansi-blue-fg">▆</span>▃<span class="ansi-green-fg">▃</span>▅▄▂▂▂▂▂▁▁▁   ▁        ▂
+  ▆▃▃▃▃▄▁▁▁▁▃▁▁▃▁▃▁▁▁▁▁▁▃▁▁▃▄▁▁▃▁▁▁▁▁██<span class="ansi-blue-fg">█</span>█<span class="ansi-green-fg">█</span>███████████▇███▆█▇▆▆▅ █
+  400 μs<span class="ansi-bright-black-fg">        </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>        449 μs <span class="ansi-bold">&lt;</span>
+
+ Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">8.08 KiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">3</span>.</pre>
+</div>
+</div>
+</div>
+<p><code>@benchmark</code> マクロは上記のように関数の実行時間に合わせて適切な試行回数を自動で決定し, 実行時間の分布を表示してくれます. 基本的には中央値 (median) を見るのが良いでしょう.</p>
+<p>メモリ使用量も8.08KiBと表示されています. 今回の配列 <code>V</code> は <code>Float64</code> 型の2次元配列で, <span class="math inline">\(n_a\)</span> 行 <span class="math inline">\(T\)</span> 列なので, メモリ使用量は <span class="math inline">\(8 n_a T\)</span> バイトになります (64bit = 8バイト) . 例えば, <span class="math inline">\(n_a = 100\)</span> のときは <span class="math inline">\(8 \times 100 \times 10 = 8000\)</span> バイトで, 8.08KiB (1KiB = 1024バイト) とほぼ一致しています.</p>
+<p>次に <span class="math inline">\(n_a = 1000\)</span> としたときの計算時間を測定してみましょう.</p>
+<div id="8" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> My.<span class="fu">solve!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">1000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="ansi-escaped-output">
+<pre>BenchmarkTools.Trial: 118 samples with 1 evaluation per sample.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">42.448 ms</span> … <span class="ansi-magenta-fg">43.358 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">42.520 ms              </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">42.531 ms</span> ± <span class="ansi-green-fg">86.042 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+
+          ▃█▅▂▃▅█<span class="ansi-blue-fg">▅</span>▅<span class="ansi-green-fg">▃</span>▃                                          
+  ▅▁▅▁▄▄█████████<span class="ansi-blue-fg">█</span>█<span class="ansi-green-fg">█</span>█████▄▄▇▁▁▁▅▄▄▄▁▁▁▁▁▁▁▁▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▄ ▄
+  42.4 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>        42.7 ms <span class="ansi-bold">&lt;</span>
+
+ Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">80.08 KiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">3</span>.</pre>
+</div>
+</div>
+</div>
+<p>おおむね計算時間が100倍, メモリ使用量が10倍になっていることがわかります. これは, 計算時間が <span class="math inline">\(O(n_a^2 T)\)</span>, メモリ使用量が <span class="math inline">\(O(n_a T)\)</span> であることと一致しています.</p>
+</section>
+</section>
+<section id="微分" class="level2">
+<h2 class="anchored" data-anchor-id="微分">微分</h2>
+<p>数値計算の文脈において微分は主に3種類あります.</p>
+<ul>
+<li>数式微分 (Symbolic Differentiation)</li>
+<li>数値微分 (Numerical Differentiation)</li>
+<li>自動微分 (Automatic Differentiation)</li>
+</ul>
+<p>数式微分 (手計算による解析的な微分) が可能な場合は, これが最も高速で効率的ですが, 複雑な関数に対しては, 数値微分や自動微分などで計算する必要があります. 以下では, 次のラグランジアンを例に, それぞれの微分方法を説明します.</p>
+<p><span class="math display">\[
+\mathcal{L} = \phi \log \left(w(1-l)\right)  + (1-\phi) \frac{l^{1-\gamma}}{1-\gamma}
+\]</span></p>
+<section id="数式微分-symbolic-differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="数式微分-symbolic-differentiation">数式微分 (Symbolic Differentiation)</h3>
+<p>いわゆる手計算による微分です. 一階条件を求めると,</p>
+<p><span class="math display">\[
+\frac{\partial \mathcal{L}}{\partial l} = -\frac{\phi}{1-l} + (1-\phi) l^{-\gamma} = 0.
+\]</span></p>
+<p><code>Symbolics.jl</code> パッケージを使うと, Julia上で数式微分を行うこともできます.</p>
+<div id="symbolic-diff" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Symbolics</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Latexify</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@variables</span> w l ϕ γ</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> ϕ <span class="op">*</span> <span class="fu">log</span>(w <span class="op">*</span> (<span class="fl">1</span> <span class="op">-</span> l)) <span class="op">+</span> (<span class="fl">1</span> <span class="op">-</span> ϕ) <span class="op">*</span> l<span class="op">^</span>(<span class="fl">1</span> <span class="op">-</span> γ) <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> γ)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>∂l <span class="op">=</span> <span class="fu">Differential</span>(l)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>∂L∂l <span class="op">=</span> <span class="fu">expand_derivatives</span>(<span class="fu">∂l</span>(L))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="fu">latexify</span>(∂L∂l))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="math display">\[\begin{equation}
+\frac{ - \phi}{1 - l} + l^{ - \gamma} \left( 1 - \phi \right)
+\end{equation}\]</span></p>
+</div>
+</section>
+<section id="数値微分-numerical-differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="数値微分-numerical-differentiation">数値微分 (Numerical Differentiation)</h3>
+<p><span class="math display">\[
+f'(x) = \lim_{\Delta \to 0} \frac{f(x+\Delta) - f(x)}{\Delta}.
+\]</span></p>
+<p>数値微分は上記の微分の定義を数値的に近似する方法です. 定義通りに行うと, 非常に小さい <span class="math inline">\(d\)</span> (例えば <span class="math inline">\(10^{-9}\)</span> など) を使って, 以下のように近似できます.</p>
+<p><span class="math display">\[
+f'(x) \approx \frac{f(x+d) - f(x)}{d}.
+\]</span></p>
+<p>実用上は, 中心差分 (central difference) を使うことが多いです.</p>
+<p><span class="math display">\[
+f'(x) \approx \frac{f(x+\frac{1}{2}d) - f(x-\frac{1}{2}d)}{d}.
+\]</span></p>
+<p>Julia では, <code>FiniteDiff.jl</code> パッケージを使うと数値微分ができます.</p>
+<div id="numerical-diff" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">FiniteDiff</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(l; w<span class="op">=</span><span class="fl">1</span>., ϕ<span class="op">=</span><span class="fl">0.5</span>, γ<span class="op">=</span><span class="fl">1.5</span>) <span class="op">=</span> ϕ <span class="op">*</span> <span class="fu">log</span>(w <span class="op">*</span> (<span class="fl">1</span> <span class="op">-</span> l)) <span class="op">+</span> (<span class="fl">1</span> <span class="op">-</span> ϕ) <span class="op">*</span> l<span class="op">^</span>(<span class="fl">1</span> <span class="op">-</span> γ) <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> γ)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_analytical</span>(l; w<span class="op">=</span><span class="fl">1</span>., ϕ<span class="op">=</span><span class="fl">0.5</span>, γ<span class="op">=</span><span class="fl">1.5</span>) <span class="op">=</span> <span class="op">-</span>ϕ <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> l) <span class="op">+</span> (<span class="fl">1</span> <span class="op">-</span> ϕ) <span class="op">*</span> l<span class="op">^</span>(<span class="op">-</span>γ)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_numerical</span>(l; Δ<span class="op">=</span><span class="fl">1e-9</span>) <span class="op">=</span> (<span class="fu">f</span>(l <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> Δ) <span class="op">-</span> <span class="fu">f</span>(l <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> Δ)) <span class="op">/</span> Δ</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_finitediff</span>(l) <span class="op">=</span> FiniteDiff.<span class="fu">finite_difference_derivative</span>(l <span class="op">-&gt;</span> <span class="fu">f</span>(l), l)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-fig-comp-numerical-diff" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_analytical, label<span class="op">=</span><span class="st">"Analytical"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_numerical, label<span class="op">=</span><span class="st">"Numerical"</span>, linestyle<span class="op">=:</span>dash)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_finitediff, label<span class="op">=</span><span class="st">"FiniteDiff.jl"</span>, linestyle<span class="op">=:</span>dot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-comp-numerical-diff" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-comp-numerical-diff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<!--?xml version="1.0" encoding="utf-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="500" height="309" viewbox="0 0 2000 1236">
+<defs>
+  <clippath id="clip330">
+    <rect x="0" y="0" width="2000" height="1236"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip330)" d="M0 1236 L2000 1236 L2000 1.24345e-14 L0 1.24345e-14  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip331">
+    <rect x="400" y="0" width="1401" height="1236"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip330)" d="M145.191 1128.61 L1952.76 1128.61 L1952.76 47.2441 L145.191 47.2441  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip332">
+    <rect x="145" y="47" width="1809" height="1082"></rect>
+  </clippath>
+</defs>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="196.348,1128.61 196.348,47.2441 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="683.563,1128.61 683.563,47.2441 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1170.78,1128.61 1170.78,47.2441 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1657.99,1128.61 1657.99,47.2441 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,1052.93 1952.76,1052.93 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,835.407 1952.76,835.407 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,617.88 1952.76,617.88 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,400.352 1952.76,400.352 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,182.824 1952.76,182.824 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,1128.61 1952.76,1128.61 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="196.348,1128.61 196.348,1109.71 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="683.563,1128.61 683.563,1109.71 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1170.78,1128.61 1170.78,1109.71 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1657.99,1128.61 1657.99,1109.71 "></polyline>
+<path clip-path="url(#clip330)" d="M174.531 1156.33 Q170.92 1156.33 169.092 1159.89 Q167.286 1163.44 167.286 1170.57 Q167.286 1177.67 169.092 1181.24 Q170.92 1184.78 174.531 1184.78 Q178.166 1184.78 179.971 1181.24 Q181.8 1177.67 181.8 1170.57 Q181.8 1163.44 179.971 1159.89 Q178.166 1156.33 174.531 1156.33 M174.531 1152.63 Q180.342 1152.63 183.397 1157.23 Q186.476 1161.82 186.476 1170.57 Q186.476 1179.29 183.397 1183.9 Q180.342 1188.48 174.531 1188.48 Q168.721 1188.48 165.643 1183.9 Q162.587 1179.29 162.587 1170.57 Q162.587 1161.82 165.643 1157.23 Q168.721 1152.63 174.531 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M194.693 1181.93 L199.578 1181.93 L199.578 1187.81 L194.693 1187.81 L194.693 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M213.79 1183.88 L230.11 1183.88 L230.11 1187.81 L208.165 1187.81 L208.165 1183.88 Q210.827 1181.12 215.411 1176.49 Q220.017 1171.84 221.198 1170.5 Q223.443 1167.97 224.323 1166.24 Q225.226 1164.48 225.226 1162.79 Q225.226 1160.03 223.281 1158.3 Q221.36 1156.56 218.258 1156.56 Q216.059 1156.56 213.605 1157.32 Q211.175 1158.09 208.397 1159.64 L208.397 1154.92 Q211.221 1153.78 213.675 1153.2 Q216.128 1152.63 218.165 1152.63 Q223.536 1152.63 226.73 1155.31 Q229.925 1158 229.925 1162.49 Q229.925 1164.62 229.114 1166.54 Q228.327 1168.44 226.221 1171.03 Q225.642 1171.7 222.54 1174.92 Q219.439 1178.11 213.79 1183.88 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M660.704 1156.33 Q657.093 1156.33 655.264 1159.89 Q653.459 1163.44 653.459 1170.57 Q653.459 1177.67 655.264 1181.24 Q657.093 1184.78 660.704 1184.78 Q664.338 1184.78 666.144 1181.24 Q667.972 1177.67 667.972 1170.57 Q667.972 1163.44 666.144 1159.89 Q664.338 1156.33 660.704 1156.33 M660.704 1152.63 Q666.514 1152.63 669.57 1157.23 Q672.648 1161.82 672.648 1170.57 Q672.648 1179.29 669.57 1183.9 Q666.514 1188.48 660.704 1188.48 Q654.894 1188.48 651.815 1183.9 Q648.76 1179.29 648.76 1170.57 Q648.76 1161.82 651.815 1157.23 Q654.894 1152.63 660.704 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M680.866 1181.93 L685.75 1181.93 L685.75 1187.81 L680.866 1187.81 L680.866 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M708.782 1157.32 L696.977 1175.77 L708.782 1175.77 L708.782 1157.32 M707.556 1153.25 L713.435 1153.25 L713.435 1175.77 L718.366 1175.77 L718.366 1179.66 L713.435 1179.66 L713.435 1187.81 L708.782 1187.81 L708.782 1179.66 L693.181 1179.66 L693.181 1175.15 L707.556 1153.25 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1148.08 1156.33 Q1144.47 1156.33 1142.64 1159.89 Q1140.83 1163.44 1140.83 1170.57 Q1140.83 1177.67 1142.64 1181.24 Q1144.47 1184.78 1148.08 1184.78 Q1151.71 1184.78 1153.52 1181.24 Q1155.35 1177.67 1155.35 1170.57 Q1155.35 1163.44 1153.52 1159.89 Q1151.71 1156.33 1148.08 1156.33 M1148.08 1152.63 Q1153.89 1152.63 1156.95 1157.23 Q1160.02 1161.82 1160.02 1170.57 Q1160.02 1179.29 1156.95 1183.9 Q1153.89 1188.48 1148.08 1188.48 Q1142.27 1188.48 1139.19 1183.9 Q1136.14 1179.29 1136.14 1170.57 Q1136.14 1161.82 1139.19 1157.23 Q1142.27 1152.63 1148.08 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1168.24 1181.93 L1173.13 1181.93 L1173.13 1187.81 L1168.24 1187.81 L1168.24 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1193.89 1168.67 Q1190.74 1168.67 1188.89 1170.82 Q1187.06 1172.97 1187.06 1176.72 Q1187.06 1180.45 1188.89 1182.63 Q1190.74 1184.78 1193.89 1184.78 Q1197.04 1184.78 1198.87 1182.63 Q1200.72 1180.45 1200.72 1176.72 Q1200.72 1172.97 1198.87 1170.82 Q1197.04 1168.67 1193.89 1168.67 M1203.17 1154.01 L1203.17 1158.27 Q1201.41 1157.44 1199.61 1157 Q1197.83 1156.56 1196.07 1156.56 Q1191.44 1156.56 1188.98 1159.69 Q1186.55 1162.81 1186.21 1169.13 Q1187.57 1167.12 1189.63 1166.05 Q1191.69 1164.96 1194.17 1164.96 Q1199.38 1164.96 1202.39 1168.13 Q1205.42 1171.28 1205.42 1176.72 Q1205.42 1182.05 1202.27 1185.26 Q1199.12 1188.48 1193.89 1188.48 Q1187.89 1188.48 1184.72 1183.9 Q1181.55 1179.29 1181.55 1170.57 Q1181.55 1162.37 1185.44 1157.51 Q1189.33 1152.63 1195.88 1152.63 Q1197.64 1152.63 1199.42 1152.97 Q1201.23 1153.32 1203.17 1154.01 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1635.42 1156.33 Q1631.81 1156.33 1629.98 1159.89 Q1628.18 1163.44 1628.18 1170.57 Q1628.18 1177.67 1629.98 1181.24 Q1631.81 1184.78 1635.42 1184.78 Q1639.06 1184.78 1640.86 1181.24 Q1642.69 1177.67 1642.69 1170.57 Q1642.69 1163.44 1640.86 1159.89 Q1639.06 1156.33 1635.42 1156.33 M1635.42 1152.63 Q1641.23 1152.63 1644.29 1157.23 Q1647.37 1161.82 1647.37 1170.57 Q1647.37 1179.29 1644.29 1183.9 Q1641.23 1188.48 1635.42 1188.48 Q1629.61 1188.48 1626.53 1183.9 Q1623.48 1179.29 1623.48 1170.57 Q1623.48 1161.82 1626.53 1157.23 Q1629.61 1152.63 1635.42 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1655.58 1181.93 L1660.47 1181.93 L1660.47 1187.81 L1655.58 1187.81 L1655.58 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1680.65 1171.4 Q1677.32 1171.4 1675.4 1173.18 Q1673.5 1174.96 1673.5 1178.09 Q1673.5 1181.21 1675.4 1183 Q1677.32 1184.78 1680.65 1184.78 Q1683.99 1184.78 1685.91 1183 Q1687.83 1181.19 1687.83 1178.09 Q1687.83 1174.96 1685.91 1173.18 Q1684.01 1171.4 1680.65 1171.4 M1675.98 1169.41 Q1672.97 1168.67 1671.28 1166.61 Q1669.61 1164.55 1669.61 1161.58 Q1669.61 1157.44 1672.55 1155.03 Q1675.51 1152.63 1680.65 1152.63 Q1685.82 1152.63 1688.75 1155.03 Q1691.69 1157.44 1691.69 1161.58 Q1691.69 1164.55 1690 1166.61 Q1688.34 1168.67 1685.35 1169.41 Q1688.73 1170.2 1690.61 1172.49 Q1692.5 1174.78 1692.5 1178.09 Q1692.5 1183.11 1689.43 1185.8 Q1686.37 1188.48 1680.65 1188.48 Q1674.94 1188.48 1671.86 1185.8 Q1668.8 1183.11 1668.8 1178.09 Q1668.8 1174.78 1670.7 1172.49 Q1672.6 1170.2 1675.98 1169.41 M1674.26 1162.02 Q1674.26 1164.71 1675.93 1166.21 Q1677.62 1167.72 1680.65 1167.72 Q1683.66 1167.72 1685.35 1166.21 Q1687.07 1164.71 1687.07 1162.02 Q1687.07 1159.34 1685.35 1157.83 Q1683.66 1156.33 1680.65 1156.33 Q1677.62 1156.33 1675.93 1157.83 Q1674.26 1159.34 1674.26 1162.02 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,1128.61 145.191,47.2441 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,1052.93 164.089,1052.93 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,835.407 164.089,835.407 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,617.88 164.089,617.88 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,400.352 164.089,400.352 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,182.824 164.089,182.824 "></polyline>
+<path clip-path="url(#clip330)" d="M52.9921 1053.39 L82.6679 1053.39 L82.6679 1057.32 L52.9921 1057.32 L52.9921 1053.39 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M105.608 1039.73 L93.8021 1058.18 L105.608 1058.18 L105.608 1039.73 M104.381 1035.65 L110.26 1035.65 L110.26 1058.18 L115.191 1058.18 L115.191 1062.07 L110.26 1062.07 L110.26 1070.21 L105.608 1070.21 L105.608 1062.07 L90.0058 1062.07 L90.0058 1057.55 L104.381 1035.65 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M55.0754 835.859 L84.7512 835.859 L84.7512 839.794 L55.0754 839.794 L55.0754 835.859 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M98.8715 848.752 L115.191 848.752 L115.191 852.687 L93.2465 852.687 L93.2465 848.752 Q95.9086 845.998 100.492 841.368 Q105.098 836.715 106.279 835.373 Q108.524 832.849 109.404 831.113 Q110.307 829.354 110.307 827.664 Q110.307 824.91 108.362 823.174 Q106.441 821.438 103.339 821.438 Q101.14 821.438 98.6863 822.201 Q96.2558 822.965 93.478 824.516 L93.478 819.794 Q96.3021 818.66 98.7558 818.081 Q101.209 817.502 103.246 817.502 Q108.617 817.502 111.811 820.188 Q115.006 822.873 115.006 827.363 Q115.006 829.493 114.196 831.414 Q113.408 833.312 111.302 835.905 Q110.723 836.576 107.621 839.794 Q104.52 842.988 98.8715 848.752 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M103.246 603.678 Q99.6354 603.678 97.8067 607.243 Q96.0012 610.785 96.0012 617.914 Q96.0012 625.021 97.8067 628.586 Q99.6354 632.127 103.246 632.127 Q106.881 632.127 108.686 628.586 Q110.515 625.021 110.515 617.914 Q110.515 610.785 108.686 607.243 Q106.881 603.678 103.246 603.678 M103.246 599.975 Q109.057 599.975 112.112 604.581 Q115.191 609.164 115.191 617.914 Q115.191 626.641 112.112 631.248 Q109.057 635.831 103.246 635.831 Q97.4363 635.831 94.3576 631.248 Q91.3021 626.641 91.3021 617.914 Q91.3021 609.164 94.3576 604.581 Q97.4363 599.975 103.246 599.975 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M98.8715 413.697 L115.191 413.697 L115.191 417.632 L93.2465 417.632 L93.2465 413.697 Q95.9086 410.942 100.492 406.313 Q105.098 401.66 106.279 400.317 Q108.524 397.794 109.404 396.058 Q110.307 394.299 110.307 392.609 Q110.307 389.854 108.362 388.118 Q106.441 386.382 103.339 386.382 Q101.14 386.382 98.6863 387.146 Q96.2558 387.91 93.478 389.461 L93.478 384.739 Q96.3021 383.604 98.7558 383.026 Q101.209 382.447 103.246 382.447 Q108.617 382.447 111.811 385.132 Q115.006 387.817 115.006 392.308 Q115.006 394.438 114.196 396.359 Q113.408 398.257 111.302 400.85 Q110.723 401.521 107.621 404.739 Q104.52 407.933 98.8715 413.697 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M105.608 169.618 L93.8021 188.067 L105.608 188.067 L105.608 169.618 M104.381 165.544 L110.26 165.544 L110.26 188.067 L115.191 188.067 L115.191 191.956 L110.26 191.956 L110.26 200.104 L105.608 200.104 L105.608 191.956 L90.0058 191.956 L90.0058 187.442 L104.381 165.544 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip332)" style="stroke:#009af9; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="196.348,77.8489 220.709,121.617 245.07,160.588 269.431,195.488 293.791,226.907 318.152,255.334 342.513,281.17 366.873,304.753 391.234,326.367 415.595,346.251 439.956,364.61 464.316,381.621 488.677,397.433 513.038,412.178 537.398,425.97 561.759,438.909 586.12,451.083 610.481,462.57 634.841,473.437 659.202,483.746 683.563,493.553 707.923,502.905 732.284,511.849 756.645,520.422 781.006,528.663 805.366,536.605 829.727,544.279 854.088,551.712 878.448,558.932 902.809,565.963 927.17,572.828 951.531,579.55 975.891,586.148 1000.25,592.644 1024.61,599.056 1048.97,605.404 1073.33,611.706 1097.69,617.98 1122.06,624.245 1146.42,630.52 1170.78,636.823 1195.14,643.175 1219.5,649.595 1243.86,656.104 1268.22,662.726 1292.58,669.484 1316.94,676.403 1341.3,683.512 1365.66,690.841 1390.02,698.424 1414.38,706.297 1438.74,714.503 1463.11,723.087 1487.47,732.103 1511.83,741.612 1536.19,751.681 1560.55,762.392 1584.91,773.837 1609.27,786.127 1633.63,799.393 1657.99,813.788 1682.35,829.502 1706.71,846.764 1731.07,865.855 1755.43,887.129 1779.79,911.031 1804.16,938.134 1828.52,969.187 1852.88,1005.19 1877.24,1047.49 1901.6,1098.01 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" stroke-dasharray="16, 10" points="196.348,77.8488 220.709,121.617 245.07,160.588 269.431,195.488 293.791,226.907 318.152,255.334 342.513,281.17 366.873,304.753 391.234,326.367 415.595,346.251 439.956,364.61 464.316,381.621 488.677,397.433 513.038,412.178 537.398,425.97 561.759,438.909 586.12,451.083 610.481,462.57 634.841,473.437 659.202,483.746 683.563,493.553 707.923,502.905 732.284,511.849 756.645,520.422 781.006,528.663 805.366,536.605 829.727,544.279 854.088,551.712 878.448,558.932 902.809,565.963 927.17,572.828 951.531,579.55 975.891,586.148 1000.25,592.644 1024.61,599.056 1048.97,605.404 1073.33,611.706 1097.69,617.98 1122.06,624.245 1146.42,630.52 1170.78,636.823 1195.14,643.175 1219.5,649.595 1243.86,656.104 1268.22,662.726 1292.58,669.484 1316.94,676.403 1341.3,683.512 1365.66,690.841 1390.02,698.424 1414.38,706.297 1438.74,714.503 1463.11,723.087 1487.47,732.104 1511.83,741.612 1536.19,751.681 1560.55,762.392 1584.91,773.837 1609.27,786.127 1633.63,799.393 1657.99,813.788 1682.35,829.502 1706.71,846.764 1731.07,865.855 1755.43,887.129 1779.79,911.031 1804.16,938.134 1828.52,969.187 1852.88,1005.19 1877.24,1047.49 1901.6,1098.01 "></polyline>
+<polyline clip-path="url(#clip332)" style="stroke:#3da44d; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" stroke-dasharray="2, 4" points="196.348,77.8489 220.709,121.617 245.07,160.588 269.431,195.488 293.791,226.907 318.152,255.334 342.513,281.17 366.873,304.753 391.234,326.367 415.595,346.251 439.956,364.61 464.316,381.621 488.677,397.433 513.038,412.178 537.398,425.97 561.759,438.909 586.12,451.083 610.481,462.57 634.841,473.437 659.202,483.746 683.563,493.553 707.923,502.905 732.284,511.849 756.645,520.422 781.006,528.663 805.366,536.605 829.727,544.279 854.088,551.712 878.448,558.932 902.809,565.963 927.17,572.828 951.531,579.55 975.891,586.148 1000.25,592.644 1024.61,599.056 1048.97,605.404 1073.33,611.706 1097.69,617.98 1122.06,624.245 1146.42,630.52 1170.78,636.823 1195.14,643.175 1219.5,649.595 1243.86,656.104 1268.22,662.726 1292.58,669.484 1316.94,676.403 1341.3,683.512 1365.66,690.841 1390.02,698.424 1414.38,706.297 1438.74,714.503 1463.11,723.087 1487.47,732.103 1511.83,741.612 1536.19,751.681 1560.55,762.392 1584.91,773.837 1609.27,786.127 1633.63,799.393 1657.99,813.788 1682.35,829.502 1706.71,846.764 1731.07,865.855 1755.43,887.129 1779.79,911.031 1804.16,938.134 1828.52,969.187 1852.88,1005.19 1877.24,1047.49 1901.6,1098.01 "></polyline>
+<path clip-path="url(#clip330)" d="M1471.86 290.65 L1892.5 290.65 L1892.5 83.2896 L1471.86 83.2896  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<polyline clip-path="url(#clip330)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1471.86,290.65 1892.5,290.65 1892.5,83.2896 1471.86,83.2896 1471.86,290.65 "></polyline>
+<polyline clip-path="url(#clip330)" style="stroke:#009af9; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1491.95,135.13 1612.45,135.13 "></polyline>
+<path clip-path="url(#clip330)" d="M1648.37 122.456 L1642.03 139.655 L1654.74 139.655 L1648.37 122.456 M1645.73 117.85 L1651.03 117.85 L1664.2 152.41 L1659.34 152.41 L1656.19 143.544 L1640.62 143.544 L1637.47 152.41 L1632.54 152.41 L1645.73 117.85 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1690.62 136.762 L1690.62 152.41 L1686.36 152.41 L1686.36 136.9 Q1686.36 133.22 1684.92 131.391 Q1683.49 129.563 1680.62 129.563 Q1677.17 129.563 1675.18 131.762 Q1673.18 133.961 1673.18 137.757 L1673.18 152.41 L1668.9 152.41 L1668.9 126.484 L1673.18 126.484 L1673.18 130.512 Q1674.71 128.174 1676.77 127.016 Q1678.86 125.859 1681.56 125.859 Q1686.03 125.859 1688.32 128.637 Q1690.62 131.391 1690.62 136.762 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1710.89 139.377 Q1705.73 139.377 1703.74 140.558 Q1701.75 141.738 1701.75 144.586 Q1701.75 146.854 1703.23 148.197 Q1704.74 149.516 1707.3 149.516 Q1710.85 149.516 1712.98 147.016 Q1715.13 144.493 1715.13 140.326 L1715.13 139.377 L1710.89 139.377 M1719.39 137.618 L1719.39 152.41 L1715.13 152.41 L1715.13 148.474 Q1713.67 150.836 1711.49 151.97 Q1709.32 153.081 1706.17 153.081 Q1702.19 153.081 1699.83 150.859 Q1697.49 148.613 1697.49 144.863 Q1697.49 140.488 1700.41 138.266 Q1703.35 136.044 1709.16 136.044 L1715.13 136.044 L1715.13 135.627 Q1715.13 132.688 1713.18 131.09 Q1711.26 129.47 1707.77 129.47 Q1705.55 129.47 1703.44 130.002 Q1701.33 130.535 1699.39 131.6 L1699.39 127.664 Q1701.73 126.762 1703.93 126.322 Q1706.12 125.859 1708.21 125.859 Q1713.83 125.859 1716.61 128.776 Q1719.39 131.692 1719.39 137.618 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1728.16 116.391 L1732.42 116.391 L1732.42 152.41 L1728.16 152.41 L1728.16 116.391 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1752.12 154.817 Q1750.31 159.447 1748.6 160.859 Q1746.89 162.271 1744.02 162.271 L1740.61 162.271 L1740.61 158.706 L1743.11 158.706 Q1744.87 158.706 1745.85 157.873 Q1746.82 157.039 1748 153.937 L1748.76 151.993 L1738.28 126.484 L1742.79 126.484 L1750.89 146.762 L1758.99 126.484 L1763.51 126.484 L1752.12 154.817 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1773.6 119.123 L1773.6 126.484 L1782.37 126.484 L1782.37 129.794 L1773.6 129.794 L1773.6 143.868 Q1773.6 147.039 1774.46 147.942 Q1775.34 148.845 1778 148.845 L1782.37 148.845 L1782.37 152.41 L1778 152.41 Q1773.07 152.41 1771.19 150.581 Q1769.32 148.729 1769.32 143.868 L1769.32 129.794 L1766.19 129.794 L1766.19 126.484 L1769.32 126.484 L1769.32 119.123 L1773.6 119.123 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1787.98 126.484 L1792.23 126.484 L1792.23 152.41 L1787.98 152.41 L1787.98 126.484 M1787.98 116.391 L1792.23 116.391 L1792.23 121.785 L1787.98 121.785 L1787.98 116.391 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1819.8 127.479 L1819.8 131.461 Q1818 130.465 1816.17 129.979 Q1814.36 129.47 1812.51 129.47 Q1808.37 129.47 1806.08 132.109 Q1803.79 134.725 1803.79 139.47 Q1803.79 144.215 1806.08 146.854 Q1808.37 149.47 1812.51 149.47 Q1814.36 149.47 1816.17 148.984 Q1818 148.474 1819.8 147.479 L1819.8 151.414 Q1818.02 152.248 1816.1 152.664 Q1814.2 153.081 1812.05 153.081 Q1806.19 153.081 1802.74 149.4 Q1799.3 145.72 1799.3 139.47 Q1799.3 133.127 1802.77 129.493 Q1806.26 125.859 1812.33 125.859 Q1814.29 125.859 1816.17 126.276 Q1818.04 126.669 1819.8 127.479 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1838.99 139.377 Q1833.83 139.377 1831.84 140.558 Q1829.85 141.738 1829.85 144.586 Q1829.85 146.854 1831.33 148.197 Q1832.84 149.516 1835.41 149.516 Q1838.95 149.516 1841.08 147.016 Q1843.23 144.493 1843.23 140.326 L1843.23 139.377 L1838.99 139.377 M1847.49 137.618 L1847.49 152.41 L1843.23 152.41 L1843.23 148.474 Q1841.77 150.836 1839.6 151.97 Q1837.42 153.081 1834.27 153.081 Q1830.29 153.081 1827.93 150.859 Q1825.59 148.613 1825.59 144.863 Q1825.59 140.488 1828.51 138.266 Q1831.45 136.044 1837.26 136.044 L1843.23 136.044 L1843.23 135.627 Q1843.23 132.688 1841.29 131.09 Q1839.36 129.47 1835.87 129.47 Q1833.65 129.47 1831.54 130.002 Q1829.43 130.535 1827.49 131.6 L1827.49 127.664 Q1829.83 126.762 1832.03 126.322 Q1834.23 125.859 1836.31 125.859 Q1841.93 125.859 1844.71 128.776 Q1847.49 131.692 1847.49 137.618 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1856.26 116.391 L1860.52 116.391 L1860.52 152.41 L1856.26 152.41 L1856.26 116.391 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip330)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" stroke-dasharray="16, 10" points="1491.95,186.97 1612.45,186.97 "></polyline>
+<path clip-path="url(#clip330)" d="M1632.54 169.69 L1638.83 169.69 L1654.16 198.602 L1654.16 169.69 L1658.69 169.69 L1658.69 204.25 L1652.4 204.25 L1637.07 175.338 L1637.07 204.25 L1632.54 204.25 L1632.54 169.69 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1667.37 194.018 L1667.37 178.324 L1671.63 178.324 L1671.63 193.856 Q1671.63 197.537 1673.07 199.389 Q1674.5 201.217 1677.37 201.217 Q1680.82 201.217 1682.81 199.018 Q1684.83 196.819 1684.83 193.023 L1684.83 178.324 L1689.09 178.324 L1689.09 204.25 L1684.83 204.25 L1684.83 200.268 Q1683.28 202.629 1681.22 203.787 Q1679.18 204.921 1676.47 204.921 Q1672 204.921 1669.69 202.143 Q1667.37 199.365 1667.37 194.018 M1678.09 177.699 L1678.09 177.699 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1718.05 183.301 Q1719.64 180.43 1721.86 179.065 Q1724.09 177.699 1727.1 177.699 Q1731.15 177.699 1733.35 180.546 Q1735.55 183.37 1735.55 188.602 L1735.55 204.25 L1731.26 204.25 L1731.26 188.74 Q1731.26 185.014 1729.94 183.208 Q1728.62 181.403 1725.92 181.403 Q1722.61 181.403 1720.68 183.602 Q1718.76 185.801 1718.76 189.597 L1718.76 204.25 L1714.48 204.25 L1714.48 188.74 Q1714.48 184.99 1713.16 183.208 Q1711.84 181.403 1709.09 181.403 Q1705.82 181.403 1703.9 183.625 Q1701.98 185.824 1701.98 189.597 L1701.98 204.25 L1697.7 204.25 L1697.7 178.324 L1701.98 178.324 L1701.98 182.352 Q1703.44 179.967 1705.48 178.833 Q1707.51 177.699 1710.31 177.699 Q1713.14 177.699 1715.11 179.134 Q1717.1 180.569 1718.05 183.301 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1766.22 190.222 L1766.22 192.305 L1746.63 192.305 Q1746.91 196.703 1749.27 199.018 Q1751.66 201.31 1755.89 201.31 Q1758.35 201.31 1760.64 200.708 Q1762.95 200.106 1765.22 198.902 L1765.22 202.93 Q1762.93 203.902 1760.52 204.412 Q1758.11 204.921 1755.64 204.921 Q1749.43 204.921 1745.8 201.31 Q1742.19 197.699 1742.19 191.541 Q1742.19 185.176 1745.61 181.449 Q1749.06 177.699 1754.9 177.699 Q1760.13 177.699 1763.16 181.078 Q1766.22 184.435 1766.22 190.222 M1761.96 188.972 Q1761.91 185.477 1759.99 183.393 Q1758.09 181.31 1754.94 181.31 Q1751.38 181.31 1749.23 183.324 Q1747.1 185.338 1746.77 188.995 L1761.96 188.972 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1788.23 182.305 Q1787.51 181.889 1786.66 181.703 Q1785.82 181.495 1784.8 181.495 Q1781.19 181.495 1779.25 183.856 Q1777.33 186.194 1777.33 190.592 L1777.33 204.25 L1773.05 204.25 L1773.05 178.324 L1777.33 178.324 L1777.33 182.352 Q1778.67 179.991 1780.82 178.856 Q1782.98 177.699 1786.05 177.699 Q1786.49 177.699 1787.03 177.768 Q1787.56 177.815 1788.21 177.93 L1788.23 182.305 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1792.7 178.324 L1796.96 178.324 L1796.96 204.25 L1792.7 204.25 L1792.7 178.324 M1792.7 168.231 L1796.96 168.231 L1796.96 173.625 L1792.7 173.625 L1792.7 168.231 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1824.53 179.319 L1824.53 183.301 Q1822.72 182.305 1820.89 181.819 Q1819.09 181.31 1817.23 181.31 Q1813.09 181.31 1810.8 183.949 Q1808.51 186.565 1808.51 191.31 Q1808.51 196.055 1810.8 198.694 Q1813.09 201.31 1817.23 201.31 Q1819.09 201.31 1820.89 200.824 Q1822.72 200.314 1824.53 199.319 L1824.53 203.254 Q1822.74 204.088 1820.82 204.504 Q1818.92 204.921 1816.77 204.921 Q1810.92 204.921 1807.47 201.24 Q1804.02 197.56 1804.02 191.31 Q1804.02 184.967 1807.49 181.333 Q1810.98 177.699 1817.05 177.699 Q1819.02 177.699 1820.89 178.116 Q1822.77 178.509 1824.53 179.319 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1843.72 191.217 Q1838.55 191.217 1836.56 192.398 Q1834.57 193.578 1834.57 196.426 Q1834.57 198.694 1836.05 200.037 Q1837.56 201.356 1840.13 201.356 Q1843.67 201.356 1845.8 198.856 Q1847.95 196.333 1847.95 192.166 L1847.95 191.217 L1843.72 191.217 M1852.21 189.458 L1852.21 204.25 L1847.95 204.25 L1847.95 200.314 Q1846.49 202.676 1844.32 203.81 Q1842.14 204.921 1838.99 204.921 Q1835.01 204.921 1832.65 202.699 Q1830.31 200.453 1830.31 196.703 Q1830.31 192.328 1833.23 190.106 Q1836.17 187.884 1841.98 187.884 L1847.95 187.884 L1847.95 187.467 Q1847.95 184.528 1846.01 182.93 Q1844.09 181.31 1840.59 181.31 Q1838.37 181.31 1836.26 181.842 Q1834.16 182.375 1832.21 183.44 L1832.21 179.504 Q1834.55 178.602 1836.75 178.162 Q1838.95 177.699 1841.03 177.699 Q1846.66 177.699 1849.43 180.616 Q1852.21 183.532 1852.21 189.458 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1860.98 168.231 L1865.24 168.231 L1865.24 204.25 L1860.98 204.25 L1860.98 168.231 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip330)" style="stroke:#3da44d; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" stroke-dasharray="2, 4" points="1491.95,238.81 1612.45,238.81 "></polyline>
+<path clip-path="url(#clip330)" d="M1632.54 221.53 L1652.4 221.53 L1652.4 225.465 L1637.21 225.465 L1637.21 235.65 L1650.92 235.65 L1650.92 239.585 L1637.21 239.585 L1637.21 256.09 L1632.54 256.09 L1632.54 221.53 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1656.17 230.164 L1660.43 230.164 L1660.43 256.09 L1656.17 256.09 L1656.17 230.164 M1656.17 220.071 L1660.43 220.071 L1660.43 225.465 L1656.17 225.465 L1656.17 220.071 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1690.89 240.442 L1690.89 256.09 L1686.63 256.09 L1686.63 240.58 Q1686.63 236.9 1685.2 235.071 Q1683.76 233.243 1680.89 233.243 Q1677.44 233.243 1675.45 235.442 Q1673.46 237.641 1673.46 241.437 L1673.46 256.09 L1669.18 256.09 L1669.18 230.164 L1673.46 230.164 L1673.46 234.192 Q1674.99 231.854 1677.05 230.696 Q1679.13 229.539 1681.84 229.539 Q1686.31 229.539 1688.6 232.317 Q1690.89 235.071 1690.89 240.442 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1699.39 230.164 L1703.65 230.164 L1703.65 256.09 L1699.39 256.09 L1699.39 230.164 M1699.39 220.071 L1703.65 220.071 L1703.65 225.465 L1699.39 225.465 L1699.39 220.071 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1716.77 222.803 L1716.77 230.164 L1725.55 230.164 L1725.55 233.474 L1716.77 233.474 L1716.77 247.548 Q1716.77 250.719 1717.63 251.622 Q1718.51 252.525 1721.17 252.525 L1725.55 252.525 L1725.55 256.09 L1721.17 256.09 Q1716.24 256.09 1714.36 254.261 Q1712.49 252.409 1712.49 247.548 L1712.49 233.474 L1709.36 233.474 L1709.36 230.164 L1712.49 230.164 L1712.49 222.803 L1716.77 222.803 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1753.32 242.062 L1753.32 244.145 L1733.74 244.145 Q1734.02 248.543 1736.38 250.858 Q1738.76 253.15 1743 253.15 Q1745.45 253.15 1747.74 252.548 Q1750.06 251.946 1752.33 250.742 L1752.33 254.77 Q1750.04 255.742 1747.63 256.252 Q1745.22 256.761 1742.74 256.761 Q1736.54 256.761 1732.91 253.15 Q1729.3 249.539 1729.3 243.381 Q1729.3 237.016 1732.72 233.289 Q1736.17 229.539 1742 229.539 Q1747.24 229.539 1750.27 232.918 Q1753.32 236.275 1753.32 242.062 M1749.06 240.812 Q1749.02 237.317 1747.1 235.233 Q1745.2 233.15 1742.05 233.15 Q1738.49 233.15 1736.33 235.164 Q1734.2 237.178 1733.88 240.835 L1749.06 240.812 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1765.17 225.372 L1765.17 252.247 L1770.82 252.247 Q1777.98 252.247 1781.29 249.006 Q1784.62 245.766 1784.62 238.775 Q1784.62 231.831 1781.29 228.613 Q1777.98 225.372 1770.82 225.372 L1765.17 225.372 M1760.5 221.53 L1770.11 221.53 Q1780.15 221.53 1784.85 225.719 Q1789.55 229.886 1789.55 238.775 Q1789.55 247.71 1784.83 251.9 Q1780.11 256.09 1770.11 256.09 L1760.5 256.09 L1760.5 221.53 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1796.82 230.164 L1801.08 230.164 L1801.08 256.09 L1796.82 256.09 L1796.82 230.164 M1796.82 220.071 L1801.08 220.071 L1801.08 225.465 L1796.82 225.465 L1796.82 220.071 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1823.11 220.071 L1823.11 223.613 L1819.04 223.613 Q1816.75 223.613 1815.85 224.539 Q1814.97 225.465 1814.97 227.872 L1814.97 230.164 L1821.98 230.164 L1821.98 233.474 L1814.97 233.474 L1814.97 256.09 L1810.68 256.09 L1810.68 233.474 L1806.61 233.474 L1806.61 230.164 L1810.68 230.164 L1810.68 228.358 Q1810.68 224.03 1812.7 222.062 Q1814.71 220.071 1819.09 220.071 L1823.11 220.071 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1839.8 220.071 L1839.8 223.613 L1835.73 223.613 Q1833.44 223.613 1832.54 224.539 Q1831.66 225.465 1831.66 227.872 L1831.66 230.164 L1838.67 230.164 L1838.67 233.474 L1831.66 233.474 L1831.66 256.09 L1827.37 256.09 L1827.37 233.474 L1823.3 233.474 L1823.3 230.164 L1827.37 230.164 L1827.37 228.358 Q1827.37 224.03 1829.39 222.062 Q1831.4 220.071 1835.78 220.071 L1839.8 220.071 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1840.52 250.21 L1845.41 250.21 L1845.41 256.09 L1840.52 256.09 L1840.52 250.21 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1854.99 230.164 L1859.25 230.164 L1859.25 256.553 Q1859.25 261.506 1857.35 263.728 Q1855.48 265.951 1851.29 265.951 L1849.67 265.951 L1849.67 262.34 L1850.8 262.34 Q1853.23 262.34 1854.11 261.205 Q1854.99 260.094 1854.99 256.553 L1854.99 230.164 M1854.99 220.071 L1859.25 220.071 L1859.25 225.465 L1854.99 225.465 L1854.99 220.071 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip330)" d="M1868.16 220.071 L1872.42 220.071 L1872.42 256.09 L1868.16 256.09 L1868.16 220.071 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path></svg>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-comp-numerical-diff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Comparison of analytical and numerical derivatives.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="自動微分-automatic-differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="自動微分-automatic-differentiation">自動微分 (Automatic Differentiation)</h3>
+<p>数値微分はとてもシンプルな実装ですが, <span class="math inline">\(d\)</span> の選び方によっては精度が悪くなる可能性があります. より高い精度を求める場合は, 自動微分を用いることができます. 自動微分は, 関数を基本的な演算 (多項式, 三角関数, 対数関数など) の組み合わせとして分解し, 各基本演算の微分を連鎖律に基づいて計算する方法です. これは, 数式微分を数値的に実行するようなイメージです.</p>
+<p><strong>順伝播と逆伝播</strong></p>
+<p><span class="math display">\[
+\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}
+\]</span></p>
+<ul>
+<li>順伝播 (forward mode): 入力から出力に向かって微分を計算する方法.
+<ul>
+<li><span class="math inline">\(\frac{du}{dx}\)</span> を計算し, それを用いて <span class="math inline">\(\frac{dy}{du}\)</span> を計算する.</li>
+</ul></li>
+<li>逆伝播 (reverse mode): 出力から入力に向かって微分を計算する方法.
+<ul>
+<li><span class="math inline">\(\frac{dy}{du}\)</span> を計算し, それを用いて <span class="math inline">\(\frac{du}{dx}\)</span> を計算する.</li>
+</ul></li>
+</ul>
+<p>一般に <span class="math inline">\(f: \mathbb{R}^m \to \mathbb{R}^n\)</span> に対して, <span class="math inline">\(m &gt; n\)</span> の場合は逆伝播が効率的であり, <span class="math inline">\(m &lt; n\)</span> の場合は順伝播が効率的です. 例えば, ニューラルネットワークでは, 多数のパラメータ (重み) を持つモデルに対して, 単一の損失関数を最小化するために逆伝播がよく使われます.</p>
+<p>順伝播の効率的な実装は双対数 (dual numbers) を用いて行えることが知られています. 一方, 逆伝播の効率的な実装は難しく, 様々な手法が提案されている状況です. 詳しくは, <span class="citation" data-cites="perla">Perla, Sargent, and Stachurski (<a href="#ref-perla" role="doc-biblioref">n.d.</a>)</span> の<a href="https://julia.quantecon.org/more_julia/optimization_solver_packages.html">9.2節</a> を参照してください.</p>
+<p>Julia では, <code>ForwardDiff.jl</code> パッケージを使うと順伝播の自動微分ができます.</p>
+<div id="automatic-diff" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_forwarddiff</span>(l) <span class="op">=</span> ForwardDiff.<span class="fu">derivative</span>(l <span class="op">-&gt;</span> <span class="fu">f</span>(l), l)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-fig-comp-automatic-diff" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_analytical, label<span class="op">=</span><span class="st">"Analytical"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_forwarddiff, label<span class="op">=</span><span class="st">"ForwardDiff.jl"</span>, linestyle<span class="op">=:</span>dash)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="fig-comp-automatic-diff" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-comp-automatic-diff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<!--?xml version="1.0" encoding="utf-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="500" height="309" viewbox="0 0 2000 1236">
+<defs>
+  <clippath id="clip390">
+    <rect x="0" y="0" width="2000" height="1236"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip390)" d="M0 1236 L2000 1236 L2000 1.24345e-14 L0 1.24345e-14  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip391">
+    <rect x="400" y="0" width="1401" height="1236"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip390)" d="M145.191 1128.61 L1952.76 1128.61 L1952.76 47.2441 L145.191 47.2441  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip392">
+    <rect x="145" y="47" width="1809" height="1082"></rect>
+  </clippath>
+</defs>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="196.348,1128.61 196.348,47.2441 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="683.563,1128.61 683.563,47.2441 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1170.78,1128.61 1170.78,47.2441 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1657.99,1128.61 1657.99,47.2441 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,1052.94 1952.76,1052.94 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,835.407 1952.76,835.407 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,617.88 1952.76,617.88 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,400.352 1952.76,400.352 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="145.191,182.824 1952.76,182.824 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,1128.61 1952.76,1128.61 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="196.348,1128.61 196.348,1109.71 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="683.563,1128.61 683.563,1109.71 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1170.78,1128.61 1170.78,1109.71 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1657.99,1128.61 1657.99,1109.71 "></polyline>
+<path clip-path="url(#clip390)" d="M174.531 1156.33 Q170.92 1156.33 169.092 1159.89 Q167.286 1163.44 167.286 1170.57 Q167.286 1177.67 169.092 1181.24 Q170.92 1184.78 174.531 1184.78 Q178.166 1184.78 179.971 1181.24 Q181.8 1177.67 181.8 1170.57 Q181.8 1163.44 179.971 1159.89 Q178.166 1156.33 174.531 1156.33 M174.531 1152.63 Q180.342 1152.63 183.397 1157.23 Q186.476 1161.82 186.476 1170.57 Q186.476 1179.29 183.397 1183.9 Q180.342 1188.48 174.531 1188.48 Q168.721 1188.48 165.643 1183.9 Q162.587 1179.29 162.587 1170.57 Q162.587 1161.82 165.643 1157.23 Q168.721 1152.63 174.531 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M194.693 1181.93 L199.578 1181.93 L199.578 1187.81 L194.693 1187.81 L194.693 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M213.79 1183.88 L230.11 1183.88 L230.11 1187.81 L208.165 1187.81 L208.165 1183.88 Q210.827 1181.12 215.411 1176.49 Q220.017 1171.84 221.198 1170.5 Q223.443 1167.97 224.323 1166.24 Q225.226 1164.48 225.226 1162.79 Q225.226 1160.03 223.281 1158.3 Q221.36 1156.56 218.258 1156.56 Q216.059 1156.56 213.605 1157.32 Q211.175 1158.09 208.397 1159.64 L208.397 1154.92 Q211.221 1153.78 213.675 1153.2 Q216.128 1152.63 218.165 1152.63 Q223.536 1152.63 226.73 1155.31 Q229.925 1158 229.925 1162.49 Q229.925 1164.62 229.114 1166.54 Q228.327 1168.44 226.221 1171.03 Q225.642 1171.7 222.54 1174.92 Q219.439 1178.11 213.79 1183.88 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M660.704 1156.33 Q657.093 1156.33 655.264 1159.89 Q653.459 1163.44 653.459 1170.57 Q653.459 1177.67 655.264 1181.24 Q657.093 1184.78 660.704 1184.78 Q664.338 1184.78 666.144 1181.24 Q667.972 1177.67 667.972 1170.57 Q667.972 1163.44 666.144 1159.89 Q664.338 1156.33 660.704 1156.33 M660.704 1152.63 Q666.514 1152.63 669.57 1157.23 Q672.648 1161.82 672.648 1170.57 Q672.648 1179.29 669.57 1183.9 Q666.514 1188.48 660.704 1188.48 Q654.894 1188.48 651.815 1183.9 Q648.76 1179.29 648.76 1170.57 Q648.76 1161.82 651.815 1157.23 Q654.894 1152.63 660.704 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M680.866 1181.93 L685.75 1181.93 L685.75 1187.81 L680.866 1187.81 L680.866 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M708.782 1157.32 L696.977 1175.77 L708.782 1175.77 L708.782 1157.32 M707.556 1153.25 L713.435 1153.25 L713.435 1175.77 L718.366 1175.77 L718.366 1179.66 L713.435 1179.66 L713.435 1187.81 L708.782 1187.81 L708.782 1179.66 L693.181 1179.66 L693.181 1175.15 L707.556 1153.25 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1148.08 1156.33 Q1144.47 1156.33 1142.64 1159.89 Q1140.83 1163.44 1140.83 1170.57 Q1140.83 1177.67 1142.64 1181.24 Q1144.47 1184.78 1148.08 1184.78 Q1151.71 1184.78 1153.52 1181.24 Q1155.35 1177.67 1155.35 1170.57 Q1155.35 1163.44 1153.52 1159.89 Q1151.71 1156.33 1148.08 1156.33 M1148.08 1152.63 Q1153.89 1152.63 1156.95 1157.23 Q1160.02 1161.82 1160.02 1170.57 Q1160.02 1179.29 1156.95 1183.9 Q1153.89 1188.48 1148.08 1188.48 Q1142.27 1188.48 1139.19 1183.9 Q1136.14 1179.29 1136.14 1170.57 Q1136.14 1161.82 1139.19 1157.23 Q1142.27 1152.63 1148.08 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1168.24 1181.93 L1173.13 1181.93 L1173.13 1187.81 L1168.24 1187.81 L1168.24 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1193.89 1168.67 Q1190.74 1168.67 1188.89 1170.82 Q1187.06 1172.97 1187.06 1176.72 Q1187.06 1180.45 1188.89 1182.63 Q1190.74 1184.78 1193.89 1184.78 Q1197.04 1184.78 1198.87 1182.63 Q1200.72 1180.45 1200.72 1176.72 Q1200.72 1172.97 1198.87 1170.82 Q1197.04 1168.67 1193.89 1168.67 M1203.17 1154.01 L1203.17 1158.27 Q1201.41 1157.44 1199.61 1157 Q1197.83 1156.56 1196.07 1156.56 Q1191.44 1156.56 1188.98 1159.69 Q1186.55 1162.81 1186.21 1169.13 Q1187.57 1167.12 1189.63 1166.05 Q1191.69 1164.96 1194.17 1164.96 Q1199.38 1164.96 1202.39 1168.13 Q1205.42 1171.28 1205.42 1176.72 Q1205.42 1182.05 1202.27 1185.26 Q1199.12 1188.48 1193.89 1188.48 Q1187.89 1188.48 1184.72 1183.9 Q1181.55 1179.29 1181.55 1170.57 Q1181.55 1162.37 1185.44 1157.51 Q1189.33 1152.63 1195.88 1152.63 Q1197.64 1152.63 1199.42 1152.97 Q1201.23 1153.32 1203.17 1154.01 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1635.42 1156.33 Q1631.81 1156.33 1629.98 1159.89 Q1628.18 1163.44 1628.18 1170.57 Q1628.18 1177.67 1629.98 1181.24 Q1631.81 1184.78 1635.42 1184.78 Q1639.06 1184.78 1640.86 1181.24 Q1642.69 1177.67 1642.69 1170.57 Q1642.69 1163.44 1640.86 1159.89 Q1639.06 1156.33 1635.42 1156.33 M1635.42 1152.63 Q1641.23 1152.63 1644.29 1157.23 Q1647.37 1161.82 1647.37 1170.57 Q1647.37 1179.29 1644.29 1183.9 Q1641.23 1188.48 1635.42 1188.48 Q1629.61 1188.48 1626.53 1183.9 Q1623.48 1179.29 1623.48 1170.57 Q1623.48 1161.82 1626.53 1157.23 Q1629.61 1152.63 1635.42 1152.63 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1655.58 1181.93 L1660.47 1181.93 L1660.47 1187.81 L1655.58 1187.81 L1655.58 1181.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1680.65 1171.4 Q1677.32 1171.4 1675.4 1173.18 Q1673.5 1174.96 1673.5 1178.09 Q1673.5 1181.21 1675.4 1183 Q1677.32 1184.78 1680.65 1184.78 Q1683.99 1184.78 1685.91 1183 Q1687.83 1181.19 1687.83 1178.09 Q1687.83 1174.96 1685.91 1173.18 Q1684.01 1171.4 1680.65 1171.4 M1675.98 1169.41 Q1672.97 1168.67 1671.28 1166.61 Q1669.61 1164.55 1669.61 1161.58 Q1669.61 1157.44 1672.55 1155.03 Q1675.51 1152.63 1680.65 1152.63 Q1685.82 1152.63 1688.75 1155.03 Q1691.69 1157.44 1691.69 1161.58 Q1691.69 1164.55 1690 1166.61 Q1688.34 1168.67 1685.35 1169.41 Q1688.73 1170.2 1690.61 1172.49 Q1692.5 1174.78 1692.5 1178.09 Q1692.5 1183.11 1689.43 1185.8 Q1686.37 1188.48 1680.65 1188.48 Q1674.94 1188.48 1671.86 1185.8 Q1668.8 1183.11 1668.8 1178.09 Q1668.8 1174.78 1670.7 1172.49 Q1672.6 1170.2 1675.98 1169.41 M1674.26 1162.02 Q1674.26 1164.71 1675.93 1166.21 Q1677.62 1167.72 1680.65 1167.72 Q1683.66 1167.72 1685.35 1166.21 Q1687.07 1164.71 1687.07 1162.02 Q1687.07 1159.34 1685.35 1157.83 Q1683.66 1156.33 1680.65 1156.33 Q1677.62 1156.33 1675.93 1157.83 Q1674.26 1159.34 1674.26 1162.02 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,1128.61 145.191,47.2441 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,1052.94 164.089,1052.94 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,835.407 164.089,835.407 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,617.88 164.089,617.88 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,400.352 164.089,400.352 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="145.191,182.824 164.089,182.824 "></polyline>
+<path clip-path="url(#clip390)" d="M52.9921 1053.39 L82.6679 1053.39 L82.6679 1057.32 L52.9921 1057.32 L52.9921 1053.39 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M105.608 1039.73 L93.8021 1058.18 L105.608 1058.18 L105.608 1039.73 M104.381 1035.66 L110.26 1035.66 L110.26 1058.18 L115.191 1058.18 L115.191 1062.07 L110.26 1062.07 L110.26 1070.22 L105.608 1070.22 L105.608 1062.07 L90.0058 1062.07 L90.0058 1057.55 L104.381 1035.66 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M55.0754 835.859 L84.7512 835.859 L84.7512 839.794 L55.0754 839.794 L55.0754 835.859 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M98.8715 848.752 L115.191 848.752 L115.191 852.687 L93.2465 852.687 L93.2465 848.752 Q95.9086 845.998 100.492 841.368 Q105.098 836.715 106.279 835.373 Q108.524 832.85 109.404 831.113 Q110.307 829.354 110.307 827.664 Q110.307 824.91 108.362 823.174 Q106.441 821.438 103.339 821.438 Q101.14 821.438 98.6863 822.201 Q96.2558 822.965 93.478 824.516 L93.478 819.794 Q96.3021 818.66 98.7558 818.081 Q101.209 817.502 103.246 817.502 Q108.617 817.502 111.811 820.188 Q115.006 822.873 115.006 827.363 Q115.006 829.493 114.196 831.414 Q113.408 833.312 111.302 835.905 Q110.723 836.576 107.621 839.794 Q104.52 842.988 98.8715 848.752 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M103.246 603.678 Q99.6354 603.678 97.8067 607.243 Q96.0012 610.785 96.0012 617.914 Q96.0012 625.021 97.8067 628.586 Q99.6354 632.127 103.246 632.127 Q106.881 632.127 108.686 628.586 Q110.515 625.021 110.515 617.914 Q110.515 610.785 108.686 607.243 Q106.881 603.678 103.246 603.678 M103.246 599.975 Q109.057 599.975 112.112 604.581 Q115.191 609.164 115.191 617.914 Q115.191 626.641 112.112 631.248 Q109.057 635.831 103.246 635.831 Q97.4363 635.831 94.3576 631.248 Q91.3021 626.641 91.3021 617.914 Q91.3021 609.164 94.3576 604.581 Q97.4363 599.975 103.246 599.975 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M98.8715 413.697 L115.191 413.697 L115.191 417.632 L93.2465 417.632 L93.2465 413.697 Q95.9086 410.942 100.492 406.313 Q105.098 401.66 106.279 400.317 Q108.524 397.794 109.404 396.058 Q110.307 394.299 110.307 392.609 Q110.307 389.854 108.362 388.118 Q106.441 386.382 103.339 386.382 Q101.14 386.382 98.6863 387.146 Q96.2558 387.91 93.478 389.461 L93.478 384.739 Q96.3021 383.604 98.7558 383.026 Q101.209 382.447 103.246 382.447 Q108.617 382.447 111.811 385.132 Q115.006 387.817 115.006 392.308 Q115.006 394.438 114.196 396.359 Q113.408 398.257 111.302 400.85 Q110.723 401.521 107.621 404.739 Q104.52 407.933 98.8715 413.697 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M105.608 169.618 L93.8021 188.067 L105.608 188.067 L105.608 169.618 M104.381 165.544 L110.26 165.544 L110.26 188.067 L115.191 188.067 L115.191 191.956 L110.26 191.956 L110.26 200.104 L105.608 200.104 L105.608 191.956 L90.0058 191.956 L90.0058 187.442 L104.381 165.544 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip392)" style="stroke:#009af9; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="196.348,77.8488 220.709,121.617 245.07,160.588 269.431,195.488 293.791,226.907 318.152,255.334 342.513,281.17 366.873,304.753 391.234,326.367 415.595,346.251 439.956,364.61 464.316,381.621 488.677,397.433 513.038,412.178 537.398,425.97 561.759,438.909 586.12,451.083 610.481,462.57 634.841,473.437 659.202,483.746 683.563,493.553 707.923,502.905 732.284,511.849 756.645,520.422 781.006,528.663 805.366,536.605 829.727,544.279 854.088,551.712 878.448,558.932 902.809,565.963 927.17,572.828 951.531,579.55 975.891,586.148 1000.25,592.644 1024.61,599.056 1048.97,605.404 1073.33,611.706 1097.69,617.98 1122.06,624.245 1146.42,630.52 1170.78,636.823 1195.14,643.175 1219.5,649.595 1243.86,656.104 1268.22,662.726 1292.58,669.484 1316.94,676.403 1341.3,683.512 1365.66,690.841 1390.02,698.424 1414.38,706.297 1438.74,714.503 1463.11,723.087 1487.47,732.104 1511.83,741.612 1536.19,751.681 1560.55,762.392 1584.91,773.837 1609.27,786.127 1633.63,799.393 1657.99,813.788 1682.35,829.502 1706.71,846.764 1731.07,865.855 1755.43,887.129 1779.79,911.031 1804.16,938.134 1828.52,969.187 1852.88,1005.19 1877.24,1047.49 1901.6,1098.01 "></polyline>
+<polyline clip-path="url(#clip392)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" stroke-dasharray="16, 10" points="196.348,77.8488 220.709,121.617 245.07,160.588 269.431,195.488 293.791,226.907 318.152,255.334 342.513,281.17 366.873,304.753 391.234,326.367 415.595,346.251 439.956,364.61 464.316,381.621 488.677,397.433 513.038,412.178 537.398,425.97 561.759,438.909 586.12,451.083 610.481,462.57 634.841,473.437 659.202,483.746 683.563,493.553 707.923,502.905 732.284,511.849 756.645,520.422 781.006,528.663 805.366,536.605 829.727,544.279 854.088,551.712 878.448,558.932 902.809,565.963 927.17,572.828 951.531,579.55 975.891,586.148 1000.25,592.644 1024.61,599.056 1048.97,605.404 1073.33,611.706 1097.69,617.98 1122.06,624.245 1146.42,630.52 1170.78,636.823 1195.14,643.175 1219.5,649.595 1243.86,656.104 1268.22,662.726 1292.58,669.484 1316.94,676.403 1341.3,683.512 1365.66,690.841 1390.02,698.424 1414.38,706.297 1438.74,714.503 1463.11,723.087 1487.47,732.104 1511.83,741.612 1536.19,751.681 1560.55,762.392 1584.91,773.837 1609.27,786.127 1633.63,799.393 1657.99,813.788 1682.35,829.502 1706.71,846.764 1731.07,865.855 1755.43,887.129 1779.79,911.031 1804.16,938.134 1828.52,969.187 1852.88,1005.19 1877.24,1047.49 1901.6,1098.01 "></polyline>
+<path clip-path="url(#clip390)" d="M1409.18 238.81 L1892.5 238.81 L1892.5 83.2896 L1409.18 83.2896  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<polyline clip-path="url(#clip390)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1409.18,238.81 1892.5,238.81 1892.5,83.2896 1409.18,83.2896 1409.18,238.81 "></polyline>
+<polyline clip-path="url(#clip390)" style="stroke:#009af9; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1429.26,135.13 1549.77,135.13 "></polyline>
+<path clip-path="url(#clip390)" d="M1585.69 122.456 L1579.34 139.655 L1592.05 139.655 L1585.69 122.456 M1583.05 117.85 L1588.35 117.85 L1601.52 152.41 L1596.66 152.41 L1593.51 143.544 L1577.93 143.544 L1574.78 152.41 L1569.85 152.41 L1583.05 117.85 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1627.93 136.762 L1627.93 152.41 L1623.67 152.41 L1623.67 136.9 Q1623.67 133.22 1622.24 131.391 Q1620.8 129.563 1617.93 129.563 Q1614.48 129.563 1612.49 131.762 Q1610.5 133.961 1610.5 137.757 L1610.5 152.41 L1606.22 152.41 L1606.22 126.484 L1610.5 126.484 L1610.5 130.512 Q1612.03 128.174 1614.09 127.016 Q1616.17 125.859 1618.88 125.859 Q1623.35 125.859 1625.64 128.637 Q1627.93 131.391 1627.93 136.762 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1648.21 139.377 Q1643.05 139.377 1641.06 140.558 Q1639.06 141.738 1639.06 144.586 Q1639.06 146.854 1640.55 148.197 Q1642.05 149.516 1644.62 149.516 Q1648.16 149.516 1650.29 147.016 Q1652.44 144.493 1652.44 140.326 L1652.44 139.377 L1648.21 139.377 M1656.7 137.618 L1656.7 152.41 L1652.44 152.41 L1652.44 148.474 Q1650.99 150.836 1648.81 151.97 Q1646.63 153.081 1643.49 153.081 Q1639.5 153.081 1637.14 150.859 Q1634.81 148.613 1634.81 144.863 Q1634.81 140.488 1637.72 138.266 Q1640.66 136.044 1646.47 136.044 L1652.44 136.044 L1652.44 135.627 Q1652.44 132.688 1650.5 131.09 Q1648.58 129.47 1645.08 129.47 Q1642.86 129.47 1640.75 130.002 Q1638.65 130.535 1636.7 131.6 L1636.7 127.664 Q1639.04 126.762 1641.24 126.322 Q1643.44 125.859 1645.52 125.859 Q1651.15 125.859 1653.93 128.776 Q1656.7 131.692 1656.7 137.618 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1665.48 116.391 L1669.74 116.391 L1669.74 152.41 L1665.48 152.41 L1665.48 116.391 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1689.43 154.817 Q1687.63 159.447 1685.92 160.859 Q1684.2 162.271 1681.33 162.271 L1677.93 162.271 L1677.93 158.706 L1680.43 158.706 Q1682.19 158.706 1683.16 157.873 Q1684.13 157.039 1685.31 153.937 L1686.08 151.993 L1675.59 126.484 L1680.11 126.484 L1688.21 146.762 L1696.31 126.484 L1700.82 126.484 L1689.43 154.817 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1710.92 119.123 L1710.92 126.484 L1719.69 126.484 L1719.69 129.794 L1710.92 129.794 L1710.92 143.868 Q1710.92 147.039 1711.77 147.942 Q1712.65 148.845 1715.31 148.845 L1719.69 148.845 L1719.69 152.41 L1715.31 152.41 Q1710.38 152.41 1708.51 150.581 Q1706.63 148.729 1706.63 143.868 L1706.63 129.794 L1703.51 129.794 L1703.51 126.484 L1706.63 126.484 L1706.63 119.123 L1710.92 119.123 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1725.29 126.484 L1729.55 126.484 L1729.55 152.41 L1725.29 152.41 L1725.29 126.484 M1725.29 116.391 L1729.55 116.391 L1729.55 121.785 L1725.29 121.785 L1725.29 116.391 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1757.12 127.479 L1757.12 131.461 Q1755.31 130.465 1753.49 129.979 Q1751.68 129.47 1749.83 129.47 Q1745.68 129.47 1743.39 132.109 Q1741.1 134.725 1741.1 139.47 Q1741.1 144.215 1743.39 146.854 Q1745.68 149.47 1749.83 149.47 Q1751.68 149.47 1753.49 148.984 Q1755.31 148.474 1757.12 147.479 L1757.12 151.414 Q1755.34 152.248 1753.42 152.664 Q1751.52 153.081 1749.36 153.081 Q1743.51 153.081 1740.06 149.4 Q1736.61 145.72 1736.61 139.47 Q1736.61 133.127 1740.08 129.493 Q1743.58 125.859 1749.64 125.859 Q1751.61 125.859 1753.49 126.276 Q1755.36 126.669 1757.12 127.479 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1776.31 139.377 Q1771.15 139.377 1769.16 140.558 Q1767.17 141.738 1767.17 144.586 Q1767.17 146.854 1768.65 148.197 Q1770.15 149.516 1772.72 149.516 Q1776.26 149.516 1778.39 147.016 Q1780.55 144.493 1780.55 140.326 L1780.55 139.377 L1776.31 139.377 M1784.8 137.618 L1784.8 152.41 L1780.55 152.41 L1780.55 148.474 Q1779.09 150.836 1776.91 151.97 Q1774.74 153.081 1771.59 153.081 Q1767.61 153.081 1765.24 150.859 Q1762.91 148.613 1762.91 144.863 Q1762.91 140.488 1765.82 138.266 Q1768.76 136.044 1774.57 136.044 L1780.55 136.044 L1780.55 135.627 Q1780.55 132.688 1778.6 131.09 Q1776.68 129.47 1773.18 129.47 Q1770.96 129.47 1768.86 130.002 Q1766.75 130.535 1764.8 131.6 L1764.8 127.664 Q1767.14 126.762 1769.34 126.322 Q1771.54 125.859 1773.62 125.859 Q1779.25 125.859 1782.03 128.776 Q1784.8 131.692 1784.8 137.618 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1793.58 116.391 L1797.84 116.391 L1797.84 152.41 L1793.58 152.41 L1793.58 116.391 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip390)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" stroke-dasharray="16, 10" points="1429.26,186.97 1549.77,186.97 "></polyline>
+<path clip-path="url(#clip390)" d="M1569.85 169.69 L1589.71 169.69 L1589.71 173.625 L1574.53 173.625 L1574.53 183.81 L1588.23 183.81 L1588.23 187.745 L1574.53 187.745 L1574.53 204.25 L1569.85 204.25 L1569.85 169.69 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1605.29 181.31 Q1601.87 181.31 1599.87 183.995 Q1597.88 186.657 1597.88 191.31 Q1597.88 195.963 1599.85 198.648 Q1601.84 201.31 1605.29 201.31 Q1608.69 201.31 1610.68 198.625 Q1612.68 195.94 1612.68 191.31 Q1612.68 186.703 1610.68 184.018 Q1608.69 181.31 1605.29 181.31 M1605.29 177.699 Q1610.85 177.699 1614.02 181.31 Q1617.19 184.921 1617.19 191.31 Q1617.19 197.676 1614.02 201.31 Q1610.85 204.921 1605.29 204.921 Q1599.71 204.921 1596.54 201.31 Q1593.39 197.676 1593.39 191.31 Q1593.39 184.921 1596.54 181.31 Q1599.71 177.699 1605.29 177.699 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1639.27 182.305 Q1638.56 181.889 1637.7 181.703 Q1636.87 181.495 1635.85 181.495 Q1632.24 181.495 1630.29 183.856 Q1628.37 186.194 1628.37 190.592 L1628.37 204.25 L1624.09 204.25 L1624.09 178.324 L1628.37 178.324 L1628.37 182.352 Q1629.71 179.991 1631.87 178.856 Q1634.02 177.699 1637.1 177.699 Q1637.54 177.699 1638.07 177.768 Q1638.6 177.815 1639.25 177.93 L1639.27 182.305 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1641.26 178.324 L1645.52 178.324 L1650.85 198.555 L1656.15 178.324 L1661.17 178.324 L1666.49 198.555 L1671.8 178.324 L1676.05 178.324 L1669.27 204.25 L1664.25 204.25 L1658.67 183 L1653.07 204.25 L1648.05 204.25 L1641.26 178.324 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1694.3 191.217 Q1689.13 191.217 1687.14 192.398 Q1685.15 193.578 1685.15 196.426 Q1685.15 198.694 1686.63 200.037 Q1688.14 201.356 1690.71 201.356 Q1694.25 201.356 1696.38 198.856 Q1698.53 196.333 1698.53 192.166 L1698.53 191.217 L1694.3 191.217 M1702.79 189.458 L1702.79 204.25 L1698.53 204.25 L1698.53 200.314 Q1697.07 202.676 1694.9 203.81 Q1692.72 204.921 1689.57 204.921 Q1685.59 204.921 1683.23 202.699 Q1680.89 200.453 1680.89 196.703 Q1680.89 192.328 1683.81 190.106 Q1686.75 187.884 1692.56 187.884 L1698.53 187.884 L1698.53 187.467 Q1698.53 184.528 1696.59 182.93 Q1694.67 181.31 1691.17 181.31 Q1688.95 181.31 1686.84 181.842 Q1684.74 182.375 1682.79 183.44 L1682.79 179.504 Q1685.13 178.602 1687.33 178.162 Q1689.53 177.699 1691.61 177.699 Q1697.24 177.699 1700.01 180.616 Q1702.79 183.532 1702.79 189.458 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1726.59 182.305 Q1725.87 181.889 1725.01 181.703 Q1724.18 181.495 1723.16 181.495 Q1719.55 181.495 1717.61 183.856 Q1715.68 186.194 1715.68 190.592 L1715.68 204.25 L1711.4 204.25 L1711.4 178.324 L1715.68 178.324 L1715.68 182.352 Q1717.03 179.991 1719.18 178.856 Q1721.33 177.699 1724.41 177.699 Q1724.85 177.699 1725.38 177.768 Q1725.92 177.815 1726.56 177.93 L1726.59 182.305 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1747.28 182.259 L1747.28 168.231 L1751.54 168.231 L1751.54 204.25 L1747.28 204.25 L1747.28 200.361 Q1745.94 202.676 1743.88 203.81 Q1741.84 204.921 1738.97 204.921 Q1734.27 204.921 1731.31 201.171 Q1728.37 197.421 1728.37 191.31 Q1728.37 185.199 1731.31 181.449 Q1734.27 177.699 1738.97 177.699 Q1741.84 177.699 1743.88 178.833 Q1745.94 179.944 1747.28 182.259 M1732.77 191.31 Q1732.77 196.009 1734.69 198.694 Q1736.63 201.356 1740.01 201.356 Q1743.39 201.356 1745.34 198.694 Q1747.28 196.009 1747.28 191.31 Q1747.28 186.611 1745.34 183.949 Q1743.39 181.264 1740.01 181.264 Q1736.63 181.264 1734.69 183.949 Q1732.77 186.611 1732.77 191.31 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1765.17 173.532 L1765.17 200.407 L1770.82 200.407 Q1777.98 200.407 1781.29 197.166 Q1784.62 193.926 1784.62 186.935 Q1784.62 179.991 1781.29 176.773 Q1777.98 173.532 1770.82 173.532 L1765.17 173.532 M1760.5 169.69 L1770.11 169.69 Q1780.15 169.69 1784.85 173.879 Q1789.55 178.046 1789.55 186.935 Q1789.55 195.87 1784.83 200.06 Q1780.11 204.25 1770.11 204.25 L1760.5 204.25 L1760.5 169.69 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1796.82 178.324 L1801.08 178.324 L1801.08 204.25 L1796.82 204.25 L1796.82 178.324 M1796.82 168.231 L1801.08 168.231 L1801.08 173.625 L1796.82 173.625 L1796.82 168.231 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1823.11 168.231 L1823.11 171.773 L1819.04 171.773 Q1816.75 171.773 1815.85 172.699 Q1814.97 173.625 1814.97 176.032 L1814.97 178.324 L1821.98 178.324 L1821.98 181.634 L1814.97 181.634 L1814.97 204.25 L1810.68 204.25 L1810.68 181.634 L1806.61 181.634 L1806.61 178.324 L1810.68 178.324 L1810.68 176.518 Q1810.68 172.19 1812.7 170.222 Q1814.71 168.231 1819.09 168.231 L1823.11 168.231 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1839.8 168.231 L1839.8 171.773 L1835.73 171.773 Q1833.44 171.773 1832.54 172.699 Q1831.66 173.625 1831.66 176.032 L1831.66 178.324 L1838.67 178.324 L1838.67 181.634 L1831.66 181.634 L1831.66 204.25 L1827.37 204.25 L1827.37 181.634 L1823.3 181.634 L1823.3 178.324 L1827.37 178.324 L1827.37 176.518 Q1827.37 172.19 1829.39 170.222 Q1831.4 168.231 1835.78 168.231 L1839.8 168.231 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1840.52 198.37 L1845.41 198.37 L1845.41 204.25 L1840.52 204.25 L1840.52 198.37 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1854.99 178.324 L1859.25 178.324 L1859.25 204.713 Q1859.25 209.666 1857.35 211.888 Q1855.48 214.111 1851.29 214.111 L1849.67 214.111 L1849.67 210.5 L1850.8 210.5 Q1853.23 210.5 1854.11 209.365 Q1854.99 208.254 1854.99 204.713 L1854.99 178.324 M1854.99 168.231 L1859.25 168.231 L1859.25 173.625 L1854.99 173.625 L1854.99 168.231 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip390)" d="M1868.16 168.231 L1872.42 168.231 L1872.42 204.25 L1868.16 204.25 L1868.16 168.231 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path></svg>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-comp-automatic-diff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Comparison of analytical and automatic derivatives.
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="並列計算" class="level2">
+<h2 class="anchored" data-anchor-id="並列計算">並列計算</h2>
+<p>現代のPCは複数のコアを持つマルチコアCPUを搭載しています. パッケージのバックグラウンドで並列計算が用いられていることもありますが, 基本的にはユーザーが明示的に並列計算を指示する必要があります.</p>
+<p>まずは, 自分のPCが何コア持っているかを確認してみましょう.</p>
+<div id="cell-check-cores" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Threads</span>.<span class="fu">nthreads</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="check-cores" class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>12</code></pre>
+</div>
+</div>
+<p>ここで, スレッド数が1となっている場合は, Juliaを起動する前に環境変数 <code>JULIA_NUM_THREADS</code> を設定する必要があります.</p>
+<ul>
+<li>Quarto: <code>julia.exeflags: ["--threads=auto"]</code> をYAMLヘッダーに追加</li>
+<li>VSCode: <code>settings.json</code> に <code>"julia.numThreads": "auto"</code> を追加</li>
+<li>ターミナル: <code>export JULIA_NUM_THREADS=auto</code> を実行</li>
+</ul>
+<p><code>auto</code> と設定した場合, 利用可能なコア数に応じて自動的にスレッド数が設定されます. 現代のPCであれば, ほとんどの場合, 利用可能なコア数が2以上になるはずです.</p>
+<div id="define-solve-multi" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_multi!</span>(m<span class="op">::</span><span class="dt">My.Model</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    (; T, n_a, r, w, β, a_grid) <span class="op">=</span> m</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fu">zeros</span>(n_a, T)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="op">=</span> T<span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Threads</span>.<span class="pp">@threads</span> <span class="cf">for</span> i_a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            utility <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i_a′ <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                V′ <span class="op">=</span> (t <span class="op">==</span> T) ? <span class="fl">0.0</span> <span class="op">:</span> V[i_a′, t<span class="op">+</span><span class="fl">1</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                c <span class="op">=</span> (<span class="fl">1</span> <span class="op">+</span> r) <span class="op">*</span> a_grid[i_a] <span class="op">+</span> w <span class="op">-</span> a_grid[i_a′]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> c <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                    utility <span class="op">=</span> <span class="fu">max</span>(My.<span class="fu">u</span>(c, m) <span class="op">+</span> β <span class="op">*</span> V′, utility)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                <span class="cf">end</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>            V[i_a, t] <span class="op">=</span> utility</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    m.V <span class="op">.=</span> V</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="cn">nothing</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-benchmark-single" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> My.<span class="fu">solve!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">1000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="benchmark-single" class="cell-output cell-output-display" data-execution_count="1">
+<div class="ansi-escaped-output">
+<pre>BenchmarkTools.Trial: 118 samples with 1 evaluation per sample.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">42.310 ms</span> … <span class="ansi-magenta-fg"> 43.291 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">42.512 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">42.538 ms</span> ± <span class="ansi-green-fg">118.957 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.00% ± 0.00%
+
+             ▃▃▃█<span class="ansi-blue-fg">▅</span>▃<span class="ansi-green-fg"> </span>                                            
+  ▃▁▁▁▁▁▁▁▁▅▅████<span class="ansi-blue-fg">█</span>█<span class="ansi-green-fg">▇</span>▇▆▄▃▃▃▁▁▃▃▁▁▁▁▁▁▃▁▄▁▁▃▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▃ ▃
+  42.3 ms<span class="ansi-bright-black-fg">         Histogram: frequency by time</span>         43.1 ms <span class="ansi-bold">&lt;</span>
+
+ Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">80.08 KiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">3</span>.</pre>
+</div>
+</div>
+</div>
+<div id="cell-benchmark-multi" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">solve_multi!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">1000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="benchmark-multi" class="cell-output cell-output-display" data-execution_count="1">
+<div class="ansi-escaped-output">
+<pre>BenchmarkTools.Trial: 1244 samples with 1 evaluation per sample.
+ Range <span class="ansi-bright-black-fg">(</span><span class="ansi-cyan-fg ansi-bold">min</span> … <span class="ansi-magenta-fg">max</span><span class="ansi-bright-black-fg">):  </span><span class="ansi-cyan-fg ansi-bold">3.929 ms</span> … <span class="ansi-magenta-fg">  7.402 ms</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>min … max<span class="ansi-bright-black-fg">): </span>0.00% … 43.66%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-blue-fg ansi-bold">median</span><span class="ansi-bright-black-fg">):     </span><span class="ansi-blue-fg ansi-bold">3.967 ms               </span><span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>median<span class="ansi-bright-black-fg">):    </span>0.00%
+ Time  <span class="ansi-bright-black-fg">(</span><span class="ansi-green-fg ansi-bold">mean</span> ± <span class="ansi-green-fg">σ</span><span class="ansi-bright-black-fg">):   </span><span class="ansi-green-fg ansi-bold">4.011 ms</span> ± <span class="ansi-green-fg">223.449 μs</span>  <span class="ansi-bright-black-fg">┊</span> GC <span class="ansi-bright-black-fg">(</span>mean ± σ<span class="ansi-bright-black-fg">):  </span>0.32% ±  2.64%
+
+  ▃█<span class="ansi-blue-fg">█</span>▅▂<span class="ansi-green-fg"> </span> ▁     ▁ ▂▁                                            
+  ██<span class="ansi-blue-fg">█</span>██<span class="ansi-green-fg">█</span>▇██▅▆▆▆█▇███▅▅▆▄▄▄▅▁▁▁▄▁▄▄▁▁▁▁▄▁▁▄▁▁▁▁▁▄▄▁▁▁▁▁▄▁▁▁▁▁▄ █
+  3.93 ms<span class="ansi-bright-black-fg">      </span><span class="ansi-bright-black-fg">Histogram: </span><span class="ansi-bright-black-fg ansi-bold">log(</span><span class="ansi-bright-black-fg">frequency</span><span class="ansi-bright-black-fg ansi-bold">)</span><span class="ansi-bright-black-fg"> by time</span>      4.87 ms <span class="ansi-bold">&lt;</span>
+
+ Memory estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">158.52 KiB</span>, allocs estimate<span class="ansi-bright-black-fg">: </span><span class="ansi-yellow-fg">623</span>.</pre>
+</div>
+</div>
+</div>
+<p>並列化した場合, 1コアで実行した場合と比べて, おおむねスレッド数に応じて計算時間が短縮されていることがわかります. ただし, ここまで理論値に近い速度向上が得られることは稀で, 実際には理論値の数%から数十%程度の速度向上にとどまることが多いです.</p>
+<p><strong>並列化できない計算</strong></p>
+<p>並列計算の大前提は, 各スレッドが独立して計算できることです. 今回は後方帰納法で解くため, 時刻 <span class="math inline">\(t\)</span> の価値関数を計算する際に, 時刻 <span class="math inline">\(t+1\)</span> の価値関数が必要になり, 時刻方向に並列化することはできません.</p>
+
+
+<!-- -->
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-perla" class="csl-entry" role="listitem">
+Perla, Jesse, Thomas J. Sargent, and John Stachurski. n.d. <span>“Quantitative <span>Economics</span> with <span>Julia</span>.”</span> <em>Quantitative Economics with Julia</em>. https://julia.quantecon.org/intro.html. Accessed October 8, 2025.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><code>@time</code> マクロでも簡易的に測定できますが, 関数の宣言によるコンパイル時間なども含んでしまうため, 関数の実行速度を正確に測定するには <code>BenchmarkTools.jl</code> パッケージを使うのが望ましいです.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/kazuyanagimoto\.github\.io\/course-kobe-macro4-2025\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> 数値計算の補足</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2025-10-11</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> julia</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="an">julia:</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">  exeflags: ["--threads=auto"]</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>このページは数値計算に関する補足を雑多にまとめたものです. 書きかけの内容を多く含みます.</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span>(size<span class="op">=</span>(<span class="fl">500</span>, <span class="fl">309</span>), titlefontsize<span class="op">=</span><span class="fl">10</span>, fmt<span class="op">=:</span>svg)</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## 計算量</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>アルゴリズムの効率性を評価する尺度として、計算時間とメモリ使用量があります. ここでいう計算時間とは, アルゴリズムが終了するまでにかかるステップ数 (**時間計算量**, time complexity) のことをいい, 実際のPC上での実行時間とは異なります. より高いスペックのPCを使えば, 同じアルゴリズムでも実行時間は短くなる一方で, ステップ数の次元が異なるアルゴリズムはマシンの性能に関わらず効率的と言えます.また, メモリ使用量とはアルゴリズムが終了するまでに必要なメモリの量 (**領域計算量**, space complexity) のことをいいます.</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="fu">### 時間計算量</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>時間計算量は, 入力の大きさ $n$ に対するステップ数 $T(n)$ の関数として表されます. 例えば, 配列の要素数が $n$ のときに, すべての要素を1回ずつ見るアルゴリズムは, $T(n) = n$ となります. また, 2重ループで配列のすべての組み合わせを調べるアルゴリズムは, $T(n) = n^2$ となります. このように, アルゴリズムの時間計算量は, 入力の大きさに対するステップ数の増加率によって特徴づけられます.</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>時間計算量を評価する際, 重要なのは支配的な項の次元数になります. 例えば, $T(n) = 3n^2 + 2n + 1$ の場合, $n$ が大きくなると $3n^2$ の項が支配的になるため, $n^2$ に着目すれば十分です. この考え方に従ったとき, 計算量を $O(n^2)$ と表記します. より厳密に表現すると以下のようになります.</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## $O$-記法</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>$f(n)$ が $O(g(n))$ とは, 任意の $n \ge 0$ に対して, ある定数 $C &gt; 0$ が存在して, 以下の不等式が成り立つことをいう.</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>f(n)<span class="pp">|</span> \le C <span class="pp">|</span>g(n)<span class="pp">|</span>.</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>定量モデルで気にする必要があるのは, ほとんどの場合, グリッド数によるオーダーです. 例えば, $V(k, z)$ のような2次元の価値関数をグリッド上で計算する場合, $k$ のグリッド数 $n_k$ と $z$ のグリッド数 $n_z$ に対して, 計算量は $n_k n_z$ の関数となります.</span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### 領域計算量</span></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>領域計算量は, アルゴリズムが終了するまでに必要なメモリの量を, 入力の大きさ $n$ に対する関数として表します. 例えば, 配列の要素数が $n$ のときに, すべての要素を保存するアルゴリズムは, 領域計算量が $O(n)$ となります. また, 2次元配列を保存するアルゴリズムは, 領域計算量が $O(n^2)$ となります.</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>**メモリのヒエラルキー**</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>なぜメモリの使用量が重要なのでしょうか. 近年のPCは何百GBもの容量があるし, いくら使おうと問題ではないのではないか, と思うかもしれません. しかし, 実際には, メモリのヒエラルキー (memory hierarchy) によって, メモリの速度と容量が大きく異なります.</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>一般に, 高速なメモリは高価であるため搭載量が少なく, 低速なメモリは安価であるため搭載量が多いです. それらを合わせると @fig-memory-hierarchy ようなピラミッド型のヒエラルキーが形成されます.</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="al">![Memory Hierarchy.](/static/img/lecture/memory_hierarchy.drawio.svg)</span>{#fig-memory-hierarchy fig-align="center"}</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>レジスタ (Registers): CPU内部にある最も高速なメモリ</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>キャッシュ (Cache): (近年では) CPU内部にある高速なメモリ. L1, L2, L3 などのレベルがある. ここまでCPU内部にある.</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>主記憶 (Main Memory): RAM (Random Access Memory)</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>補助記憶 (Auxiliary Storage): SSD (Solid State Drive) やHDD (Hard Disk Drive)</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>たとえば, AMDの最新世代のCPUである <span class="co">[</span><span class="ot">Ryzen 5 9600</span><span class="co">](https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-5-9600.html)</span> の場合, L1キャッシュは480KB, L2キャッシュは6MB, L3キャッシュは32MBです. レジスタはサイズで表現することはあまりありませんが, ざっくり数百B程度と考えてください. 一方で, 一般にメモリと呼ばれる RAM は8GBから64GB 程度が一般的です. さらに, 一般にストレージとよばれるSSDやHDDは数百GBから数TBの容量があります.</span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### 計算量の実践</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>実際にモデルを使って, 計算量を測定してみましょう. 例えば, 以下のような単純なライフサイクルモデルを考えます.</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>**Model**</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>\max_{<span class="sc">\{</span>c_t, a_{t+1}<span class="sc">\}</span>_{t=0}^{T-1}} \sum_{t=0}^{T-1} \beta^t u(c_t) <span class="sc">\\</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>\quad\text{s.t. } c_t + a_{t+1} = (1+r) a_t + w, \quad a_0 \text{ given}, \quad a_T \ge 0.</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>これは後方帰納法で解くことができます. コードで表すと次の <span class="in">`solve!`</span> 関数のようになります.</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: model-life-cycle</span></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> My</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a><span class="pp">@kwdef</span> <span class="kw">struct</span> Model{TF<span class="op">&lt;:</span><span class="dt">AbstractFloat</span>,TI<span class="op">&lt;:</span><span class="dt">Integer</span>}</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Utility function</span></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>    γ<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>    β<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">0.96</span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>    T<span class="op">::</span><span class="dt">Int </span><span class="op">=</span> <span class="fl">10</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Prices</span></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>    r<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">0.07</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>    w<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">5.0</span></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Grid for assets</span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>    n_a<span class="op">::</span><span class="dt">TI </span><span class="op">=</span> <span class="fl">30</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>    a_min<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>    a_max<span class="op">::</span><span class="dt">TF </span><span class="op">=</span> <span class="fl">4.0</span></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>    a_grid<span class="op">::</span><span class="dt">Vector{TF} </span><span class="op">=</span> <span class="fu">collect</span>(<span class="fu">range</span>(start<span class="op">=</span>a_min, stop<span class="op">=</span>a_max, length<span class="op">=</span>n_a))</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Value function</span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>    V<span class="op">::</span><span class="dt">Matrix{TF} </span><span class="op">=</span> <span class="fu">zeros</span>(n_a, T)</span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="fu">u</span>(c, m<span class="op">::</span><span class="dt">Model</span>) <span class="op">=</span> <span class="fu">isone</span>(m.γ) ? <span class="fu">log</span>(c) <span class="op">:</span> c<span class="op">^</span>(<span class="fl">1</span> <span class="op">-</span> m.γ) <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> m.γ)</span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve!</span>(m<span class="op">::</span><span class="dt">Model</span>)</span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>    (; T, n_a, r, w, β, a_grid) <span class="op">=</span> m</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fu">zeros</span>(n_a, T)</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="op">=</span> T<span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span>, i_a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a>        utility <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i_a′ <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>            V′ <span class="op">=</span> (t <span class="op">==</span> T) ? <span class="fl">0.0</span> <span class="op">:</span> V[i_a′, t<span class="op">+</span><span class="fl">1</span>]</span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a>            c <span class="op">=</span> (<span class="fl">1</span> <span class="op">+</span> r) <span class="op">*</span> a_grid[i_a] <span class="op">+</span> w <span class="op">-</span> a_grid[i_a′]</span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> c <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a>                utility <span class="op">=</span> <span class="fu">max</span>(<span class="fu">u</span>(c, m) <span class="op">+</span> β <span class="op">*</span> V′, utility)</span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>        V[i_a, t] <span class="op">=</span> utility</span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>    m.V <span class="op">.=</span> V</span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="cn">nothing</span></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> <span class="co"># module My</span></span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>時間計算量の数え方として, 四則演算, 比較 (<span class="in">`&gt;`</span>, <span class="in">`max`</span> など), 代入, 配列へのアクセスは $O(1)$ とします. すると, 計算回数の主要部は for-loop つまり, $O(n_a^2 T)$ です. メモリ使用量は, 価値関数 $V$ の保存に使用している部分が支配的なので $O(n_a T)$ です. では, $T = 10$ で固定して, $n_a$ を変化させたときの計算時間とメモリ使用量を測定してみましょう.</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a>**BenchmarkTools.jl**</span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>Juliaでは, <span class="in">`BenchmarkTools.jl`</span> パッケージを使うと実際の計算時間とメモリ使用量を測定できます.^<span class="co">[</span><span class="ot">`@time` マクロでも簡易的に測定できますが, 関数の宣言によるコンパイル時間なども含んでしまうため, 関数の実行速度を正確に測定するには `BenchmarkTools.jl` パッケージを使うのが望ましいです.</span><span class="co">]</span></span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> My.<span class="fu">solve!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">100</span>))</span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a><span class="in">`@benchmark`</span> マクロは上記のように関数の実行時間に合わせて適切な試行回数を自動で決定し, 実行時間の分布を表示してくれます. 基本的には中央値 (median) を見るのが良いでしょう. </span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a>メモリ使用量も8.08KiBと表示されています. 今回の配列 <span class="in">`V`</span> は <span class="in">`Float64`</span> 型の2次元配列で, $n_a$ 行 $T$ 列なので, メモリ使用量は $8 n_a T$ バイトになります (64bit = 8バイト) . 例えば, $n_a = 100$ のときは $8 \times 100 \times 10 = 8000$ バイトで, 8.08KiB (1KiB = 1024バイト) とほぼ一致しています.</span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a>次に $n_a = 1000$ としたときの計算時間を測定してみましょう.</span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> My.<span class="fu">solve!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">1000</span>))</span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>おおむね計算時間が100倍, メモリ使用量が10倍になっていることがわかります. これは, 計算時間が $O(n_a^2 T)$, メモリ使用量が $O(n_a T)$ であることと一致しています.</span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## 微分</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>数値計算の文脈において微分は主に3種類あります.</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>数式微分 (Symbolic Differentiation)</span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>数値微分 (Numerical Differentiation)</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>自動微分 (Automatic Differentiation)</span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>数式微分 (手計算による解析的な微分) が可能な場合は, これが最も高速で効率的ですが, 複雑な関数に対しては, 数値微分や自動微分などで計算する必要があります. 以下では, 次のラグランジアンを例に, それぞれの微分方法を説明します.</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>\mathcal{L} = \phi \log \left(w(1-l)\right)  + (1-\phi) \frac{l^{1-\gamma}}{1-\gamma}</span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### 数式微分 (Symbolic Differentiation)</span></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>いわゆる手計算による微分です. 一階条件を求めると,</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a>\frac{\partial \mathcal{L}}{\partial l} = -\frac{\phi}{1-l} + (1-\phi) l^{-\gamma} = 0.</span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a><span class="in">`Symbolics.jl`</span> パッケージを使うと, Julia上で数式微分を行うこともできます.</span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: symbolic-diff</span></span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Symbolics</span></span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Latexify</span></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a><span class="pp">@variables</span> w l ϕ γ</span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> ϕ <span class="op">*</span> <span class="fu">log</span>(w <span class="op">*</span> (<span class="fl">1</span> <span class="op">-</span> l)) <span class="op">+</span> (<span class="fl">1</span> <span class="op">-</span> ϕ) <span class="op">*</span> l<span class="op">^</span>(<span class="fl">1</span> <span class="op">-</span> γ) <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> γ)</span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>∂l <span class="op">=</span> <span class="fu">Differential</span>(l)</span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>∂L∂l <span class="op">=</span> <span class="fu">expand_derivatives</span>(<span class="fu">∂l</span>(L))</span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="fu">latexify</span>(∂L∂l))</span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### 数値微分 (Numerical Differentiation)</span></span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>f'(x) = \lim_{\Delta \to 0} \frac{f(x+\Delta) - f(x)}{\Delta}.</span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>数値微分は上記の微分の定義を数値的に近似する方法です. 定義通りに行うと, 非常に小さい $d$ (例えば $10^{-9}$ など) を使って, 以下のように近似できます.</span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a>f'(x) \approx \frac{f(x+d) - f(x)}{d}.</span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>実用上は, 中心差分 (central difference) を使うことが多いです.</span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a>f'(x) \approx \frac{f(x+\frac{1}{2}d) - f(x-\frac{1}{2}d)}{d}.</span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a>Julia では, <span class="in">`FiniteDiff.jl`</span> パッケージを使うと数値微分ができます.</span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: numerical-diff</span></span>
+<span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">FiniteDiff</span></span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(l; w<span class="op">=</span><span class="fl">1</span>., ϕ<span class="op">=</span><span class="fl">0.5</span>, γ<span class="op">=</span><span class="fl">1.5</span>) <span class="op">=</span> ϕ <span class="op">*</span> <span class="fu">log</span>(w <span class="op">*</span> (<span class="fl">1</span> <span class="op">-</span> l)) <span class="op">+</span> (<span class="fl">1</span> <span class="op">-</span> ϕ) <span class="op">*</span> l<span class="op">^</span>(<span class="fl">1</span> <span class="op">-</span> γ) <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> γ)</span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_analytical</span>(l; w<span class="op">=</span><span class="fl">1</span>., ϕ<span class="op">=</span><span class="fl">0.5</span>, γ<span class="op">=</span><span class="fl">1.5</span>) <span class="op">=</span> <span class="op">-</span>ϕ <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> l) <span class="op">+</span> (<span class="fl">1</span> <span class="op">-</span> ϕ) <span class="op">*</span> l<span class="op">^</span>(<span class="op">-</span>γ)</span>
+<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_numerical</span>(l; Δ<span class="op">=</span><span class="fl">1e-9</span>) <span class="op">=</span> (<span class="fu">f</span>(l <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> Δ) <span class="op">-</span> <span class="fu">f</span>(l <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> Δ)) <span class="op">/</span> Δ</span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_finitediff</span>(l) <span class="op">=</span> FiniteDiff.<span class="fu">finite_difference_derivative</span>(l <span class="op">-&gt;</span> <span class="fu">f</span>(l), l)</span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-comp-numerical-diff</span></span>
+<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Comparison of analytical and numerical derivatives."</span></span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_analytical, label<span class="op">=</span><span class="st">"Analytical"</span>)</span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_numerical, label<span class="op">=</span><span class="st">"Numerical"</span>, linestyle<span class="op">=:</span>dash)</span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_finitediff, label<span class="op">=</span><span class="st">"FiniteDiff.jl"</span>, linestyle<span class="op">=:</span>dot)</span>
+<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a><span class="fu">### 自動微分 (Automatic Differentiation)</span></span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a>数値微分はとてもシンプルな実装ですが, $d$ の選び方によっては精度が悪くなる可能性があります. より高い精度を求める場合は, 自動微分を用いることができます. 自動微分は, 関数を基本的な演算 (多項式, 三角関数, 対数関数など) の組み合わせとして分解し, 各基本演算の微分を連鎖律に基づいて計算する方法です. これは, 数式微分を数値的に実行するようなイメージです.</span>
+<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a>**順伝播と逆伝播**</span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a>\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}</span>
+<span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>順伝播 (forward mode): 入力から出力に向かって微分を計算する方法.</span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>$\frac{du}{dx}$ を計算し, それを用いて $\frac{dy}{du}$ を計算する.</span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>逆伝播 (reverse mode): 出力から入力に向かって微分を計算する方法.</span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>$\frac{dy}{du}$ を計算し, それを用いて $\frac{du}{dx}$ を計算する.</span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a>一般に $f: \mathbb{R}^m \to \mathbb{R}^n$ に対して, $m &gt; n$ の場合は逆伝播が効率的であり, $m &lt; n$ の場合は順伝播が効率的です. 例えば, ニューラルネットワークでは, 多数のパラメータ (重み) を持つモデルに対して, 単一の損失関数を最小化するために逆伝播がよく使われます.</span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a>順伝播の効率的な実装は双対数 (dual numbers) を用いて行えることが知られています. 一方, 逆伝播の効率的な実装は難しく, 様々な手法が提案されている状況です. 詳しくは, @perla の<span class="co">[</span><span class="ot">9.2節</span><span class="co">](https://julia.quantecon.org/more_julia/optimization_solver_packages.html)</span> を参照してください.</span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a>Julia では, <span class="in">`ForwardDiff.jl`</span> パッケージを使うと順伝播の自動微分ができます.</span>
+<span id="cb15-276"><a href="#cb15-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: automatic-diff</span></span>
+<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span></span>
+<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a><span class="fu">f′_forwarddiff</span>(l) <span class="op">=</span> ForwardDiff.<span class="fu">derivative</span>(l <span class="op">-&gt;</span> <span class="fu">f</span>(l), l)</span>
+<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-comp-automatic-diff</span></span>
+<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Comparison of analytical and automatic derivatives."</span></span>
+<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_analytical, label<span class="op">=</span><span class="st">"Analytical"</span>)</span>
+<span id="cb15-293"><a href="#cb15-293" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(<span class="fl">0.2</span><span class="op">:</span><span class="fl">0.01</span><span class="op">:</span><span class="fl">0.9</span>, f′_forwarddiff, label<span class="op">=</span><span class="st">"ForwardDiff.jl"</span>, linestyle<span class="op">=:</span>dash)</span>
+<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-296"><a href="#cb15-296" aria-hidden="true" tabindex="-1"></a><span class="fu">## 並列計算</span></span>
+<span id="cb15-297"><a href="#cb15-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-298"><a href="#cb15-298" aria-hidden="true" tabindex="-1"></a>現代のPCは複数のコアを持つマルチコアCPUを搭載しています. パッケージのバックグラウンドで並列計算が用いられていることもありますが, 基本的にはユーザーが明示的に並列計算を指示する必要があります.</span>
+<span id="cb15-299"><a href="#cb15-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a>まずは, 自分のPCが何コア持っているかを確認してみましょう.</span>
+<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check-cores</span></span>
+<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a><span class="bu">Threads</span>.<span class="fu">nthreads</span>()</span>
+<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a>ここで, スレッド数が1となっている場合は, Juliaを起動する前に環境変数 <span class="in">`JULIA_NUM_THREADS`</span> を設定する必要があります. </span>
+<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Quarto: <span class="in">`julia.exeflags: ["--threads=auto"]`</span> をYAMLヘッダーに追加</span>
+<span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>VSCode: <span class="in">`settings.json`</span> に <span class="in">`"julia.numThreads": "auto"`</span> を追加</span>
+<span id="cb15-313"><a href="#cb15-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ターミナル: <span class="in">`export JULIA_NUM_THREADS=auto`</span> を実行</span>
+<span id="cb15-314"><a href="#cb15-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-315"><a href="#cb15-315" aria-hidden="true" tabindex="-1"></a><span class="in">`auto`</span> と設定した場合, 利用可能なコア数に応じて自動的にスレッド数が設定されます. 現代のPCであれば, ほとんどの場合, 利用可能なコア数が2以上になるはずです.</span>
+<span id="cb15-316"><a href="#cb15-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-319"><a href="#cb15-319" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-320"><a href="#cb15-320" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: define-solve-multi</span></span>
+<span id="cb15-321"><a href="#cb15-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb15-322"><a href="#cb15-322" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_multi!</span>(m<span class="op">::</span><span class="dt">My.Model</span>)</span>
+<span id="cb15-323"><a href="#cb15-323" aria-hidden="true" tabindex="-1"></a>    (; T, n_a, r, w, β, a_grid) <span class="op">=</span> m</span>
+<span id="cb15-324"><a href="#cb15-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-325"><a href="#cb15-325" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fu">zeros</span>(n_a, T)</span>
+<span id="cb15-326"><a href="#cb15-326" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="op">=</span> T<span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span></span>
+<span id="cb15-327"><a href="#cb15-327" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Threads</span>.<span class="pp">@threads</span> <span class="cf">for</span> i_a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb15-328"><a href="#cb15-328" aria-hidden="true" tabindex="-1"></a>            utility <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span></span>
+<span id="cb15-329"><a href="#cb15-329" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i_a′ <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>n_a</span>
+<span id="cb15-330"><a href="#cb15-330" aria-hidden="true" tabindex="-1"></a>                V′ <span class="op">=</span> (t <span class="op">==</span> T) ? <span class="fl">0.0</span> <span class="op">:</span> V[i_a′, t<span class="op">+</span><span class="fl">1</span>]</span>
+<span id="cb15-331"><a href="#cb15-331" aria-hidden="true" tabindex="-1"></a>                c <span class="op">=</span> (<span class="fl">1</span> <span class="op">+</span> r) <span class="op">*</span> a_grid[i_a] <span class="op">+</span> w <span class="op">-</span> a_grid[i_a′]</span>
+<span id="cb15-332"><a href="#cb15-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> c <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span id="cb15-334"><a href="#cb15-334" aria-hidden="true" tabindex="-1"></a>                    utility <span class="op">=</span> <span class="fu">max</span>(My.<span class="fu">u</span>(c, m) <span class="op">+</span> β <span class="op">*</span> V′, utility)</span>
+<span id="cb15-335"><a href="#cb15-335" aria-hidden="true" tabindex="-1"></a>                <span class="cf">end</span></span>
+<span id="cb15-336"><a href="#cb15-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-337"><a href="#cb15-337" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb15-338"><a href="#cb15-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-339"><a href="#cb15-339" aria-hidden="true" tabindex="-1"></a>            V[i_a, t] <span class="op">=</span> utility</span>
+<span id="cb15-340"><a href="#cb15-340" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb15-341"><a href="#cb15-341" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb15-342"><a href="#cb15-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-343"><a href="#cb15-343" aria-hidden="true" tabindex="-1"></a>    m.V <span class="op">.=</span> V</span>
+<span id="cb15-344"><a href="#cb15-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-345"><a href="#cb15-345" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="cn">nothing</span></span>
+<span id="cb15-346"><a href="#cb15-346" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb15-347"><a href="#cb15-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-348"><a href="#cb15-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-351"><a href="#cb15-351" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-352"><a href="#cb15-352" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: benchmark-single</span></span>
+<span id="cb15-353"><a href="#cb15-353" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> My.<span class="fu">solve!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">1000</span>))</span>
+<span id="cb15-354"><a href="#cb15-354" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-355"><a href="#cb15-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-358"><a href="#cb15-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{julia}</span></span>
+<span id="cb15-359"><a href="#cb15-359" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: benchmark-multi</span></span>
+<span id="cb15-360"><a href="#cb15-360" aria-hidden="true" tabindex="-1"></a><span class="pp">@benchmark</span> <span class="fu">solve_multi!</span>(m) setup <span class="op">=</span> (m <span class="op">=</span> My.<span class="fu">Model</span>(n_a<span class="op">=</span><span class="fl">1000</span>))</span>
+<span id="cb15-361"><a href="#cb15-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-362"><a href="#cb15-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-363"><a href="#cb15-363" aria-hidden="true" tabindex="-1"></a>並列化した場合, 1コアで実行した場合と比べて, おおむねスレッド数に応じて計算時間が短縮されていることがわかります. ただし, ここまで理論値に近い速度向上が得られることは稀で, 実際には理論値の数%から数十%程度の速度向上にとどまることが多いです.</span>
+<span id="cb15-364"><a href="#cb15-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-365"><a href="#cb15-365" aria-hidden="true" tabindex="-1"></a>**並列化できない計算**</span>
+<span id="cb15-366"><a href="#cb15-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-367"><a href="#cb15-367" aria-hidden="true" tabindex="-1"></a>並列計算の大前提は, 各スレッドが独立して計算できることです. 今回は後方帰納法で解くため, 時刻 $t$ の価値関数を計算する際に, 時刻 $t+1$ の価値関数が必要になり, 時刻方向に並列化することはできません.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
