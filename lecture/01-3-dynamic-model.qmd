@@ -15,10 +15,99 @@ using LaTeXStrings
 using Distributions
 import Random
 using Roots
+using Optim
 using LinearAlgebra
 using Interpolations
+using SpecialFunctions
 default(size=(500, 309), titlefontsize=10, fmt=:svg)
 ```
+
+## グリッドと補完
+
+未知なる関数 $f(x)$ の一般形が分からないが, 具体的な $x$ に関しては $f(x)$ の値が計算できる状況というのがよくあります. ちょっと極端な例を考えてみましょう. 次の効用最大化問題を考えます.
+
+$$
+\max_{n} \log c - \Phi(n) \text{ s.t.　}　c = w n.
+$$
+
+ここで, 労働供給の不効用 $\Phi(n) = \phi \log (n!)$ とします. この時の最適な $n^*$ を求めてみましょう.
+
+```{julia}
+#| label: define-profit-integer
+#| output: false
+Φ(n::Int; ϕ=0.1) = ϕ * sum(log(i) for i in 1:n)
+u(n::Int; w=1.) = log(n) - Φ(n)
+```
+
+**Grid Search**
+
+最も単純な方法は, $n = 1, \dots, 10$ ぐらいまで試してみて, 最も効用 $u(c, n)$ が大きくなる $n$ を選ぶ方法です. これをグリッドサーチと呼びます.
+
+```{julia}
+#| label: fig-grid-search
+#| fig-cap: "Grid Search for Optimal n. $ϕ = 0.1$."
+#| code-fold: true
+scatter(1:10, u, label=false, xlabel=L"n", ylabel=L"u(c, n)")
+```
+
+```{julia}
+#| label: grid-search
+argmax(u, 1:10)
+```
+
+**補完 (Interpolation)**
+
+これを実数の世界に拡張してみましょう. もし, $n$ が実数の時の $\Phi(n)$ の値が計算できれば, 通常の一変数関数の最大化問題として解くことができます. そのために, $\Phi(n)$ を補完 (interpolation) してみましょう. Juliaでは `Interpolations.jl` パッケージを用います.
+
+```{julia}
+#| label: define-profit-interp
+#| output: false
+n_grid = 1:10
+Φ_grid = Φ.(n_grid)
+Φ_interp = linear_interpolation(n_grid, Φ_grid)
+Φ_spline = Interpolations.scale(
+    interpolate(Φ_grid, BSpline(Cubic(Line(OnGrid())))),
+    n_grid
+)
+```
+
+```{julia}
+#| label: fig-interpolation
+#| fig-cap: "Linear and Spline Interpolation of Cost Function $\\Phi(n)$."
+#| code-fold: true
+scatter(1:10, Φ, label="Grid Points", xlabel=L"n", ylabel=L"\Phi(n)")
+plot!(1:0.1:10, n -> Φ_interp(n), label="Linear Interpolation", legend=:topleft)
+plot!(1:0.1:10, n -> Φ_spline(n), label="Cubic Spline", linestyle=:dash)
+```
+
+ここでは線形補間 (linear interpolation) と3次スプライン補間 (cubic spline interpolation) の両方を定義しました. 線形補間は2点間を直線で結ぶだけですが, スプライン補間はより滑らかな曲線で補間します. 詳細は @kitao2024 の付録Bが参考になります.
+
+このように実数上に定義された関数を用いれば, 通常の最適化問題のように解くことができます.^[線形補間では一階微分までしかとれませんが, スプライン補間を用いれば二階微分が取れるので, derivative-based な最適化手法も使えます. ここでは1変数関数なので, bracketing method のような微分のいらない手法を用いています.]
+
+```{julia}
+#| label: optimization-comparison
+u_interp(n) = log(n) - Φ_interp(n)
+u_spline(n) = log(n) - Φ_spline(n)
+
+sol_interp = optimize(n -> -u_interp(n), 1.0, 10.0)
+sol_spline = optimize(n -> -u_spline(n), 1.0, 10.0)
+
+println("Linear Interpolation: n = $(round(sol_interp.minimizer, digits=4))")
+println("Cubic Spline: n = $(round(sol_spline.minimizer, digits=4))")
+```
+
+
+今回の例では, 階乗は[ガンマ関数](https://ja.wikipedia.org/wiki/%E3%82%AC%E3%83%B3%E3%83%9E%E9%96%A2%E6%95%B0) を用いて実数に拡張できるので, より厳密な解を求めることもできます.
+
+```{julia}
+#| label: analytical-solution
+#| code-fold: true
+Φ(n::Real; ϕ=0.1) = ϕ * loggamma(n + 1)
+u_exact(n) = log(n) - Φ(n)
+sol_exact = optimize(n -> -u_exact(n), 1.0, 10.0)
+println("Exact Solution: n = $(round(sol_exact.minimizer, digits=4))")
+```
+
 
 ## ベルマン方程式の数値解法
 
@@ -84,8 +173,6 @@ f′(k; m) = m.α * k^(m.α - 1)
 1. $k$ の定義域を $[k_{\min}, k_{\max}]$ を $n$ 個のグリッドポイントに分割する.
 1. $V(k)$ の初期値 $V^0$ を適当に設定する. つまり, $V^0 = (V_0^0, V_1^0, \dots, V_n^0)$ に適当な値を設定する.
 1. $V^0$ をベルマン方程式の右辺に代入し, 各 $k_i$ に対して $V_i^1$ を計算する.
-    - $h(f(k) + (1-\delta)k - c)$ は補完によって計算する
-    - 線形補完, スプライン補完などを用いる
 1. 2-3を繰り返す. 収束条件は以下のように設定する.
     - $|V^N - V^{N-1}| < \varepsilon$
     - $|V^N - V^{N-1}|$ はベクトルのノルム
