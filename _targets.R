@@ -45,6 +45,7 @@ write_lines <- function(text, file, ...) {
 tar_source()
 
 tar_plan(
+  url_site = yaml::read_yaml(here_rel("_variables.yml"))$`site-url`,
   # Graphics -------------------------------------------------------------------
   tar_target(
     fns_graphics,
@@ -58,6 +59,8 @@ tar_plan(
   image,
   data,
   lecture,
+  # Calendar -------------------------------------------------------------------
+  calendar,
   # Website --------------------------------------------------------------------
   tar_quarto(
     website,

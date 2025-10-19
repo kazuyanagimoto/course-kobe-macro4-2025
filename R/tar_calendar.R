@@ -1,3 +1,48 @@
+calendar <- tar_plan(
+  tar_files(
+    files,
+    c(
+      list.files("slides", pattern = "\\.qmd$", full.names = TRUE),
+      list.files("lecture", pattern = "\\.qmd$", full.names = TRUE)
+    )
+  ),
+  tar_target(qmd, readLines(files), pattern = map(files)),
+  tar_target(
+    schedule_raw,
+    {
+      qmd
+      yaml <- rmarkdown::yaml_front_matter(files)
+      tibble(
+        id = tools::file_path_sans_ext(basename(files)),
+        title = yaml$title,
+        date = yaml$date,
+        type = basename(dirname(files)),
+      )
+    },
+    pattern = map(files)
+  ),
+  schedule = schedule_raw |>
+    dplyr::filter(stringr::str_sub(id, 1, 1) == "0") |>
+    dplyr::add_row(id = "", title = "まとめ", date = "2026-01-26") |>
+    dplyr::arrange(date),
+  tar_file(
+    schedule_csv,
+    {
+      path <- here_rel("static", "schedule.csv")
+      readr::write_csv(schedule, path)
+      path
+    }
+  ),
+  tar_file(
+    schedule_ics,
+    {
+      ical <- build_ical(schedule, url_site)
+      ic_write2(ical, here_rel("schedule.ics"))
+    }
+  )
+)
+
+
 build_ical <- function(schedule, url_site) {
   dtstamp <- calendar::ic_char_datetime(
     lubridate::now("UTC"),
@@ -37,23 +82,6 @@ build_ical <- function(schedule, url_site) {
     tidyr::unnest(ical) |>
     calendar::ical()
 }
-
-build_schedule <- function(files) {
-  purrr::map(files, \(x) {
-    yaml <- rmarkdown::yaml_front_matter(x)
-    tibble(
-      id = tools::file_path_sans_ext(basename(x)),
-      title = yaml$title,
-      date = yaml$date,
-      type = basename(dirname(x)),
-    )
-  }) |>
-    purrr::list_rbind() |>
-    filter(stringr::str_sub(id, 1, 1) == "0") |>
-    add_row(id = "", title = "まとめ", date = "2026-01-26") |>
-    arrange(date)
-}
-
 
 ic_write2 <- function(ical, file, ...) {
   dir.create(dirname(file), showWarnings = FALSE, recursive = TRUE)
