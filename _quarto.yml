@@ -6,6 +6,7 @@ project:
   resources:
     - schedule.ics
     - assignment/*
+    - static/schedule.csv
   preview:
     port: 3334
 

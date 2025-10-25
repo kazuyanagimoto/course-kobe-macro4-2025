@@ -271,7 +271,7 @@ $$
 $h$ の一階条件から以下の式が導ける.
 
 $$
-\beta \varepsilon^{1-\rho} (1-\theta)\left(\theta d^{\sigma} + (1-\theta)(h + \chi k)^{\sigma}\right)^{\frac{1-\nu-\sigma}{\sigma}} (h + \chi k)^{\sigma - 1} = \delta l^{-\lambda}.
+\beta \varepsilon^{1-\nu} (1-\theta)\left(\theta d^{\sigma} + (1-\theta)(h + \chi k)^{\sigma}\right)^{\frac{1-\nu-\sigma}{\sigma}} (h + \chi k)^{\sigma - 1} = \delta l^{-\lambda}.
 $${#eq-greenwood2023-foc-h}
 
 よって, 以下の関係から $\nu$ が推定できる.
@@ -285,7 +285,7 @@ $$
 $\nu$ が既知であるため, (-@eq-greenwood2023-foc-h) から
 
 $$
-\beta \varepsilon^{1-\rho} (1-\theta)\left(\theta d_{1880}^{\sigma} + (1-\theta)(h_{1880} + \chi_{1880} k_{1880})^{\sigma}\right)^{\frac{1-\nu-\sigma}{\sigma}} (h_{1880} + \chi_{1880} k_{1880})^{\sigma - 1} = \delta l_{1880}^{-\lambda}
+\beta \varepsilon^{1-\nu} (1-\theta)\left(\theta d_{1880}^{\sigma} + (1-\theta)(h_{1880} + \chi_{1880} k_{1880})^{\sigma}\right)^{\frac{1-\nu-\sigma}{\sigma}} (h_{1880} + \chi_{1880} k_{1880})^{\sigma - 1} = \delta l_{1880}^{-\lambda}
 $$
 
 より $\beta$ が推定できる.
@@ -379,7 +379,7 @@ $${#eq-college-premium}
 
 {{< v 0.5em >}}
 
-- CES生産関数のパラメータ $\omega, \iota$ は @acemoglu2011 の値
+- CES生産関数のパラメータ $\omega, \iota$ は @acemoglu2011a の値
 - @eq-college-premium から, $\mathbf{x}_{1880}, \mathbf{x}_{2020}$ が求まる
 - 一階条件 $\mathbf{z}\left((1-\omega)\mathbf{u}^{\iota} + \omega\mathbf{x}\mathbf{v}^{\iota}\right)^{\frac{1}{\iota}-1}(1-\omega)\mathbf{u}^{\iota-1}=u$ から, $\mathbf{z}_{1880}, \mathbf{z}_{2020}$ が求まる
 

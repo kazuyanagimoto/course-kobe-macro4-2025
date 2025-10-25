@@ -21,10 +21,7 @@ calendar <- tar_plan(
     },
     pattern = map(files)
   ),
-  schedule = schedule_raw |>
-    dplyr::filter(stringr::str_sub(id, 1, 1) == "0") |>
-    dplyr::add_row(id = "", title = "まとめ", date = "2026-01-26") |>
-    dplyr::arrange(date),
+  schedule = build_schedule(schedule_raw, url_site),
   tar_file(
     schedule_csv,
     {
@@ -42,6 +39,26 @@ calendar <- tar_plan(
   )
 )
 
+build_schedule <- function(schedule_raw, url_site) {
+  schedule_raw |>
+    filter(stringr::str_sub(id, 1, 1) == "0") |>
+    add_row(id = "", title = "まとめ", date = "2026-01-26") |>
+    arrange(date) |>
+    mutate(
+      rnum = row_number(),
+      start_jst = lubridate::ymd_hm(
+        paste0(date, " 13:20"),
+        tz = "Asia/Tokyo"
+      ),
+      start = lubridate::with_tz(start_jst, "UTC"),
+      end = start + lubridate::minutes(90),
+      summary = glue::glue("Macro IV: {rnum}. {title}"),
+      location = "六甲台本館230",
+      description = glue::glue("{url_site}/lecture/{id}")
+    ) |>
+    select(-c(start_jst))
+}
+
 
 build_ical <- function(schedule, url_site) {
   dtstamp <- calendar::ic_char_datetime(
@@ -50,28 +67,19 @@ build_ical <- function(schedule, url_site) {
   )
 
   schedule |>
-    mutate(
-      rnum = row_number(),
-      start_time_jst = lubridate::ymd_hm(
-        paste0(date, " 13:20"),
-        tz = "Asia/Tokyo"
-      ),
-      start_time = lubridate::with_tz(start_time_jst, "UTC"),
-      summary = glue::glue("Macro IV: {rnum}. {title}"),
-    ) |>
     group_by(rnum) |>
     tidyr::nest() |>
     mutate(
       ical = purrr::map(
         data,
         ~ calendar::ic_event(
-          start_time = .$start_time,
-          end_time = 1.5,
+          start_time = .$start,
+          end_time = .$end,
           summary = .$summary,
           more_properties = TRUE,
           event_properties = list(
-            LOCATION = "六甲台本館203",
-            DESCRIPTION = glue::glue("{url_site}/lecture/{.$id}"),
+            LOCATION = .$location,
+            DESCRIPTION = .$description,
             DTSTAMP = dtstamp
           )
         )

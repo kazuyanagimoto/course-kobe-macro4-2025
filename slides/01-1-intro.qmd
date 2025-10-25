@@ -191,7 +191,7 @@ $$
 ![](/static/img/article/greenwood2023/fig2_15.svg){width=80% fig-align="center"}
 
 - ホワイトカラーの割合と所得の上昇と正の相関がある
-- Skill-biased technological change (e.g. @acemoglu2011)
+- Skill-biased technological change (e.g. @acemoglu2011a)
 
 ## まとめ
 
