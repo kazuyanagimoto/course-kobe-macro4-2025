@@ -49,6 +49,19 @@ description: "@greenwood2009"
 
 # @greenwood2009
 
+## Motivation: 婚姻率の低下と離婚率の上昇
+
+{{< v -0.5em >}}
+
+![](/static/img/article/greenwood2009/figure2.svg){width=60% fig-align="center"}
+
+## Motivation: 有配偶者の労働時間の増加
+
+{{< v -0.5em >}}
+
+![](/static/img/article/greenwood2009/figure3.svg){width=55% fig-align="center"}
+
+
 ## 設定
 
 {{< v -0.5em >}}
@@ -184,6 +197,75 @@ $$
 - 独身者 $s$ は $b'$ を引き, $V(b') > W$ を満たすと結婚する
 - 有配偶者は $b'$ を引き, $V(b') \le W$ を満たすと離婚する
 - なお, 定義から $s = 1 - \int_{-\infty}^{\infty} \,dM(b)$ を満たす
+
+## 均衡
+
+独身者, 有配偶者をあわせた, 全体の変数 (aggregate variables) を $Y, L, C, D$ とする.
+
+**生産関数**
+
+$$
+Y = w L
+$$
+
+- 企業のゼロ利潤条件を常に満たすため, $w$ は均衡価格を表す
+- 賃金は外生的に上昇する
+
+**資源制約**
+
+$$
+C + wpD = Y
+$$
+
+- 最終生産財 $Y$ は消費 $C$ と家事財の消費 $D$ に分配される
+- $p$ も外生的に下落する
+
+## Qualitative Analysis
+
+::: {.callout-note}
+
+## Proposition 1
+
+家庭内労働時間 $h$ は
+
+- $p$ の下落に対して, 増加する ($0 < \kappa < 1$)
+- $w$ の上昇に対して, 減少する ($0 < \overline{c}$)
+
+:::
+
+厳密な証明は論文のAppendixを参照. 直感的には,
+
+- $p$ の下落: 家庭内生産関数が代替的であるため, $0 < \kappa < 1$　家事財 $d$ に代替される
+- $w$ の上昇: 最低消費 $\overline{c}$ に取られる労働時間が減るため, 家事財 $d$ の消費が増え, 代替される
+
+$\overline{c}$ がないときは, $w$ の上昇に対しても家庭内労働時間は不変となる. FOCは,
+
+$$
+\begin{aligned}
+\frac{\alpha}{z - h - pd - \frac{\overline{c}}{w}} p&=(1-\alpha) z^{-\phi \zeta}\left[\theta d^\kappa+(1-\theta) h^\kappa\right]^{\zeta / \kappa-1} \theta d^{\kappa-1} \\
+\frac{\alpha}{z - h - pd - \frac{\overline{c}}{w}} &=(1-\alpha) z^{-\phi \zeta}\left[\theta d^\kappa+(1-\theta) h^\kappa\right]^{\zeta / \kappa-1}(1-\theta) h^{\kappa-1}.
+\end{aligned}
+$$
+
+---
+
+::: {.callout-note}
+
+## Proposition 2
+
+有配偶者と独身者の効用の差 $u^m - u^s$ は,
+
+- $p$ の下落に対して, 減少する ($\zeta > 0$)
+- $w$ の上昇に対して, 減少する ($0 < \overline{c}$)
+
+:::
+
+厳密な証明は論文のAppendixを参照. 直感的には,
+
+- 有配偶者は独身者よりも所得が高い (Economies of scale)
+- 低所得者の方が最低消費 $\overline{c}$ の影響を受けやすく, $w$ の上昇によって効用の差が小さくなる
+- 家庭内生産に対する効用がより凹であるため, 低所得者の方が $p$ の影響を受けやすい
+
 
 ## カリブレーション
 
