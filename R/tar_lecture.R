@@ -38,10 +38,10 @@ lecture <- tar_plan(
     names = name,
     tar_file(fig, fn(path))
   ),
-  table_reynoso2024_smm = tabulate_reynoso2024_smm(here_rel(
+  table_greenwood2016_smm = tabulate_greenwood2016_smm(here_rel(
     "static",
     "table",
-    "reynoso2024_smm.typ"
+    "greenwood2016_smm.typ"
   )),
   # Fertility ------------------------------------------------------------------
   fig_fertility_outsource = plot_fertility_outsource(here_rel(

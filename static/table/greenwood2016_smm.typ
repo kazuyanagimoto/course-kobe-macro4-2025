@@ -8,10 +8,12 @@ block[ // start block
 
   #let style-dict = (
     // tinytable style-dict after
+    "0_0": 0, "0_1": 0, "0_2": 0, "0_3": 0, "0_4": 0, "0_5": 0
   )
 
   #let style-array = ( 
     // tinytable cell style after
+    (align: center,),
   )
 
   // Helper function to get cell style
@@ -21,7 +23,7 @@ block[ // start block
   }
 
   // tinytable align-default-array before
-  #let align-default-array = ( left, left, left, left, ) // tinytable align-default-array here
+  #let align-default-array = ( left, left, left, left, left, left, ) // tinytable align-default-array here
   #show table.cell: it => {
     if style-array.len() == 0 { return it }
     
@@ -44,7 +46,8 @@ block[ // start block
   #align(center, [
 
   #table( // tinytable table start
-    columns: (20.00%, 40.00%, 10.00%, 10.00%),
+    column-gutter: 5pt,
+    columns: (10.00%, 10.00%, 10.00%, 30.00%, 10.00%, 10.00%),
     stroke: none,
     rows: auto,
     align: (x, y) => {
@@ -55,23 +58,26 @@ block[ // start block
       let style = get-style(x, y)
       if style != none and "background" in style { style.background }
     },
- table.hline(y: 1, start: 0, end: 4, stroke: 0.05em + black),
- table.hline(y: 5, start: 0, end: 4, stroke: 0.1em + black),
- table.hline(y: 0, start: 0, end: 4, stroke: 0.1em + black),
+ table.hline(y: 1, start: 1, end: 3, stroke: 0.05em + black),
+ table.hline(y: 1, start: 4, end: 6, stroke: 0.05em + black),
+ table.hline(y: 2, start: 0, end: 6, stroke: 0.05em + black),
+ table.hline(y: 6, start: 0, end: 6, stroke: 0.1em + black),
+ table.hline(y: 0, start: 0, end: 6, stroke: 0.1em + black),
     // tinytable lines before
 
     // tinytable header start
     table.header(
       repeat: true,
-[Parameter], [Target], [2005], [(1960)],
+[ ], table.cell(stroke: (bottom: .05em + black), colspan: 2, align: center)[Parameter], [ ], table.cell(stroke: (bottom: .05em + black), colspan: 2, align: center)[Data Target],
+[], [2005], [(1960)], [Target], [2005], [(1960)],
     ),
     // tinytable header end
 
     // tinytable cell content after
-[$ w_(1, 2005) = 1.81 $], [Skill premium of college], [2.020], [1.550],
-[$ phi_(2005) = 0.59 $], [Female relative earnings], [0.640], [0.450],
-[$ eta_(f, 2005) = 66.45 $], [Share of college, females], [0.332], [0.072],
-[$ eta_(m, 2005) = 55.75 $], [Share of college, males], [0.318], [0.125],
+[$ w_(1) $], [1.81], [1.04], [Skill premium of college], [2.020], [1.550],
+[$ phi.alt $], [0.59], [0.40], [Female relative earnings], [0.640], [0.450],
+[$ eta_(f) $], [66.45], [134.97], [Share of college, females], [0.332], [0.072],
+[$ eta_(m) $], [55.75], [69.86], [Share of college, males], [0.318], [0.125],
 
     // tinytable footer after
 
