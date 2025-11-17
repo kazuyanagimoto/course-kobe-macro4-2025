@@ -53,7 +53,7 @@ image: /static/img/article/reynoso2024/fig1.svg
 
 **事実 1: 単意離婚は契約できない婚姻内投資を減らす**
 
-先行研究から, 単意離婚精度は, 契約できない (non-contractible), つまり離婚後分与できない婚姻内投資を減少させると考えられる. 代表的な例は以下のようなもの.
+先行研究から, 単意離婚制度は, 契約できない (non-contractible), つまり離婚後分与できない婚姻内投資を減少させると考えられる. 代表的な例は以下のようなもの.
 
 {{< v 0.5em >}}
 
@@ -144,7 +144,8 @@ $$
 - $c_{it}$: 個人 $i$ の個人消費 (private consumption)
 - $q_t$: 公共財消費 (public consumption)
 - $k_t$: 専業主婦ダミー. $k_t = 0$ ならば労働市場で働く
-- $\theta_{fm}, t$: 夫婦別の match quality. 以下のようにランダムウォークする
+- $\alpha^{s_f, s_m}$: 専業主婦を選択した際の妻の効用. 夫婦それぞれの教育レベルに依存する
+- $\theta_{fm, t}$: 夫婦別の match quality. 以下のようにランダムウォークする
 
 $$
 \theta_{fm, t} = \theta_{fm, t-1} + \epsilon_{fm, t}, \quad \epsilon_{fm, t} \sim \mathcal{N}\left(0, {\sigma_{\theta}^{s_f, s_m}}^2\right).
