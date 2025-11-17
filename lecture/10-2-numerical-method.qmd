@@ -21,6 +21,7 @@ format:
 #| output: false
 #| code-fold: true
 using Plots
+using LaTeXStrings
 default(size=(500, 309), titlefontsize=10, fmt=:svg)
 ```
 
@@ -339,3 +340,47 @@ end
 **並列化できない計算**
 
 並列計算の大前提は, 各スレッドが独立して計算できることです. 今回は後方帰納法で解くため, 時刻 $t$ の価値関数を計算する際に, 時刻 $t+1$ の価値関数が必要になり, 時刻方向に並列化することはできません.
+
+```{julia}
+#| label: define-solve-muli-illegal
+#| output: false
+function solve_multi_illegal!(m::My.Model)
+    (; T, n_a, r, w, β, a_grid) = m
+
+    V = zeros(n_a, T)
+    Threads.@threads for t = T:-1:1
+        for i_a = 1:n_a
+            utility = -Inf
+            for i_a′ = 1:n_a
+                V′ = (t == T) ? 0.0 : V[i_a′, t+1]
+                c = (1 + r) * a_grid[i_a] + w - a_grid[i_a′]
+
+                if c > 0
+                    utility = max(My.u(c, m) + β * V′, utility)
+                end
+
+            end
+
+            V[i_a, t] = utility
+        end
+    end
+
+    m.V .= V
+
+    return nothing
+end
+```
+
+```{julia}
+#| label: fig-vf-illegal
+#| fig-cap: "Value function computed with illegal parallelization."
+#| code-fold: true
+m = My.Model(n_a=100)
+solve_multi_illegal!(m)
+
+plot(m.a_grid, m.V[:, end], xlabel=L"a", ylabel=L"V(a, t)", label=L"t=T")
+plot!(m.a_grid, m.V[:, end-2], label=L"t=T-2")
+plot!(m.a_grid, m.V[:, begin], label=L"t=1")
+```
+
+@fig-vf-illegal のように, 時間方向に並列化すると正しい価値関数が得られません.
