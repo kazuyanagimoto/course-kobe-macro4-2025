@@ -489,7 +489,7 @@ $$
 &=\int_{-\infty}^{\infty} h^*\left(\exp\left(\sqrt{2}\sigma z + \mu\right)\right) \frac{1}{\sqrt{\pi}} \exp\left(-z^2\right) \,dz \\
 &\simeq \sum_{i=1}^{n} w_i h^*\left(\exp\left(\sqrt{2}\sigma x_i + \mu\right)\right) \frac{1}{\sqrt{\pi}}.
 \end{aligned}
-$$
+$${#eq-mean-hours}
 
 ここでは $w = \exp(y)$, $y = \sqrt{2}\sigma z + \mu$ とした.
 
@@ -680,25 +680,13 @@ $$
 
 #### SMMの実践
 
-ここでは, SMMを用いて労働供給のパラメータを推定する. かなり簡略化された例を用いるため, モデルの当てはまりは悪いが, SMMの考え方を理解するための例として利用する.
-
-**モデル**
-
-$$
-\max_{c, l} u(c, l) = \log c + \alpha \log (1-l) \quad \text{s.t.} \quad c = w (1 - l)
-$$
-
-- $c$: 消費
-- $w$: 時給
-- $l$: 余暇時間
-
-時給 $w$ は以下のような分布に従うとする.
+ここでは, @eq-max-utility に基づく労働供給モデルを用います.　時給 $w$ は以下のような分布に従うとします.
 
 $$
 \log w \sim \mathcal{N}(\mu, \sigma).
 $$
 
-標準化のため, $\mu = 0$ とする. この時, $\theta = (\alpha, \sigma)$ を推定する.
+標準化のため, $\mu = 0$ とし, $\gamma_c = \gamma_l = 1.5$ とします.^[この値は一般的に用いられる値ですが, 実際には推定することもあります.] この時, $\theta = (\alpha, \sigma)$ を推定します.
 
 **データ**
 
@@ -714,7 +702,7 @@ $$
 #| label: fig-dist-earn
 #| fig-cap: "**Distribution of earnings.** Data from JPSED.stat. 20-29 aged men in 2023."
 #| code-fold: true
-mean_leisure_data = 1 - 33.4 / (16 * 7)
+mean_hours_data = 33.4 / (16 * 7)
 earn = [25, 75, 150, 250, 350, 450, 550, 650, 750, 850, 950, 1100, 1200]
 density = [13.7, 12.2, 12.3, 14.8, 20.2, 16.3, 7.0, 2.0, 0.6, 0.4, 0.1, 0.3, 0.2] / 100
 mean_learn_data = density' * log.(earn)
@@ -724,45 +712,34 @@ plot(earn, density, label="Density", xlabel="Earnings (10K JPY)",
     ylabel="Density", lw=2, legend=false)
 ```
 
-一階条件から容易に $l = \frac{\alpha}{w + \alpha}$ となることがわかります. ガウス・エルミート求積を用いて, 労働時間の平均は以下のように計算できます.
+一階条件から得られる最適な労働時間を $h(w)$ としたとき, 労働時間の平均 $\overline{h}$ は @eq-mean-hours によって計算できます. 同様に, 対数収入 $\log e$ の平均と分散は以下のように計算できます.
 
 $$
 \begin{aligned}
-\mathbb{E}[l] &= \int_{-\infty}^{\infty} l(w) \,dF(w; \mu, \sigma) \\
-&= \int_{-\infty}^{\infty} \frac{\alpha}{w + \alpha} \,dF(w; \mu, \sigma) \\
-&\simeq \sum_{i=1}^{n} \xi_i \frac{\alpha}{\exp\left(\sqrt{2}\sigma x_i + \mu\right) + \alpha} \frac{1}{\sqrt{\pi}} \\
+\mathbb{E}[\log e] &= \int_{-\infty}^{\infty} \log(w h(w)) \,dF(w; \mu, \sigma) \\
+&= \int_{-\infty}^{\infty}\log w + \log h(w) \, dF(w; \mu, \sigma) \\
+&= \sum_{i}^{n} \xi_i \left(\sqrt{2} \sigma x_i + \mu + \log\left(h\left(\exp\left(\sqrt{2} \sigma x_i + \mu\right)\right)\right)\right) \\
+\text{Var}(\log e) &= \int_{-\infty}^{\infty} \left(\log(w h(w)) - \mathbb{E}[\log e]\right)^2 \,dF(w; \mu, \sigma) \\
+&= \int_{-\infty}^{\infty} \left(\log w + \log h(w) - \mathbb{E}[\log e]\right)^2 \,dF(w; \mu, \sigma) \\
+&\simeq \sum_{i}^{n} \xi_i \left(\sqrt{2} \sigma x_i + \mu + \log\left(h\left(\exp\left(\sqrt{2} \sigma x_i + \mu\right)\right)\right) - \mathbb{E}[\log e]\right)^2 \frac{1}{\sqrt{\pi}}
 \end{aligned}
 $$
 
-ここで, $\xi_i, x_i$ はガウス・エルミート求積の重みと評価点です. 同様に, 対数収入 $\log e$ の平均と分散は以下のように計算できます.
-
-$$
-\begin{aligned}
-\mathbb{E}[\log e] &= \int_{-\infty}^{\infty} \log(w(1-l)) \,dF(w; \mu, \sigma) \\
-&= \int_{-\infty}^{\infty} \log\left(\frac{w^2}{\alpha + w}\right) \,dF(w; \mu, \sigma) \\
-&= \int_{-\infty}^{\infty} 2\log w \,dF(w; \mu, \sigma) - \int_{-\infty}^{\infty} \log (\alpha + w) \,dF(w; \mu, \sigma) \\
-&= 2\mu - \int_{-\infty}^{\infty} \log (\alpha + w) \,dF(w; \mu, \sigma) \\
-&\simeq 2\mu - \sum_{i} \xi_i \log\left(\alpha + \exp(\sqrt{2}\sigma x_i + \mu)\right)\frac{1}{\sqrt{\pi}}\\
-\text{Var}(\log e) &= \int_{-\infty}^{\infty} \left(\log(w(1-l)) - \overline{\log e}\right)^2 \,dF(w; \mu, \sigma) \\
-&= \int_{-\infty}^{\infty} \left(2\log w - \log(\alpha + w) - \overline{\log e}\right)^2 \,dF(w; \mu, \sigma) \\
-&\simeq \sum_{i}^{n} \xi_i \left(2(\sqrt{2}\sigma x_i + \mu) - \log\left(\alpha + \exp(\sqrt{2}\sigma x_i + \mu)\right) - \overline{\log e}\right)^2 \frac{1}{\sqrt{\pi}}\\
-\end{aligned}
-$$
-
+ここで, $\xi_i, x_i$ はガウス・エルミート求積の重みと評価点です.
 
 ```{julia}
 #| label: compute-smm
 function moment(α, σ; n_gh=10)
     x, ξ = gausshermite(n_gh)
     μ = 0.0
-    mean_leisure = ξ' * (α ./ (exp.(sqrt(2) * σ * x .+ μ) .+ α)) / sqrt(π)
-    mean_learn = 2μ - ξ' * log.(α .+ exp.(sqrt(2) * σ .* x .+ μ)) / sqrt(π)
-    sd_learn = sqrt(ξ' * (2 * (sqrt(2) * σ .* x .+ μ) - log.(α .+ exp.(sqrt(2) * σ .* x .+ μ)) .- mean_learn) .^ 2 / sqrt(π))
+    h̄ = mean_hours(α_l=α, σ=σ, μ=μ, n=n_gh)
+    mean_learn = ξ' * (sqrt(2) * σ .* x .+ log.(hours_worked.(exp.(sqrt(2) * σ .* x .+ μ); α_l=α)) / sqrt(π))
+    sd_learn = sqrt(ξ' * (sqrt(2) * σ .* x .+ log.(hours_worked.(exp.(sqrt(2) * σ .* x .+ μ); α_l=α)) .- mean_learn) .^ 2 / sqrt(π))
 
-    return [mean_leisure, sd_learn]
+    return [h̄, sd_learn]
 end
-
-loss(α, σ; d=[mean_leisure_data, sd_learn_data]) = sqrt(sum(((moment(α, σ) .- d) ./ d) .^ 2))
+moment(0.5, 0.5)
+loss(α, σ; d=[mean_hours_data, sd_learn_data]) = sqrt(sum(((moment(α, σ) .- d) ./ d) .^ 2))
 prob = OptimizationProblem((x, p) -> loss(x[1], x[2]), [0.5, 0.5])
 sol = solve(prob, NelderMead()) # Optim.jl
 α, σ = sol.x
@@ -774,7 +751,7 @@ sol = solve(prob, NelderMead()) # Optim.jl
 #| label: fig-smm-contour
 #| fig-cap: "**Contour plot of loss function.**"
 #| code-fold: true
-contour(0.01:0.01:5, 0.01:0.01:1, loss)
+contour(0.01:0.05:10, 0.01:0.01:2, loss)
 scatter!([α], [σ], label="Solution", markersize=5)
 ```
 
@@ -785,20 +762,34 @@ scatter!([α], [σ], label="Solution", markersize=5)
 #| tbl-cap: Results of SMM
 #| code-fold: true
 
+function moment_mc(α, σ; n_mc=10^6)
+    μ = 0.0
+    ws = rand(LogNormal(μ, σ), n_mc)
+    hs = hours_worked.(ws; α_l=α)
+    h̄ = mean(hs)
+    sd_learn = std(log.(hs) .+ log.(ws))
+
+    return [h̄, sd_learn]
+end
+
 mnt = moment(α, σ)
+mnt_mc = moment_mc(α, σ)
 
 data = (
     Parameter=["α", "σ"],
     Value=[α, σ],
-    Target=["Mean of Leisure Hours", "S.D. of Log Earnings"],
-    Data=[mean_leisure_data, sd_learn_data],
-    Model=mnt
+    Target=["Mean of Hours Worked", "S.D. of Log Earnings"],
+    Data=[mean_hours_data, sd_learn_data],
+    Model=mnt,
+    MC=mnt_mc,
 )
 
 simple_table(data)
 ```
 
-@tbl-smm の結果から, モデルから得られたモーメントがデータのモーメントとほとんど一致していることがわかります. このモデルの当てはまりを確認するためにターゲットとしていないモーメントとして, 労働時間の分布を確認してみましょう. 推定された $\alpha, \sigma$ の値を用いてモンテカルロシミュレーションを行い, 労働時間の分布を確認します. なお, 労働時間は $h^*(w) = 1 - \frac{\alpha}{w + \alpha}$ で計算でき, 週あたりの労働時間に直すために $h^*(w) \times 16 \times 7$ を計算します.
+@tbl-smm の結果から, モデルから得られたモーメントがデータのモーメントとほとんど一致していることがわかります. また, 検算のためにモンテカルロ法によって計算したモーメントも表示しています.
+
+このモデルの当てはまりを確認するためにターゲットとしていないモーメントとして, 労働時間の分布を確認してみましょう. 推定された $\alpha, \sigma$ の値を用いてモンテカルロシミュレーションを行い, 労働時間の分布を確認します. なお, 週あたりの労働時間に直すために $h^*(w) \times 16 \times 7$ を計算します.
 
 ```{julia}
 #| label: fig-untarget-hours
@@ -806,13 +797,12 @@ simple_table(data)
 #| code-fold: true
 lbl_hours = ["0-19", "20-34", "35-44", "45-59", "60+"]
 dens_hours_data = [22.4, 12.1, 44.7, 17.9, 3.8] / 100
-hours_model = [(w / (w + α)) * 16 * 7 for w in rand(LogNormal(0, σ), 10^6)]
-
+hours_model = [hours_worked(w; α_l=α) * 16 * 7 for w in rand(LogNormal(0, σ), 10^6)]
 bins = [0, 20, 35, 45, 60, 113]
 dens_hours_model = [mean(bins[i] .<= hours_model .< bins[i+1]) for i in 1:(length(bins)-1)]
 
 bar(lbl_hours, dens_hours_data, label="Model")
-scatter!(lbl_hours, dens_hours_model, label="Data", xlabel="Hours Worked per Week")
+scatter!(lbl_hours, dens_hours_model, label="Data", xlabel="Hours Worked per Week", ylims=(0, 0.6), ylabel="Density")
 ```
 
-@fig-untarget-hours で分かるように, モデルの労働時間の分布はデータの労働時間の分布とかなり異なります. これは, モデルが単純化されすぎているためです. 例えば, 20-29歳の男性のデータを用いてるため, 学生や新卒の人々が多く含まれており, 労働時間が短くなっている可能性があります. また, 賃金に対する労働時間の弾力性 (フリッシュ弾力性) が重要な役割を果たしていると考えられるにもかかわらず, 対数型効用関数という柔軟性のない効用関数を用いていることに問題がある可能性があります. ターゲットとしたモーメントの当てはまりは定義から良いので, ターゲットとしていないモーメントによる評価も重要です.
+@fig-untarget-hours で分かるように, モデルの労働時間の分布はデータの労働時間の分布とかなり異なります. これは, モデルが単純化されすぎているためです. 例えば, 20-29歳の男性のデータを用いてるため, 学生や新卒の人々が多く含まれており, 労働時間が短くなっている可能性があります. また, $\gamma_c = \gamma_l = 1.5$ とした点も問題かもしれません.　このように, ターゲットとしたモーメントの当てはまりは定義から良いので, ターゲットとしていないモーメントによる評価も重要です.

@@ -22,6 +22,8 @@ format:
 #| code-fold: true
 using Plots
 using LaTeXStrings
+using Distributions
+
 default(size=(500, 309), titlefontsize=10, fmt=:svg)
 ```
 
@@ -384,3 +386,59 @@ plot!(m.a_grid, m.V[:, begin], label=L"t=1")
 ```
 
 @fig-vf-illegal のように, 時間方向に並列化すると正しい価値関数が得られません.
+
+## Monte Carlo Simulation for SMM
+
+SMM (Simulated Method of Moments) のようなシミュレーションベースの推定では, モデルのパラメータを変化させながら (モンテカルロ) シミュレーションを繰り返す必要があります. このとき, 正確に実装しないと, モデルのパラメータを変化させるたびに, ランダムな数を生成してまい, 正確な最適化ができません. そのため, モデルのパラメータを変化させるたびに, 新たに乱数を生成するのではなく, 事前に乱数を生成しておき, それを使いまわす必要があります.
+
+例として, 第二回の授業で扱った次のモデルを考えましょう.
+
+**モデル**
+
+$$
+\max_{c, l} u(c, l) = \log c + \alpha \log (1-l) \quad \text{s.t.} \quad c = w (1 - l),
+$$
+
+where
+
+$$
+\log w \sim \mathcal{N}(\mu, \sigma).
+$$
+
+標準化のため, $\mu = 0$ とする. この時, $\theta = (\alpha, \sigma)$ を推定する.
+
+```{julia}
+#| label: prep-dist-earn
+#| code-fold: true
+mean_leisure_data = 1 - 33.4 / (16 * 7)
+earn = [25, 75, 150, 250, 350, 450, 550, 650, 750, 850, 950, 1100, 1200]
+density = [13.7, 12.2, 12.3, 14.8, 20.2, 16.3, 7.0, 2.0, 0.6, 0.4, 0.1, 0.3, 0.2] / 100
+mean_learn_data = density' * log.(earn)
+sd_learn_data = sqrt(density' * (log.(earn) .- mean_learn_data) .^ 2)
+```
+
+**悪い実装例**
+
+```{julia}
+function mc_bad(α, σ; n_mc=10^6)
+    ls = zeros(n_mc)
+    learns = similar(ls)
+    for i in 1:n_mc
+        w = rand(LogNormal(0, σ))
+        l_opt = 1 / (1 + α)
+        c_opt = w * (1 - l_opt)
+        ls[i] = l_opt
+        learns[i] = log(w)
+    end
+    return [mean(ls), std(ls)]
+end
+
+```
+
+
+
+
+
+
+では, SMMで推定するパラメータが確率分布のパラメータであるときは, どのように乱数を生成すれば良いでしょうか. これには大きく二つの方法があります.
+
