@@ -59,7 +59,7 @@ $$
 
 {{< v 0.5em >}}
 
-- Year FE を含めない会期では, $\beta$ は有意に正. 教育投資のスピルオーバー効果を示唆
+- Year FE を含めない回帰では, $\beta$ は有意に正. 教育投資のスピルオーバー効果を示唆
 - 著者らは教育レベル (人的資本) が社会的なステータスと指摘
 
 ## モデル
@@ -123,7 +123,7 @@ $$
 **Step 2**: 配分の決定
 
 $$
-V\left(h, b, \kappa, n; \tilde{h}\right) = \max_{c, l, x} U(c, l, n, h', \tilde{h}') + \beta \mathbb{E}_{\kappa'|\kappa}\left[V\left(h', b, \kappa', n; \tilde{h}'\right)\right]
+V\left(h, b, \kappa, n; \tilde{h}\right) = \max_{c, l, x} U(c, l, n, h', \tilde{h}')
 $$
 
 subject to
@@ -179,7 +179,7 @@ c + xn + T \le w h (1 - \lambda n - l) + T_n(n).
 $$
 
 - $T$: lump-sum (一括) 税. 出産奨励金と均衡する必要がある.
-- $T(n) = \psi n$: 出産奨励金
+- $T_n(n) = \psi n$: 出産奨励金
 
 {{< v 0.5em >}}
 
@@ -203,7 +203,7 @@ $$
 どちらの政策も
 
 - 出生率を高める. また, 所得に対する出生率の弾力性が減少
-- 子ども一人あたりの教育投資が減り, 結果として格差 (Gini 係数) が拡大する
+- 低所得者の教育投資が減り, 結果として格差 (Gini 係数) が拡大する
 
 ## Optimal Policy
 
