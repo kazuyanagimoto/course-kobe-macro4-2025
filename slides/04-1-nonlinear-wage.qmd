@@ -1,7 +1,7 @@
 ---
 title: Non-linear Wage
-subtitle: "@erosa2022"
-description: "@erosa2022"
+subtitle: "@erosa2022; @erosa2024"
+description: "@erosa2022; @erosa2024"
 date: 2026-01-05
 format:
   clean-typst:
@@ -12,93 +12,6 @@ format:
       - text: '#import "@preview/cetz-plot:0.1.1"'
 image: /static/cetz/nonlinear_wage.svg
 ---
-
-## 労働供給の経済学
-
-労働供給 (Labor Supply) といった時, 次の二つの要素がある.
-
-- Extensive Margin: 労働市場に参加するかどうか
-- Intensive Margin: 労働市場に参加した場合, 何時間働くか
-
-**Extensive Margin**
-
-- 労働参加率 (Labor Force Participation Rate) を指す場合が多い
-- 女性の労働参加 (Female Labor Force Participation, FLFP) も重要
-
-**Intensive Margin**
-
-- (週あたり) 労働時間を指す場合が多い
-- 労働参加を所与とした統計か, 労働非参加を0として含むか (extensive margin)
-
-## 労働供給の弾力性
-
-労働供給の賃金に対する弾力性には主に以下の3つがある:
-
-1. Marshallian 弾力性: 所得を一定とした下での労働供給の弾力性
-2. Hicksian 弾力性: 効用のレベルを一定とした下での労働供給の弾力性
-3. Frisch 弾力性: 限界効用を一定にした下での労働供給の弾力性
-
-{{< v 0.5em >}}
-
-マクロ経済学で関心があるのは基本的に Frisch 弾力性:
-
-- 動学モデルでは, 各期の労働供給は将来の限界効用を所与として決定する
-- そのため, 景気循環や政策の影響を受ける労働供給の弾力性は Frisch 弾力性である
-
-## Frisch 弾力性
-
-$$
-V(a) = \max_{c, h, a'} u(c, h) + \beta V(a') \quad \text{s.t. } c + a' = (1 + r)a + wh
-$$
-
-$\lambda$ をラグランジュ乗数とした一階条件から $u_c(c, h) = \lambda$, $u_h(c, h) = -\lambda w$ より, 
-
-$$
-u_{cc} \frac{\partial c}{\partial w} + u_{ch} \frac{\partial h}{\partial w} = 0 \text{ and }
-u_{hc} \frac{\partial c}{\partial w} + u_{hh} \frac{\partial h}{\partial w} = -\lambda.
-$$
-
-これを $\frac{\partial h}{\partial w}$ について解くと,
-
-$$
-\frac{\partial h}{\partial w} = \frac{u_{h}}{u_{hh} - \frac{u_{ch}^2}{u_{cc}}} \frac{1}{w}.
-$$
-
-Frisch 弾力性 $\eta := \frac{\partial h}{\partial w}\frac{w}{h}$ より,
-
-$$
-\eta = \frac{u_{h}}{h\left(u_{hh} - \frac{u_{ch}^2}{u_{cc}}\right)}.
-$$
-
-## Frisch 弾力性: マクロ vs ミクロ
-
-マクロ経済学でよく用いられる (separable) なCRRA 効用関数を考えると,
-
-$$
-u(c, h) = \frac{c^{1-\sigma}}{1-\sigma} - \alpha \frac{h^{1+\phi}}{1+\phi} \Rightarrow \eta = \frac{1}{\phi}.
-$$
-
-@chetty2011 はメタ分析を行い, Frisch 弾力性の平均的な推定値を報告した.
-
-- ミクロ分析 (擬似実験, quasi-experiment): 0.82
-- マクロモデル: 2.84
-    - RBCモデルなどで, 雇用は実質賃金よりも volatile
-
-{{< v 0.5em >}}
-
-Puzzle:「マクロモデルの Frisch 弾力性はミクロモデルよりもかなり大きい」
-
-- Frisch 弾力性の推定値に関しては, 今も議論が続いている
-    - 例: @erosa2016
-
-## 労働供給と家族経済学
-
-![@greenwood2023](/static/img/article/greenwood2023/fig2_1.svg){width=70% fig-align="center"}
-
-- 1940年以降, 男女別の労働時間はあまり変化していない
-- 過去150年で女性の労働参加率は大きく上昇した
-- 通常のマクロ経済学が仮定する単一 (unitary) な家計のモデルでは説明できない
-
 
 # @erosa2022
 
@@ -160,14 +73,14 @@ Puzzle:「マクロモデルの Frisch 弾力性はミクロモデルよりも�
 
 ## モデル
 
-### 設定
+**設定**
 
-- 静的なカップルの意思決定モデル. 男性 $g = m$, 女性 $ g = f$
+- 静的なカップルの意思決定モデル. 男性 $g = m$, 女性 $g = f$
 - カップルは職業 $j_m, j_f \in \{1, 2\}$ と労働時間 $h_{m}, h_{f}$ を選択
 - 男女の家事労働時間 $T_m, T_f$ は _外生的_ に与えられる ($T_m < T_f$)
 - カップルごとに職業に応じた能力 $a_{m1}, a_{m2}, a_{f1}, a_{f2}$ と労働への選好 $\phi_m, \phi_f$ が与えられる
 
-### 家計の問題
+**家計の問題**
 
 $$
 \max_{c_m, c_f, h_m, h_f, j_m, j_f} u_m(c_m, h_m) + u_f(c_f, h_f)
@@ -322,14 +235,112 @@ $$
 - Occupation はNLの割合の男女差. Hours, Wagesは対数値の男女差
 - 多くの割合をモデルが再現
 
+# @erosa2024
+
+## Variance in Hours Worked
+
+::: {layout-ncol="2"}
+
+![](/static/img/article/erosa2024/fig2.svg)
+
+![](/static/img/article/erosa2024/fig3.svg)
+
+:::
+
+- 高賃金の仕事ほど労働時間の分散が小さい
+- 労働時間の分散が大きい仕事ほど労働時間の平均が小さい
+
+## 3 Types of Jobs
+
+![](/static/img/article/erosa2024/table1.svg){width=100%}
+
+{{< v 0.5em >}}
+
+- IPUMS-CPS (1976–2015) のうち22-64歳の労働者のデータを使用
+- 3桁の職業コードを労働時間の長い順に $H, M, L$ の三種類の職業に分類
+- 長時間労働の職業ほど, 賃金が高く, 労働時間の分散が小さく, 労働所得の分散が小さい
+
+## A Generalized Roy Model
+
+**設定**
+
+- @roy1951 モデルを拡張し, ３つの職業 $j \in \{H, M, L\}$ を選択可能とする
+- 個人 $i$ は, $T$ の時間をもち, 3つの職業に労働時間 $h_{ij}$ を配分可能
+- 各職業に対する能力 $a_{ij}$ と余暇選好 $\phi_i$ は対数正規分布に従う
+
+**家計の問題**
+
+$$
+\max_{c_i, \{h_{ij}\}_{j \in \{H, M, L\}}} \log c_i + \phi_{i} \frac{\left(T - \sum_{j} h_{ij}\right)^{1-\gamma}}{1 - \gamma}
+\quad \text{subject to } c_i \leq \sum_{j} a_{ij} h_{ij}^{1+\theta_j}
+$$
+
+- 収入関数は各職業で凸型であり, $\theta_H > \theta_M > \theta_L$
+- 凸型 (限界生産性が上昇し続ける) であるため, 最適解では1つの職業に全労働時間を配分
+- 実質, 二段階の意思決定問題
+    1. 各職業での最適労働時間を計算
+    2. 最も高い効用をもたらす職業を選択
+
+## Quantitative Properties
+
+FOC:
+
+$$
+\frac{1 + \theta_j}{\phi_i} =  h_{i, j}\left(T - h_{i, j}\right)^{-\gamma}.
+$$
+
+
+::: {.callout-note}
+
+## Quantitative Properties
+
+1. $h_{i, H} > h_{i, M} > h_{i, L}$
+1. $\phi_i$ の分布が職業に差がないとすると, $\theta_j$ に対して労働時間の平均は上昇, 分散は減少
+1. 線形の時, 職業は $a_{i, j}$ のみによって決定され, 非線形では $a_{i, j}, \phi_i$ の両方に依存
+1. 非線形では, 職業内で $\phi_{i}$ が全体的に減少すると, 労働時間の平均は上昇, 分散は減少
+
+:::
+
+解釈としては,
+
+- $\phi_i$ が低い人は $\theta_j$ が高い職業が魅力的
+- $\theta_j$ が高いほど, 長時間労働が要求されるが, $\phi_i$ による差を受けにくい
+- 結果として, $\theta_j$ が高い職業ほど, $\phi_i$ が低い人が集まり, 労働時間の平均は上昇, 分散は減少
+
+## Calibration
+
+### Linear vs. Non-linear
+
+「高賃金の職業ほど, 労働時間の平均は高く, 分散は小さい」という性質は, 線形・非線形モデルのどちらでも説明可能
+
+- **線形モデル**
+    - 能力 $a_{i, j}$ と余暇選好 $\phi_i$ の負の相関を仮定
+    - 能力が高い人は余暇選好が低いため, 高賃金かつ長時間労働
+- **非線形モデル**
+    - 能力 $a_{i, j}$ と余暇選好 $\phi_i$ は独立と仮定
+    - 高賃金の職業ほど長時間労働が要求されるため
+
+同じ数のパラメータでカリブレートし, どちらがデータをよりよく説明できるかを検証
+
+- 線形モデル: $corr(a_{H}, \phi)$, $corr(a_{M}, \phi)$, $corr(a_{L}, \phi)$ と13のパラメータ
+- 非線形モデル: $\theta_H$, $\theta_M$, $\theta_L$ と13のパラメータ
+
+### Target Moments
+
+![](/static/img/article/erosa2024/table2_target.svg){fig-align="center" width=70%}
+
+- 非線形モデルの方が, 線形モデルよりもモデルの当てはまりが良い
+
+### Untargeted Moments
+
+{{< v -0.5em >}}
+
+![](/static/img/article/erosa2024/table4.svg){fig-align="center" width=70%}
+
+- 非線形モデルは, ターゲットされていないモーメントもよく再現
+- 線形モデルは, 労働所得の分散や労働時間と賃金の相関などがデータと乖離
 
 ## まとめ
-
-**労働供給の経済学**
-
-- Intensive margin と extensive margin
-- Frisch 弾力性のマクロ vs ミクロの違い
-- 古典的な unitary モデルの限界 $\Rightarrow$ 家庭内 (夫婦) の意思決定モデル
 
 **@erosa2022**
 
@@ -337,6 +348,12 @@ $$
     - Nonlinearな職業は長時間労働の代わりに高賃金
 - 男女の職業選択にNonlinear vs Linear jobs の違いがある
 - 家事負担の男女差が職業選択の男女差をもたらし, 賃金格差の一因となっている
+
+**@erosa2024**
+
+- 職業ごとの労働時間の分散と平均の関係を分析
+- Royモデルを拡張し, 線形・非線形の賃金のモデルをカリブレート
+- 非線形賃金モデルの方がデータをよく説明
 
 
 {{< appendix >}}
