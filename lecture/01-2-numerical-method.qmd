@@ -738,7 +738,7 @@ function moment(α, σ; n_gh=10)
 
     return [h̄, sd_learn]
 end
-moment(0.5, 0.5)
+
 loss(α, σ; d=[mean_hours_data, sd_learn_data]) = sqrt(sum(((moment(α, σ) .- d) ./ d) .^ 2))
 prob = OptimizationProblem((x, p) -> loss(x[1], x[2]), [0.5, 0.5])
 sol = solve(prob, NelderMead()) # Optim.jl

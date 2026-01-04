@@ -23,6 +23,11 @@ format:
 using Plots
 using LaTeXStrings
 using Distributions
+using Roots
+using Optimization
+using OptimizationNLopt
+import Random
+Random.seed!(1234)
 
 default(size=(500, 309), titlefontsize=10, fmt=:svg)
 ```
@@ -389,14 +394,14 @@ plot!(m.a_grid, m.V[:, begin], label=L"t=1")
 
 ## Monte Carlo Simulation for SMM
 
-SMM (Simulated Method of Moments) のようなシミュレーションベースの推定では, モデルのパラメータを変化させながら (モンテカルロ) シミュレーションを繰り返す必要があります. このとき, 正確に実装しないと, モデルのパラメータを変化させるたびに, ランダムな数を生成してまい, 正確な最適化ができません. そのため, モデルのパラメータを変化させるたびに, 新たに乱数を生成するのではなく, 事前に乱数を生成しておき, それを使いまわす必要があります.
+SMM (Simulated Method of Moments) のようなシミュレーションベースの推定では, モデルのパラメータを変化させながら (モンテカルロ) シミュレーションを繰り返す必要があります. このとき, 正確に実装しないと, モデルのパラメータを変化させるたびにランダムな数を生成してまい, 正確な最適化ができません. そのため, モデルのパラメータを変化させるたびに新たに乱数を生成するのではなく, 事前に乱数を生成しておきそれを使いまわす必要があります.
 
 例として, 第二回の授業で扱った次のモデルを考えましょう.
 
 **モデル**
 
 $$
-\max_{c, l} u(c, l) = \log c + \alpha \log (1-l) \quad \text{s.t.} \quad c = w (1 - l),
+\max_{c, l} u(c, l) = \frac{c^{1-\gamma_c}}{1-\gamma_c} + \alpha_l \frac{l^{1-\gamma_l}}{1-\gamma_l} \quad \text{s.t.} \quad c = w (1 - l),
 $$
 
 where
@@ -410,35 +415,109 @@ $$
 ```{julia}
 #| label: prep-dist-earn
 #| code-fold: true
-mean_leisure_data = 1 - 33.4 / (16 * 7)
+#| output: false
+mean_hours_data = 33.4 / (16 * 7)
 earn = [25, 75, 150, 250, 350, 450, 550, 650, 750, 850, 950, 1100, 1200]
 density = [13.7, 12.2, 12.3, 14.8, 20.2, 16.3, 7.0, 2.0, 0.6, 0.4, 0.1, 0.3, 0.2] / 100
 mean_learn_data = density' * log.(earn)
 sd_learn_data = sqrt(density' * (log.(earn) .- mean_learn_data) .^ 2)
+
+foc(l; w=1.0, γ_c=1.5, α_l=1.2, γ_l=1.5) =
+    w^(1 - γ_c) * (1 - l)^(-γ_c) - α_l * l^(-γ_l)
+
+function hours_worked(w; γ_c=1.5, γ_l=1.5, α=1.2)
+    y::Float64 = find_zero(y -> foc(1 / (1 + exp(y)), w=w, γ_c=γ_c, α_l=α, γ_l=γ_l), 0.0)
+    l = 1 / (1 + exp(y))
+    return 1 - l
+end
 ```
 
 **悪い実装例**
 
 ```{julia}
-function mc_bad(α, σ; n_mc=10^6)
-    ls = zeros(n_mc)
-    learns = similar(ls)
-    for i in 1:n_mc
-        w = rand(LogNormal(0, σ))
-        l_opt = 1 / (1 + α)
-        c_opt = w * (1 - l_opt)
-        ls[i] = l_opt
-        learns[i] = log(w)
+#| label: smm-mc-naive
+function mc_bad(α, σ; n_mc=10^3)
+    ws = rand(LogNormal(0, σ), n_mc)
+    hs = similar(ws)
+    learns = similar(hs)
+    for (i, w) in enumerate(ws)
+        h = hours_worked(w; α=α)
+        hs[i] = h
+        learns[i] = log(w * (1 - h))
     end
-    return [mean(ls), std(ls)]
+    return [mean(hs), std(hs)]
 end
 
+loss(α, σ; fn_mc, d=[mean_hours_data, sd_learn_data]) =
+    sqrt(sum(((fn_mc(α, σ) .- d) ./ d) .^ 2))
+prob = OptimizationProblem((x, p) -> loss(x[1], x[2], fn_mc=mc_bad), [0.5, 0.5],
+    lb=[1e-3, 1e-3], ub=[10.0, 10.0])
+
+try
+    sol = solve(prob, NLopt.LN_SBPLX())
+catch e
+    println("Optimization failed as expected:")
+    println(e)
+end
 ```
 
+ナイーブな実装として, パラメータ $\alpha, \sigma$ を変化させるたびに新たに乱数を生成する方法を示しました. これでは, 最適化アルゴリズムが正しく動作しません. 例えば, 上記のコードを実行すると, 収束すべき `hours_worked` の時点で失敗してしまいました. これは, SMMの中の推定が安定せず, `α, σ` がかなり極端な値に飛んでしまったためです.
 
+### 良い実装例
 
+SMMで推定するパラメータが確率分布のパラメータであるときは, どのように乱数を生成すれば良いでしょうか. これには大きく二つの方法があります.
 
+**1. 逆関数法** (Inverse Transform Sampling)
 
+累積分布関数 (CDF) の逆関数 (分位点関数) を用いる方法です. 任意の確率分布 $F(x; \theta)$ に対して, 一様乱数 $u \sim U[0, 1]$ を生成し, $x = F^{-1}(u; \theta)$ とすることで, パラメータ $\theta$ に依存した乱数を生成できます. SMMでは, $u$ を固定し, $\theta$ を変化させることで, 滑らかな目的関数を得ることができます.
 
-では, SMMで推定するパラメータが確率分布のパラメータであるときは, どのように乱数を生成すれば良いでしょうか. これには大きく二つの方法があります.
+```{julia}
+#| label: smm-mc-inverse
+us_fixed = rand(10^3)
 
+function mc_inverse(α, σ; us=us_fixed)
+    hs = similar(us)
+    learns = similar(hs)
+
+    ws = quantile.(LogNormal(0, σ), us)
+    for (i, w) in enumerate(ws)
+        h = hours_worked(w; α=α)
+        hs[i] = h
+        learns[i] = log(w * (1 - h))
+    end
+    return [mean(hs), std(learns)]
+end
+
+prob = OptimizationProblem((x, p) -> loss(x[1], x[2], fn_mc=mc_inverse),
+    [0.5, 0.5], lb=[1e-3, 1e-3], ub=[10.0, 10.0])
+sol = solve(prob, NLopt.LN_SBPLX())
+α, σ = sol.x
+```
+
+**2. 位置・尺度変換** (Location-scale Transformation)
+
+正規分布や一様分布のように, 標準分布 $Z$ からの線形変換 $X = \mu + \sigma Z$ で表現できる分布 (位置・尺度母数族) の場合, 標準分布からの乱数を固定して変換する方法が使えます. 対数正規分布の場合も, $\log w \sim N(\mu, \sigma^2)$ なので, $\log w = \mu + \sigma \varepsilon,\quad\varepsilon \sim N(0, 1)$ と表せます.
+
+```{julia}
+#| label: smm-transform
+εs_fixed = randn(10^3)
+function mc_transform(α, σ; εs=εs_fixed)
+    hs = similar(εs)
+    learns = similar(hs)
+
+    ws = exp.(σ .* εs)
+    for (i, w) in enumerate(ws)
+        h = hours_worked(w; α=α)
+        hs[i] = h
+        learns[i] = log(w * (1 - h))
+    end
+    return [mean(hs), std(learns)]
+end
+
+prob = OptimizationProblem((x, p) -> loss(x[1], x[2], fn_mc=mc_transform),
+    [0.5, 0.5], lb=[1e-3, 1e-3], ub=[10.0, 10.0])
+sol = solve(prob, NLopt.LN_SBPLX())
+α, σ = sol.x
+```
+
+なお, 多変数正規分布 $X \sim \mathcal{N}\left(\symbf{\mu}, \Sigma \right)$ は, $X = \symbf{\mu} + L \Xi,\quad \Xi \sim \mathcal{N}(\symbf{0}, I)$ と表せます. ここで, $L$ は $\Sigma$ のCholesky分解です. したがって, 多変量正規分布の場合も, 標準正規分布からの乱数を固定して変換する方法が使えます.
