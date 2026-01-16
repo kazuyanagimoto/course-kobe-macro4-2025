@@ -14,7 +14,7 @@ $$
 
 - $\mathbf{x}$: 観測可能な変数
 - $\symbf{\theta}$: $p$ 次元の推定したいパラメータ
-- $g(\mathbf{x}, \symbf{\theta})$: $m (\ge p)$ 次元のモーメント条件. $E[g(\mathbf{x}, \symbf{\theta})] = 0$ を満たす
+- $g(\mathbf{x}, \symbf{\theta})$: $m (\ge p)$ 次元のモーメント条件. $\mathbb{E}[g(\mathbf{x}, \symbf{\theta})] = \mathbf{0}$ を満たす
 - $W$: 任意の重みづけ行列. 2段階 GMM など機械的に選択することも可能
 - 標準偏差の推定や最適な $W$ の選択などの詳細は @newey1994 を参照
 
@@ -120,9 +120,10 @@ $$
 
 {{< v -0.5em >}}
 
-![](/static/img/article/lise2019/fig2.jpeg){width=65% fig-align="center"}
+![](/static/img/article/lise2019/fig2.jpeg){width=60% fig-align="center"}
 
 - 消費, 労働時間, 家事時間などの関係が Pareto weight を用いた collective model と整合的 
+- 賃金比率が同一でも妻側の個人消費が少ない
 
 ## Model
 
@@ -201,14 +202,24 @@ $$
     - $\Delta\omega_{j, t} := \omega_{j, t} - \omega_{j, 0}$
     - $v_0 := \hat{\theta}_0^y + \hat{\theta}_1^{y}a_{W, 0} + \hat{\theta}_2^{y}a_{W, 0}^2 + \hat{\theta}_3^{y}a_{H, 0} + \hat{\theta}_4^{y}a_{H, 0}^2$, 線形回帰による世帯収入の予測値
 - $\mathbf{z}_{1t} = \varepsilon_{W, t} - \varepsilon_{H, t}$
+    - 予測されていなかった賃金変動の差
 
 ## GMM Estimation
 
 {{< v -1em >}}
 
+![](/static/img/article/lise2019/table2a.svg){width=70% fig-align="center"}
+
+- 式 (A.1) - (A.11) を用いて GMM 推定 (メインの結果は Column I)
+- $0 < \gamma < 1$: 家事労働は代替的. 家庭内分業の要因
+- $\alpha_1^H > \alpha_1^W$: 夫の方が個人消費を重視 (妻の方が公共財を重視). 不均等な個人消費の要因
+
+---
+
+{{< v -1em >}}
+
 ![](/static/img/article/lise2019/table3.svg){width=45% fig-align="center"}
 
-- 式 (A.1) - (A.11) を用いてGMM推定. 結果は Table 2 を参照
 - 子どもの数が多いほど, 公共財の preference $\alpha_3^j := 1 - \alpha_1^j - \alpha_2^j$ が高くなる傾向
 
 ## Decomposition of Relative Pareto Weight
@@ -229,8 +240,56 @@ $\quad\mu_{1}(\mathbf{z}_{1t}) = \exp(\symbf{\mu}_1^{\top}\mathbf{z}_{1t})$
 :::
 ::::
 
-- 相対パレートウェイトは, $\frac{\mu_0(\mathbf{z}_0)}{1 - \mu_1(\mathbf{z}_{1t})} = \mu_0(\mathbf{z}_0)\mu_1(\mathbf{z}_{1t})$ に分解可能
+- 相対パレートウェイトは, $\frac{\mu_t}{1 - \mu_t} = \mu_0(\mathbf{z}_0)\mu_1(\mathbf{z}_{1t})$ に分解可能
 - パレートウェイトは結婚時のウェイト $\mu_0(\mathbf{z}_0)$ で大部分が決定される
+- $\text{Var}(\log \mu_{it}) = \text{Var}(\mathbb{E}[\log \mu_{it}]) + \mathbb{E}[\text{Var}(\log \mu_{it})]$ によると, 家庭間の分散が78.1%を占める
+
+## What Drives Pareto Weight Changes?
+
+{{< v -1em >}}
+
+![](/static/img/article/lise2019/table2b.svg){width=55% fig-align="center"}
+
+---
+
+**Column I**: Model supports Limited Commitment
+
+- Full Commitment 仮説 $\mu_1 = 0$ が棄却される
+
+{{< v 0.5em >}}
+
+**Column II-IV**: Pareto weight is memoryless and no advance information
+
+- 現在の $z_{1, t}$ のみが影響しているのかの検証
+- 恒等的に $z_{1, t} = \Delta z_{1, t} + z_{1, t-1}$ なので, $\Delta z_{1, t}$ と $z_{1, t-1}$ の係数が同じであれば, memoryless
+- $z_{1, t-2}$ は有意でないので, memoryless である可能性が高い
+- $\Delta z_{1, t+1}$ も有意でないので, 事前情報はない可能性が高い
+
+{{< v 0.5em >}}
+
+**Column V**: Household response to Large Shocks
+
+- パレートウェイトは大きいショック $z_{1, t} < q_1$, $z_{1, t} \ge q_5$ のときに大きく変化
+
+---
+
+**Column VI-VII**: Marital surplus reduce the response
+
+- 離婚に対する結婚の価値 (marital surplus) が小さいと, パレートウェイトの変化が大きい
+- 翌期離婚するカップルのパレートウェイトの変化は大きく
+- 子どもが生まれたばかりのカップルの変化は小さい
+
+{{< v 0.5em >}}
+
+**Column VIII-IX**
+
+- 相手の給料が分からない場合, 給料を隠すインセンティブを少なくしないといけない
+- 情報の非対称性が高いほど, 賃金の上昇に対するパレートウェイトの変化を大きくする必要
+- 共通口座を持つカップルは情報の非対称性が低く, パレートウェイトの変化が小さい
+- 同一産業で働くカップルは情報の非対称性が低く, パレートウェイトの変化が小さいはず
+    - 推定結果は逆の結果. 異なる産業で働くカップルはパレートウェイトの変化が小さい
+    - 異なる産業で働くことでリスクシェアリングなどのメリットが大きいのでは?
+
 
 ## Dual vs. Single Earner Households
 
@@ -252,6 +311,7 @@ $\quad\mu_{1}(\mathbf{z}_{1t}) = \exp(\symbf{\mu}_1^{\top}\mathbf{z}_{1t})$
 
 - 共働き世帯は結婚時のパレートウェイトに大きなばらつきがある
 - 夫のみが働く世代では, パレートウェイトの改定がかなり少ない
+    - 妻側の離婚時の効用が低い (marital surplus が高い) ことと整合的
 
 ## Elasticities to Wages
 
@@ -276,7 +336,7 @@ $\quad\mu_{1}(\mathbf{z}_{1t}) = \exp(\symbf{\mu}_1^{\top}\mathbf{z}_{1t})$
 **GMM**
 
 - 家庭内の消費, 時間配分に関するモーメント条件を用いてGMM推定
-- 詳細なデータと組み合わせることで, 多くのパラメータを高速に推定可能
+- 多くのパラメータを安定的に推定可能であり, Limited Commitment モデルの検証も可能
 
 {{< v 0.5em >}}
 
@@ -284,6 +344,7 @@ $\quad\mu_{1}(\mathbf{z}_{1t}) = \exp(\symbf{\mu}_1^{\top}\mathbf{z}_{1t})$
 
 - 配偶者の賃金変動に応じてパレートウェイトが変化
 - 結婚のメリットの一つであるリスク共有が限定的にしか達成されないことを示唆
+    - 配偶者が保険であれば自身の賃金が下がったとしても消費や余暇時間を維持できる
 
 
 ## 参考文献

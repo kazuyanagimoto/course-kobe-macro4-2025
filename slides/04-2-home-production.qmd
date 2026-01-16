@@ -70,7 +70,7 @@ $$
 $t = \tilde{x}$ とおいて, 一階条件は $\frac{dw}{dt}(t) = z_{\tilde{x}}(t, \mu(t))$ より, 変数分離して
 
 $$
-\int w(t) dt = \int z_{\tilde{x}}(t, \mu(t)) dt.
+\int \,dw = \int z_{\tilde{x}}(t, \mu(t)) \,dt.
 $$
 
 $t: 0 \rightarrow \tilde{x}$ で積分し, $w(0) = w_0$ とおくと, 示された.
